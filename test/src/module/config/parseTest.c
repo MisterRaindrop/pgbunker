@@ -315,7 +315,9 @@ testRun(void)
         parseOptionList[cfgOptConfigIncludePath].indexList[0].found = false;
         parseOptionList[cfgOptConfigIncludePath].indexList[0].source = cfgSourceDefault;
 
-        HRN_SYSTEM_FMT("mkdir -m 750 %s", strZ(strPath(oldConfigDefault)));
+        // mkdir -p needed because oldConfigDefault now points to /etc/pgbackrest/pgbackrest.conf (two levels deep) instead of the
+        // upstream /etc/pgbackrest.conf (one level), so the intermediate /etc dir may not exist.
+        HRN_SYSTEM_FMT("mkdir -m 750 -p %s", strZ(strPath(oldConfigDefault)));
         storagePut(
             storageNewWriteP(storageTestWrite, oldConfigDefault),
             BUFSTRDEF(

@@ -378,7 +378,9 @@ sub docGet
         my $bReleaseCheckCommit = false;
 
         # Check versions except for bug fix releases that are not the most recent release (since bug fixes on are separate branches)
-        if ($strVersion ge '2.01' && !($strVersion =~ /^[0-9]+\.[0-9]+\.[0-9]+$/ && $iReleaseIdx != 0))
+        # and except for pgBunker fork releases (suffix -bunker.N) which carry the upstream pgBackRest history but their own
+        # commits do not follow the 'Begin vX.Y.Z development.' / 'vX.Y.Z: Title' marker pattern that this validator expects.
+        if ($strVersion ge '2.01' && !($strVersion =~ /^[0-9]+\.[0-9]+\.[0-9]+$/ && $iReleaseIdx != 0) && $strVersion !~ /-bunker/)
         {
             # Should commits in the release be checked?
             $bReleaseCheckCommit = !$bReleaseDev ? true : false;
