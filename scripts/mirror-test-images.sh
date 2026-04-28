@@ -32,7 +32,10 @@
 set -euo pipefail
 
 SRC_NS=pgbackrest/test
-DST_NS=pgbunker/test
+# Mirror destination. Currently the maintainer's personal Docker Hub repo, since
+# Docker Hub no longer offers free organization creation. If pgBunker ever moves
+# to a paid 'pgbunker' org, switch this back to 'pgbunker/test'.
+DST_NS=misterraindrop1/test
 DRY_RUN=${1:-}
 
 # (vm:arch:date) tuples taken from test/container.yaml. Keep in sync as new VMs are
@@ -102,12 +105,11 @@ echo
 echo "Done. ${#TAGS[@]} images mirrored to ${DST_NS}."
 echo
 echo "Next steps:"
-echo "  1. Verify the images are visible at https://hub.docker.com/r/pgbunker/test/tags"
-echo "  2. Switch the test harness back to using the project namespace dynamically:"
+echo "  1. Verify the images are visible at https://hub.docker.com/r/${DST_NS}/tags"
+echo "  2. Confirm the test harness already points at this namespace:"
 echo
 echo "       test/lib/pgBunkerTest/Common/ContainerTest.pm  (sub containerRepo)"
 echo "       test/src/common/harnessHost.c                  (image strNewFmt)"
 echo
-echo "     Both currently hardcode 'pgbackrest/test'. Revert to using PROJECT_EXE so"
-echo "     the harness composes 'pgbunker/test' from the binary name."
+echo "     Both should reference '${DST_NS}'."
 echo "  3. Push and watch CI - the next run should pull from your mirrored namespace."
