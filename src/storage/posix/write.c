@@ -117,6 +117,11 @@ storageWritePosixOpen(THIS_VOID)
     // Set free callback to ensure the file descriptor is freed
     memContextCallbackSet(objMemContext(this), storageWritePosixFreeResource, this);
 
+    // Hint to the kernel that we won't reuse these blocks. Linux/FreeBSD only - posix_fadvise is not in macOS libc.
+#if defined(__linux__) || defined(__FreeBSD__)
+    posix_fadvise(this->fd, 0, 0, POSIX_FADV_DONTNEED);
+#endif
+
     // Update user/group owner
     if (this->interface.user != NULL || this->interface.group != NULL)
     {
