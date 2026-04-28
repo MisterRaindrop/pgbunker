@@ -2,3 +2,7 @@
 *~
 *.swp
 .DS_Store
+
+# Local editor / language server caches (not from upstream pgBackRest)
+/.cache/
+/build/

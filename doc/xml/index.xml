@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE doc SYSTEM "doc.dtd">
-<doc title="{[project]}" subtitle="Reliable {[postgres]} Backup &amp; Restore" toc="n">
-    <description>{[project]} is a reliable backup and restore solution for {[postgres]} that seamlessly scales up to the largest databases and workloads.</description>
+<doc title="{[project]}" subtitle="Community-maintained {[postgres]} Backup &amp; Restore" toc="n">
+    <description>{[project]} is a community-maintained, reliable backup and restore solution for {[postgres]} that seamlessly scales up to the largest databases and workloads. Continues the pgBackRest codebase after upstream maintenance was discontinued in April 2026.</description>
 
     <!-- ======================================================================================================================= -->
     <variable-list>
@@ -28,9 +28,9 @@
     <section id="introduction">
         <title>Introduction</title>
 
-        <p><backrest/> is a reliable backup and restore solution for <postgres/> that seamlessly scales up to the largest databases and workloads.</p>
+        <p><backrest/> is a reliable, parallel, scalable backup and restore solution for <postgres/>, suitable for everything from a single instance to multi-terabyte enterprise workloads. It is a community-maintained continuation of <proper>pgBackRest</proper>, picking up the codebase after upstream maintenance was discontinued in April 2026. The on-disk repository format is unchanged, so existing <proper>pgBackRest</proper> deployments can adopt <backrest/> as a drop-in upgrade.</p>
 
-        <p><backrest/> <link url="{[github-url-base]}/releases/tag/release/{[version-stable]}">v{[version-stable]}</link> is the current stable release. Release notes are on the <link page="{[backrest-page-release]}">Releases</link> page.</p>
+        <p>The latest <backrest/> release is published on the <link url="{[github-url-base]}/releases">GitHub Releases</link> page. The last upstream <proper>pgBackRest</proper> stable release is <link url="https://github.com/pgbackrest/pgbackrest/releases/tag/release/2.58.0">release/2.58.0</link>; <backrest/> versions continue from that baseline.</p>
 
         <p>Please give us a star on <link url="{[github-url-base]}">GitHub</link> if you like <backrest/>! <backrest/> is a community-maintained continuation of <proper>pgBackRest</proper>; sponsorship and contribution channels will be announced as the project's governance is established.</p>
     </section>

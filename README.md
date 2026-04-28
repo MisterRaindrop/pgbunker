@@ -1,4 +1,4 @@
-# pgBunker <br/> Reliable PostgreSQL Backup & Restore
+# pgBunker <br/> Community-maintained PostgreSQL Backup & Restore
 
 ## About this fork
 
@@ -8,9 +8,11 @@ This fork is based on `pgbackrest/pgbackrest` `main` at v2.58.0 and is licensed 
 
 ## Introduction
 
-pgBunker is a reliable backup and restore solution for PostgreSQL that seamlessly scales up to the largest databases and workloads, continuing the pgBackRest codebase under new maintenance.
+pgBunker is a reliable, parallel, scalable backup and restore solution for PostgreSQL — suitable for everything from a single instance to multi-terabyte enterprise workloads. It continues the pgBackRest codebase under community maintenance after the upstream project was discontinued in April 2026, preserving the proven backup engine and on-disk repository format while picking up new development.
 
-The last upstream stable release before pgBackRest was discontinued is [v2.58.0](https://github.com/pgbackrest/pgbackrest/releases/tag/release/2.58.0). pgBunker releases will continue from this baseline.
+**Migrating from pgBackRest?** pgBunker is designed as a drop-in successor: the on-disk repository format is unchanged, and the binary reads `/etc/pgbackrest/pgbackrest.conf` as a fallback when its own `/etc/pgbunker/pgbunker.conf` is absent. In most cases you can replace the binary, point your archive_command at `pgbunker`, and existing backups remain valid.
+
+The last upstream stable release before pgBackRest was discontinued is [v2.58.0](https://github.com/pgbackrest/pgbackrest/releases/tag/release/2.58.0); pgBunker releases continue from this baseline. The current pgBunker tag is [v2.59.0-bunker.1](https://github.com/MisterRaindrop/pgbunker/releases/tag/v2.59.0-bunker.1).
 
 ## Features
 
