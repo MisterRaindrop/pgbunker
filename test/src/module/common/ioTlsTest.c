@@ -17,10 +17,10 @@ Server cert with only a common name to test absence of alt names
 
 To regenerate, run the following in a temp path:
 
-openssl req -nodes -new -newkey rsa:4096 -sha256 -key ~/pgbackrest/test/certificate/pgbackrest-test-server.key \
+openssl req -nodes -new -newkey rsa:4096 -sha256 -key ~/pgbunker/test/certificate/pgbunker-test-server.key \
     -out server-cn-only.csr -subj "/CN=127.0.0.1"
-openssl x509 -extensions usr_cert -req -days 99999 -CA ~/pgbackrest/test/certificate/pgbackrest-test-ca.crt \
-    -CAkey ~/pgbackrest/test/certificate/pgbackrest-test-ca.key -CAcreateserial -in server-cn-only.csr -out server-cn-only.crt
+openssl x509 -extensions usr_cert -req -days 99999 -CA ~/pgbunker/test/certificate/pgbunker-test-ca.crt \
+    -CAkey ~/pgbunker/test/certificate/pgbunker-test-ca.key -CAcreateserial -in server-cn-only.csr -out server-cn-only.crt
 
 Then copy server-cn-only.crt into the variable below. Use a variable instead of a define so we know when the variable is not used.
 ***********************************************************************************************************************************/
@@ -91,7 +91,7 @@ To regenerate, run the following in a temp path:
 
 openssl genrsa -out bogus-ca.key 4096
 openssl req -new -x509 -sha256 -days 99999 -key bogus-ca.key -out bogus-ca.crt -subj "/CN=bogus"
-openssl req -nodes -new -newkey rsa:4096 -sha256 -key ~/pgbackrest/test/certificate/pgbackrest-test-client.key \
+openssl req -nodes -new -newkey rsa:4096 -sha256 -key ~/pgbunker/test/certificate/pgbunker-test-client.key \
     -out client-bad-ca.csr -subj "/CN=bogus"
 openssl x509 -extensions usr_cert -req -days 99999 -CA bogus-ca.crt -CAkey bogus-ca.key -CAcreateserial -in client-bad-ca.csr \
     -out client-bad-ca.crt
@@ -703,7 +703,7 @@ testRun(void)
                 tlsClientNewP(
                     sckClientNew(STRDEF("localhost"), HRN_SERVER_PORT_BOGUS, 5000, 5000), STRDEF("X"), 0, 0, true,
                     .certFile = STRDEF(HRN_SERVER_CLIENT_CERT), .keyFile = STRDEF(HRN_SERVER_KEY))),
-            CryptoError, "unable to load key file '" HRN_PATH_REPO "/test/certificate/pgbackrest-test-server.key': "
+            CryptoError, "unable to load key file '" HRN_PATH_REPO "/test/certificate/pgbunker-test-server.key': "
 #if OPENSSL_VERSION_NUMBER >= 0x30000000L
             "[92274804]"
 #else
@@ -1067,7 +1067,7 @@ testRun(void)
                 TEST_ASSIGN(tlsSession, ioServerAccept(tlsServer, socketSession), "open server session");
 
                 TEST_RESULT_BOOL(ioSessionAuthenticated(tlsSession), true, "server session authenticated");
-                TEST_RESULT_STR_Z(ioSessionPeerName(tlsSession), "pgbackrest-client", "check peer name");
+                TEST_RESULT_STR_Z(ioSessionPeerName(tlsSession), "pgbunker-client", "check peer name");
                 TEST_RESULT_VOID(ioWrite(ioSessionIoWrite(tlsSession), BUFSTRDEF("message")), "server write");
                 TEST_RESULT_VOID(ioWriteFlush(ioSessionIoWrite(tlsSession)), "server write flush");
 

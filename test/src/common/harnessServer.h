@@ -37,7 +37,7 @@ Port constants
 /***********************************************************************************************************************************
 Path and prefix for test certificates
 ***********************************************************************************************************************************/
-#define HRN_SERVER_CERT_PREFIX                                     "test/certificate/pgbackrest-test-"
+#define HRN_SERVER_CERT_PREFIX                                     "test/certificate/pgbunker-test-"
 #define HRN_SERVER_CERT                                            HRN_PATH_REPO "/" HRN_SERVER_CERT_PREFIX "server.crt"
 #define HRN_SERVER_KEY                                             HRN_PATH_REPO "/" HRN_SERVER_CERT_PREFIX "server.key"
 #define HRN_SERVER_CA                                              HRN_PATH_REPO "/" HRN_SERVER_CERT_PREFIX "ca.crt"

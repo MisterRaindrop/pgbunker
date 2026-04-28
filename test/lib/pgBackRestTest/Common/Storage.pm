@@ -1,8 +1,8 @@
 ####################################################################################################################################
 # Implements storage functionality using drivers.
 ####################################################################################################################################
-package pgBackRestTest::Common::Storage;
-use parent 'pgBackRestTest::Common::StorageBase';
+package pgBunkerTest::Common::Storage;
+use parent 'pgBunkerTest::Common::StorageBase';
 
 use strict;
 use warnings FATAL => qw(all);
@@ -11,11 +11,11 @@ use English '-no_match_vars';
 
 use File::Basename qw(dirname);
 
-use pgBackRestDoc::Common::Exception;
-use pgBackRestDoc::Common::Log;
-use pgBackRestDoc::Common::String;
+use pgBunkerDoc::Common::Exception;
+use pgBunkerDoc::Common::Log;
+use pgBunkerDoc::Common::String;
 
-use pgBackRestTest::Common::StorageBase;
+use pgBunkerTest::Common::StorageBase;
 
 ####################################################################################################################################
 # new

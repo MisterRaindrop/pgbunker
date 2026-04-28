@@ -1097,7 +1097,7 @@ testRun(void)
             {.function = HRNLIBSSH2_KNOWNHOST_READFILE, .param = "[\"" KNOWNHOSTS_FILE_CSTR "\",1]",
              .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_KNOWNHOST_ADDC,
-             .param = "[\"localhost\",null,\"12345678901234567890\",20,\"Generated from pgBackRest\",25,589825]"},
+             .param = "[\"localhost\",null,\"12345678901234567890\",20,\"Generated from pgBunker\",25,589825]"},
             {.function = HRNLIBSSH2_KNOWNHOST_WRITEFILE, .param = "[\"" KNOWNHOSTS_FILE_CSTR "\",1]",
              .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_USERAUTH_PUBLICKEY_FROMFILE_EX,
@@ -1145,7 +1145,7 @@ testRun(void)
             "provided [-16]\n"
             "P00   WARN: host 'localhost' not found in known hosts files, attempting to add host to "
             "'/home/" TEST_USER "/.ssh/known_hosts'\n"
-            "P00   WARN: pgBackRest added new host 'localhost' to '/home/" TEST_USER "/.ssh/known_hosts'");
+            "P00   WARN: pgBunker added new host 'localhost' to '/home/" TEST_USER "/.ssh/known_hosts'");
 
         harnessLogLevelReset();
 
@@ -1175,7 +1175,7 @@ testRun(void)
             {.function = HRNLIBSSH2_KNOWNHOST_READFILE, .param = "[\"" KNOWNHOSTS_FILE_CSTR "\",1]",
              .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_KNOWNHOST_ADDC,
-             .param = "[\"localhost\",null,\"12345678901234567890\",20,\"Generated from pgBackRest\",25,851969]"},
+             .param = "[\"localhost\",null,\"12345678901234567890\",20,\"Generated from pgBunker\",25,851969]"},
             {.function = HRNLIBSSH2_KNOWNHOST_WRITEFILE, .param = "[\"" KNOWNHOSTS_FILE_CSTR "\",1]",
              .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_USERAUTH_PUBLICKEY_FROMFILE_EX,
@@ -1203,7 +1203,7 @@ testRun(void)
         TEST_RESULT_LOG(
             "P00   WARN: host 'localhost' not found in known hosts files, attempting to add host to "
             "'/home/" TEST_USER "/.ssh/known_hosts'\n"
-            "P00   WARN: pgBackRest added new host 'localhost' to '/home/" TEST_USER "/.ssh/known_hosts'");
+            "P00   WARN: pgBunker added new host 'localhost' to '/home/" TEST_USER "/.ssh/known_hosts'");
 
         memContextFree(objMemContext((StorageSftp *)storageDriver(storageTest)));
 
@@ -1232,7 +1232,7 @@ testRun(void)
             {.function = HRNLIBSSH2_KNOWNHOST_READFILE, .param = "[\"" KNOWNHOSTS_FILE_CSTR "\",1]",
              .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_KNOWNHOST_ADDC,
-             .param = "[\"localhost\",null,\"12345678901234567890\",20,\"Generated from pgBackRest\",25,1114113]"},
+             .param = "[\"localhost\",null,\"12345678901234567890\",20,\"Generated from pgBunker\",25,1114113]"},
             {.function = HRNLIBSSH2_KNOWNHOST_WRITEFILE, .param = "[\"" KNOWNHOSTS_FILE_CSTR "\",1]",
              .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_USERAUTH_PUBLICKEY_FROMFILE_EX,
@@ -1260,7 +1260,7 @@ testRun(void)
         TEST_RESULT_LOG(
             "P00   WARN: host 'localhost' not found in known hosts files, attempting to add host to "
             "'/home/" TEST_USER "/.ssh/known_hosts'\n"
-            "P00   WARN: pgBackRest added new host 'localhost' to '/home/" TEST_USER "/.ssh/known_hosts'");
+            "P00   WARN: pgBunker added new host 'localhost' to '/home/" TEST_USER "/.ssh/known_hosts'");
 
         memContextFree(objMemContext((StorageSftp *)storageDriver(storageTest)));
 #endif
@@ -1290,7 +1290,7 @@ testRun(void)
             {.function = HRNLIBSSH2_KNOWNHOST_READFILE, .param = "[\"" KNOWNHOSTS_FILE_CSTR "\",1]",
              .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_KNOWNHOST_ADDC,
-             .param = "[\"localhost\",null,\"12345678901234567890\",20,\"Generated from pgBackRest\",25,1376257]"},
+             .param = "[\"localhost\",null,\"12345678901234567890\",20,\"Generated from pgBunker\",25,1376257]"},
             {.function = HRNLIBSSH2_KNOWNHOST_WRITEFILE, .param = "[\"" KNOWNHOSTS_FILE_CSTR "\",1]",
              .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_USERAUTH_PUBLICKEY_FROMFILE_EX,
@@ -1318,7 +1318,7 @@ testRun(void)
         TEST_RESULT_LOG(
             "P00   WARN: host 'localhost' not found in known hosts files, attempting to add host to "
             "'/home/" TEST_USER "/.ssh/known_hosts'\n"
-            "P00   WARN: pgBackRest added new host 'localhost' to '/home/" TEST_USER "/.ssh/known_hosts'");
+            "P00   WARN: pgBunker added new host 'localhost' to '/home/" TEST_USER "/.ssh/known_hosts'");
 
         memContextFree(objMemContext((StorageSftp *)storageDriver(storageTest)));
 #endif
@@ -1348,7 +1348,7 @@ testRun(void)
             {.function = HRNLIBSSH2_KNOWNHOST_READFILE, .param = "[\"" KNOWNHOSTS_FILE_CSTR "\",1]",
              .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_KNOWNHOST_ADDC,
-             .param = "[\"localhost\",null,\"12345678901234567890\",20,\"Generated from pgBackRest\",25,1638401]"},
+             .param = "[\"localhost\",null,\"12345678901234567890\",20,\"Generated from pgBunker\",25,1638401]"},
             {.function = HRNLIBSSH2_KNOWNHOST_WRITEFILE, .param = "[\"" KNOWNHOSTS_FILE_CSTR "\",1]",
              .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_USERAUTH_PUBLICKEY_FROMFILE_EX,
@@ -1376,7 +1376,7 @@ testRun(void)
         TEST_RESULT_LOG(
             "P00   WARN: host 'localhost' not found in known hosts files, attempting to add host to "
             "'/home/" TEST_USER "/.ssh/known_hosts'\n"
-            "P00   WARN: pgBackRest added new host 'localhost' to '/home/" TEST_USER "/.ssh/known_hosts'");
+            "P00   WARN: pgBunker added new host 'localhost' to '/home/" TEST_USER "/.ssh/known_hosts'");
 
         memContextFree(objMemContext((StorageSftp *)storageDriver(storageTest)));
 #endif
@@ -1406,7 +1406,7 @@ testRun(void)
             {.function = HRNLIBSSH2_KNOWNHOST_READFILE, .param = "[\"" KNOWNHOSTS_FILE_CSTR "\",1]",
              .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_KNOWNHOST_ADDC,
-             .param = "[\"localhost\",null,\"12345678901234567890\",20,\"Generated from pgBackRest\",25,1900545]"},
+             .param = "[\"localhost\",null,\"12345678901234567890\",20,\"Generated from pgBunker\",25,1900545]"},
             {.function = HRNLIBSSH2_KNOWNHOST_WRITEFILE, .param = "[\"" KNOWNHOSTS_FILE_CSTR "\",1]",
              .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_USERAUTH_PUBLICKEY_FROMFILE_EX,
@@ -1434,7 +1434,7 @@ testRun(void)
         TEST_RESULT_LOG(
             "P00   WARN: host 'localhost' not found in known hosts files, attempting to add host to "
             "'/home/" TEST_USER "/.ssh/known_hosts'\n"
-            "P00   WARN: pgBackRest added new host 'localhost' to '/home/" TEST_USER "/.ssh/known_hosts'");
+            "P00   WARN: pgBunker added new host 'localhost' to '/home/" TEST_USER "/.ssh/known_hosts'");
 
         memContextFree(objMemContext((StorageSftp *)storageDriver(storageTest)));
 #endif
@@ -1463,7 +1463,7 @@ testRun(void)
             {.function = HRNLIBSSH2_KNOWNHOST_READFILE, .param = "[\"" KNOWNHOSTS_FILE_CSTR "\",1]",
              .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_KNOWNHOST_ADDC,
-             .param = "[\"localhost\",null,\"12345678901234567890\",20,\"Generated from pgBackRest\",25,589825]"},
+             .param = "[\"localhost\",null,\"12345678901234567890\",20,\"Generated from pgBunker\",25,589825]"},
             {.function = HRNLIBSSH2_KNOWNHOST_WRITEFILE, .param = "[\"" KNOWNHOSTS_FILE_CSTR "\",1]",
              .resultInt = LIBSSH2_ERROR_FILE},
             {.function = HRNLIBSSH2_USERAUTH_PUBLICKEY_FROMFILE_EX,
@@ -1491,7 +1491,7 @@ testRun(void)
         TEST_RESULT_LOG(
             "P00   WARN: host 'localhost' not found in known hosts files, attempting to add host to "
             "'/home/" TEST_USER "/.ssh/known_hosts'\n"
-            "P00   WARN: pgBackRest unable to write '/home/" TEST_USER "/.ssh/known_hosts' for update");
+            "P00   WARN: pgBunker unable to write '/home/" TEST_USER "/.ssh/known_hosts' for update");
 
         memContextFree(objMemContext((StorageSftp *)storageDriver(storageTest)));
 
@@ -1571,7 +1571,7 @@ testRun(void)
             {.function = HRNLIBSSH2_KNOWNHOST_READFILE, .param = "[\"" KNOWNHOSTS_FILE_CSTR "\",1]",
              .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_KNOWNHOST_ADDC, .resultInt = LIBSSH2_ERROR_KNOWN_HOSTS,
-             .param = "[\"localhost\",null,\"12345678901234567890\",20,\"Generated from pgBackRest\",25,589825]"},
+             .param = "[\"localhost\",null,\"12345678901234567890\",20,\"Generated from pgBunker\",25,589825]"},
             {.function = HRNLIBSSH2_USERAUTH_PUBLICKEY_FROMFILE_EX,
              .param = "[\"" TEST_USER "\"," TEST_USER_LEN ",\"" KEYPUB_CSTR "\",\"" KEYPRIV_CSTR "\",null]",
              .resultInt = 0},
@@ -1597,7 +1597,7 @@ testRun(void)
         TEST_RESULT_LOG(
             "P00   WARN: host 'localhost' not found in known hosts files, attempting to add host to "
             "'/home/" TEST_USER "/.ssh/known_hosts'\n"
-            "P00   WARN: pgBackRest failed to add 'localhost' to known_hosts internal list");
+            "P00   WARN: pgBunker failed to add 'localhost' to known_hosts internal list");
 
         memContextFree(objMemContext((StorageSftp *)storageDriver(storageTest)));
 
@@ -1734,7 +1734,7 @@ testRun(void)
             {.function = HRNLIBSSH2_KNOWNHOST_READFILE, .param = "[\"" KNOWNHOSTS_FILE_CSTR "\",1]",
              .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_KNOWNHOST_ADDC,
-             .param = "[\"localhost\",null,\"12345678901234567890\",20,\"Generated from pgBackRest\",25,589825]"},
+             .param = "[\"localhost\",null,\"12345678901234567890\",20,\"Generated from pgBunker\",25,589825]"},
             {.function = HRNLIBSSH2_KNOWNHOST_WRITEFILE, .param = "[\"" KNOWNHOSTS_FILE_CSTR "\",1]",
              .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_USERAUTH_PUBLICKEY_FROMFILE_EX,
@@ -1776,7 +1776,7 @@ testRun(void)
         TEST_RESULT_LOG(
             "P00   WARN: host 'localhost' not found in known hosts files, attempting to add host to "
             "'/home/" TEST_USER "/.ssh/known_hosts'\n"
-            "P00   WARN: pgBackRest added new host 'localhost' to '/home/" TEST_USER "/.ssh/known_hosts'");
+            "P00   WARN: pgBunker added new host 'localhost' to '/home/" TEST_USER "/.ssh/known_hosts'");
 
         memContextFree(objMemContext((StorageSftp *)storageDriver(storageTest)));
 
@@ -1885,7 +1885,7 @@ testRun(void)
             {.function = HRNLIBSSH2_SESSION_INIT_EX, .param = "[null,null,null,null]"},
             {.function = HRNLIBSSH2_SESSION_HANDSHAKE, .param = HANDSHAKE_PARAM, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_KNOWNHOST_INIT},
-            {.function = HRNLIBSSH2_KNOWNHOST_READFILE, .param = "[\"/home/" TEST_USER "/.ssh/pgbackrest_known_hosts\",1]",
+            {.function = HRNLIBSSH2_KNOWNHOST_READFILE, .param = "[\"/home/" TEST_USER "/.ssh/pgbunker_known_hosts\",1]",
              .resultInt = 5},
             {.function = HRNLIBSSH2_SESSION_HOSTKEY, .len = 20, .type = LIBSSH2_HOSTKEY_TYPE_RSA, .resultZ = HOSTKEY},
             {.function = HRNLIBSSH2_KNOWNHOST_CHECKP, .param = "[\"localhost\",22,\"" HOSTKEY "\",20,65537]",
@@ -1908,7 +1908,7 @@ testRun(void)
         hrnCfgArgRawZ(argList, cfgOptRepoSftpHostKeyHashType, "sha1");
         hrnCfgArgRawZ(argList, cfgOptRepoSftpPrivateKeyFile, KEYPRIV_CSTR);
         hrnCfgArgRawZ(argList, cfgOptRepoSftpPublicKeyFile, KEYPUB_CSTR);
-        hrnCfgArgRawZ(argList, cfgOptRepoSftpKnownHost, "~/.ssh/pgbackrest_known_hosts");
+        hrnCfgArgRawZ(argList, cfgOptRepoSftpKnownHost, "~/.ssh/pgbunker_known_hosts");
         hrnCfgArgRawZ(argList, cfgOptRepoSftpHostKeyCheckType, "strict");
         HRN_CFG_LOAD(cfgCmdArchiveGet, argList);
 
@@ -1930,7 +1930,7 @@ testRun(void)
         TEST_RESULT_INT(storageTest->modePath, 0750, "check path mode");
         TEST_RESULT_BOOL(storageTest->write, false, "check write");
         TEST_RESULT_STR_Z(
-            strLstGet(strLstNewVarLst(cfgOptionLst(cfgOptRepoSftpKnownHost)), 0), "~/.ssh/pgbackrest_known_hosts",
+            strLstGet(strLstNewVarLst(cfgOptionLst(cfgOptRepoSftpKnownHost)), 0), "~/.ssh/pgbunker_known_hosts",
             "check known hosts path");
         TEST_RESULT_BOOL(storageTest->pathExpressionFunction == NULL, true, "check expression function is not set");
 
@@ -3760,21 +3760,21 @@ testRun(void)
         {
             HRNLIBSSH2_MACRO_STARTUP(),
             // storagePutP(storageNewWriteP())
-            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/.aaa.txt.pgbackrest.tmp\",26,416,0]"},
+            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/.aaa.txt.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SFTP_WRITE, .param = "[14]", .resultInt = 14},
             {.function = HRNLIBSSH2_SFTP_FSYNC, .resultInt = LIBSSH2_ERROR_EAGAIN},
             {.function = HRNLIBSSH2_SESSION_BLOCK_DIRECTIONS, .resultInt = SSH2_NO_BLOCK_READING_WRITING},
             {.function = HRNLIBSSH2_SFTP_FSYNC, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_CLOSE_HANDLE, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_RENAME_EX, .resultInt = LIBSSH2_ERROR_EAGAIN,
-             .param = "[\"" TEST_PATH "/.aaa.txt.pgbackrest.tmp\",\"" TEST_PATH "/.aaa.txt\",7]"},
+             .param = "[\"" TEST_PATH "/.aaa.txt.pgbunker.tmp\",\"" TEST_PATH "/.aaa.txt\",7]"},
             {.function = HRNLIBSSH2_SESSION_BLOCK_DIRECTIONS, .resultInt = SSH2_NO_BLOCK_READING_WRITING},
             {.function = HRNLIBSSH2_SFTP_RENAME_EX, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL,
-             .param = "[\"" TEST_PATH "/.aaa.txt.pgbackrest.tmp\",\"" TEST_PATH "/.aaa.txt\",7]"},
+             .param = "[\"" TEST_PATH "/.aaa.txt.pgbunker.tmp\",\"" TEST_PATH "/.aaa.txt\",7]"},
             {.function = HRNLIBSSH2_SFTP_LAST_ERROR, .resultUInt = LIBSSH2_FX_FAILURE},
             {.function = HRNLIBSSH2_SFTP_UNLINK_EX, .param = "[\"" TEST_PATH "/.aaa.txt\"]", .resultUInt = LIBSSH2_FX_OK},
             {.function = HRNLIBSSH2_SFTP_RENAME_EX, .resultInt = LIBSSH2_ERROR_NONE,
-             .param = "[\"" TEST_PATH "/.aaa.txt.pgbackrest.tmp\",\"" TEST_PATH "/.aaa.txt\",7]"},
+             .param = "[\"" TEST_PATH "/.aaa.txt.pgbunker.tmp\",\"" TEST_PATH "/.aaa.txt\",7]"},
             // strListSort(storageListP())
             {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "\",0,0,1]"},
             {.function = HRNLIBSSH2_SFTP_READDIR_EX, .param = "[\"\",4095,null,0]", .fileName = STRDEF(".aaa.txt"),
@@ -3787,12 +3787,12 @@ testRun(void)
              .resultInt = LIBSSH2_ERROR_NONE, .uid = 0, .gid = 0},
             {.function = HRNLIBSSH2_SFTP_CLOSE_HANDLE, .resultInt = LIBSSH2_ERROR_NONE},
             // bbb.txt
-            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/bbb.txt.pgbackrest.tmp\",26,416,0]"},
+            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/bbb.txt.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SFTP_WRITE, .param = "[7]", .resultInt = 7},
             {.function = HRNLIBSSH2_SFTP_FSYNC, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_CLOSE_HANDLE, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_RENAME_EX,
-             .param = "[\"" TEST_PATH "/bbb.txt.pgbackrest.tmp\",\"" TEST_PATH "/bbb.txt\",7]",
+             .param = "[\"" TEST_PATH "/bbb.txt.pgbunker.tmp\",\"" TEST_PATH "/bbb.txt\",7]",
              .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "\",0,0,1]"},
             {.function = HRNLIBSSH2_SFTP_READDIR_EX, .param = "[\"\",4095,null,0]", .fileName = STRDEF("bbb.txt"),
@@ -5038,18 +5038,18 @@ testRun(void)
         {
             HRNLIBSSH2_MACRO_STARTUP(),
             {.function = HRNLIBSSH2_SFTP_OPEN_EX, .resultNull = true,
-             .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",26,416,0]"},
+             .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SFTP_LAST_ERROR, .resultUInt = LIBSSH2_FX_NO_SUCH_FILE},
             {.function = HRNLIBSSH2_SFTP_MKDIR_EX, .param = "[\"" TEST_PATH "/sub1\",488]"},
-            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",26,416,0]"},
+            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SFTP_FSYNC, .resultInt = LIBSSH2_ERROR_EAGAIN},
             {.function = HRNLIBSSH2_SESSION_BLOCK_DIRECTIONS, .resultInt = SSH2_NO_BLOCK_READING_WRITING},
             {.function = HRNLIBSSH2_SFTP_FSYNC, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_CLOSE_HANDLE, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_RENAME_EX,
-             .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",\"" TEST_PATH "/sub1/testfile\",7]",
+             .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",\"" TEST_PATH "/sub1/testfile\",7]",
              .resultInt = LIBSSH2_ERROR_NONE},
             HRNLIBSSH2_MACRO_SHUTDOWN()
         });
@@ -5079,12 +5079,12 @@ testRun(void)
         {
             HRNLIBSSH2_MACRO_STARTUP(),
             {.function = HRNLIBSSH2_SFTP_OPEN_EX, .resultNull = true,
-             .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",26,416,0]"},
+             .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SFTP_LAST_ERROR, .resultUInt = LIBSSH2_FX_NO_SUCH_FILE},
             {.function = HRNLIBSSH2_SFTP_MKDIR_EX, .param = "[\"" TEST_PATH "/sub1\",488]"},
-            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",26,416,0]"},
+            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SFTP_FSYNC, .resultInt = LIBSSH2_ERROR_EAGAIN},
             {.function = HRNLIBSSH2_SESSION_BLOCK_DIRECTIONS, .resultInt = SSH2_BLOCK_READING_WRITING},
             HRNLIBSSH2_MACRO_SHUTDOWN()
@@ -5101,7 +5101,7 @@ testRun(void)
             .hostKeyCheckType = cfgOptionIdxStrId(cfgOptRepoSftpHostKeyCheckType, repoIdx),
             .knownHosts = strLstNewVarLst(cfgOptionIdxLst(cfgOptRepoSftpKnownHost, repoIdx)), .write = true);
 
-        const String *fileNameTmp = STRDEF(TEST_PATH "/sub1/testfile.pgbackrest.tmp");
+        const String *fileNameTmp = STRDEF(TEST_PATH "/sub1/testfile.pgbunker.tmp");
 
         TEST_ASSIGN(file, storageNewWriteP(storageTest, fileName), "new write file (defaults)");
         TEST_RESULT_VOID(ioWriteOpen(storageWriteIo(file)), "open file");
@@ -5117,12 +5117,12 @@ testRun(void)
         {
             HRNLIBSSH2_MACRO_STARTUP(),
             {.function = HRNLIBSSH2_SFTP_OPEN_EX, .resultNull = true,
-             .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",26,416,0]"},
+             .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SFTP_LAST_ERROR, .resultUInt = LIBSSH2_FX_NO_SUCH_FILE},
             {.function = HRNLIBSSH2_SFTP_MKDIR_EX, .param = "[\"" TEST_PATH "/sub1\",488]"},
-            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",26,416,0]"},
+            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SFTP_FSYNC, .resultInt = LIBSSH2_ERROR_SOCKET_SEND},
             {.function = HRNLIBSSH2_SFTP_LAST_ERROR, .resultUInt = LIBSSH2_ERROR_NONE},
             HRNLIBSSH2_MACRO_SHUTDOWN()
@@ -5139,7 +5139,7 @@ testRun(void)
             .hostKeyCheckType = cfgOptionIdxStrId(cfgOptRepoSftpHostKeyCheckType, repoIdx),
             .knownHosts = strLstNewVarLst(cfgOptionIdxLst(cfgOptRepoSftpKnownHost, repoIdx)), .write = true);
 
-        fileNameTmp = STRDEF(TEST_PATH "/sub1/testfile.pgbackrest.tmp");
+        fileNameTmp = STRDEF(TEST_PATH "/sub1/testfile.pgbunker.tmp");
 
         TEST_ASSIGN(file, storageNewWriteP(storageTest, fileName), "new write file (defaults)");
         TEST_RESULT_VOID(ioWriteOpen(storageWriteIo(file)), "open file");
@@ -5157,12 +5157,12 @@ testRun(void)
         {
             HRNLIBSSH2_MACRO_STARTUP(),
             {.function = HRNLIBSSH2_SFTP_OPEN_EX, .resultNull = true,
-             .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",26,416,0]"},
+             .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SFTP_LAST_ERROR, .resultUInt = LIBSSH2_FX_NO_SUCH_FILE},
             {.function = HRNLIBSSH2_SFTP_MKDIR_EX, .param = "[\"" TEST_PATH "/sub1\",488]"},
-            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",26,416,0]"},
+            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SFTP_FSYNC, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_CLOSE_HANDLE, .resultInt = LIBSSH2_ERROR_EAGAIN},
             {.function = HRNLIBSSH2_SESSION_BLOCK_DIRECTIONS, .resultInt = SSH2_BLOCK_READING},
@@ -5198,16 +5198,16 @@ testRun(void)
         {
             HRNLIBSSH2_MACRO_STARTUP(),
             {.function = HRNLIBSSH2_SFTP_OPEN_EX, .resultNull = true,
-             .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",26,416,0]"},
+             .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SFTP_LAST_ERROR, .resultUInt = LIBSSH2_FX_NO_SUCH_FILE},
             {.function = HRNLIBSSH2_SFTP_MKDIR_EX, .param = "[\"" TEST_PATH "/sub1\",488]"},
-            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",26,416,0]"},
+            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SFTP_FSYNC, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_CLOSE_HANDLE, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_RENAME_EX,
-             .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",\"" TEST_PATH "/sub1/testfile\",7]",
+             .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",\"" TEST_PATH "/sub1/testfile\",7]",
              .resultInt = LIBSSH2_ERROR_EAGAIN},
             {.function = HRNLIBSSH2_SESSION_BLOCK_DIRECTIONS, .resultInt = SSH2_BLOCK_READING_WRITING},
             HRNLIBSSH2_MACRO_SHUTDOWN()
@@ -5238,16 +5238,16 @@ testRun(void)
         {
             HRNLIBSSH2_MACRO_STARTUP(),
             {.function = HRNLIBSSH2_SFTP_OPEN_EX, .resultNull = true,
-             .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",26,416,0]"},
+             .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SFTP_LAST_ERROR, .resultUInt = LIBSSH2_FX_NO_SUCH_FILE},
             {.function = HRNLIBSSH2_SFTP_MKDIR_EX, .param = "[\"" TEST_PATH "/sub1\",488]"},
-            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",26,416,0]"},
+            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SFTP_FSYNC, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_CLOSE_HANDLE, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_RENAME_EX,
-             .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",\"" TEST_PATH "/sub1/testfile\",7]",
+             .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",\"" TEST_PATH "/sub1/testfile\",7]",
              .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SFTP_LAST_ERROR, .resultUInt = LIBSSH2_FX_CONNECTION_LOST},
             HRNLIBSSH2_MACRO_SHUTDOWN()
@@ -5281,21 +5281,21 @@ testRun(void)
         {
             HRNLIBSSH2_MACRO_STARTUP(),
             {.function = HRNLIBSSH2_SFTP_OPEN_EX, .resultNull = true,
-             .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",26,416,0]"},
+             .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SFTP_LAST_ERROR, .resultUInt = LIBSSH2_FX_NO_SUCH_FILE},
             {.function = HRNLIBSSH2_SFTP_MKDIR_EX, .param = "[\"" TEST_PATH "/sub1\",488]"},
-            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",26,416,0]"},
+            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SFTP_FSYNC, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_CLOSE_HANDLE, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_RENAME_EX,
-             .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",\"" TEST_PATH "/sub1/testfile\",7]",
+             .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",\"" TEST_PATH "/sub1/testfile\",7]",
              .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SFTP_LAST_ERROR, .resultUInt = LIBSSH2_FX_FILE_ALREADY_EXISTS},
             {.function = HRNLIBSSH2_SFTP_UNLINK_EX, .param = "[\"" TEST_PATH "/sub1/testfile\"]", .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_RENAME_EX,
-             .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",\"" TEST_PATH "/sub1/testfile\",7]",
+             .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",\"" TEST_PATH "/sub1/testfile\",7]",
              .resultInt = LIBSSH2_ERROR_NONE},
             HRNLIBSSH2_MACRO_SHUTDOWN()
         });
@@ -5325,16 +5325,16 @@ testRun(void)
         {
             HRNLIBSSH2_MACRO_STARTUP(),
             {.function = HRNLIBSSH2_SFTP_OPEN_EX, .resultNull = true,
-             .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",26,416,0]"},
+             .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SFTP_LAST_ERROR, .resultUInt = LIBSSH2_FX_NO_SUCH_FILE},
             {.function = HRNLIBSSH2_SFTP_MKDIR_EX, .param = "[\"" TEST_PATH "/sub1\",488]"},
-            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",26,416,0]"},
+            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SFTP_FSYNC, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_CLOSE_HANDLE, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_RENAME_EX,
-             .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",\"" TEST_PATH "/sub1/testfile\",7]",
+             .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",\"" TEST_PATH "/sub1/testfile\",7]",
              .resultInt = LIBSSH2_ERROR_SOCKET_SEND},
             {.function = HRNLIBSSH2_SFTP_LAST_ERROR, .resultUInt = LIBSSH2_FX_OK},
             HRNLIBSSH2_MACRO_SHUTDOWN()
@@ -5367,12 +5367,12 @@ testRun(void)
         {
             HRNLIBSSH2_MACRO_STARTUP(),
             {.function = HRNLIBSSH2_SFTP_OPEN_EX, .resultNull = true,
-             .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",26,416,0]"},
+             .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SFTP_LAST_ERROR, .resultUInt = LIBSSH2_FX_NO_SUCH_FILE},
             {.function = HRNLIBSSH2_SFTP_MKDIR_EX, .param = "[\"" TEST_PATH "/sub1\",488]"},
-            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",26,416,0]"},
+            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SFTP_FSYNC, .resultInt = LIBSSH2_ERROR_EAGAIN},
             {.function = HRNLIBSSH2_SESSION_BLOCK_DIRECTIONS, .resultInt = SSH2_NO_BLOCK_READING_WRITING},
             {.function = HRNLIBSSH2_SFTP_FSYNC, .resultInt = LIBSSH2_ERROR_NONE},
@@ -5519,11 +5519,11 @@ testRun(void)
         hrnLibSsh2ScriptSet((HrnLibSsh2 [])
         {
             HRNLIBSSH2_MACRO_STARTUP(),
-            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/test.empty.pgbackrest.tmp\",26,416,0]"},
+            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/test.empty.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SFTP_FSYNC, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_CLOSE_HANDLE, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_RENAME_EX,
-             .param = "[\"" TEST_PATH "/test.empty.pgbackrest.tmp\",\"" TEST_PATH "/test.empty\",7]",
+             .param = "[\"" TEST_PATH "/test.empty.pgbunker.tmp\",\"" TEST_PATH "/test.empty\",7]",
              .resultInt = LIBSSH2_ERROR_NONE},
             HRNLIBSSH2_MACRO_SHUTDOWN()
         });
@@ -5550,11 +5550,11 @@ testRun(void)
         hrnLibSsh2ScriptSet((HrnLibSsh2 [])
         {
             HRNLIBSSH2_MACRO_STARTUP(),
-            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/test.empty.pgbackrest.tmp\",26,416,0]"},
+            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/test.empty.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SFTP_FSYNC, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_CLOSE_HANDLE, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_RENAME_EX,
-             .param = "[\"" TEST_PATH "/test.empty.pgbackrest.tmp\",\"" TEST_PATH "/test.empty\",7]",
+             .param = "[\"" TEST_PATH "/test.empty.pgbunker.tmp\",\"" TEST_PATH "/test.empty\",7]",
              .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SFTP_LAST_ERROR, .resultUInt = LIBSSH2_FX_FAILURE},
             {.function = HRNLIBSSH2_SFTP_UNLINK_EX, .param = "[\"" TEST_PATH "/test.empty\"]", .resultInt = LIBSSH2_ERROR_EAGAIN},
@@ -5588,22 +5588,22 @@ testRun(void)
         hrnLibSsh2ScriptSet((HrnLibSsh2 [])
         {
             HRNLIBSSH2_MACRO_STARTUP(),
-            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/test.empty.pgbackrest.tmp\",26,416,0]"},
+            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/test.empty.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SFTP_FSYNC, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_CLOSE_HANDLE, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_RENAME_EX,
-             .param = "[\"" TEST_PATH "/test.empty.pgbackrest.tmp\",\"" TEST_PATH "/test.empty\",7]",
+             .param = "[\"" TEST_PATH "/test.empty.pgbunker.tmp\",\"" TEST_PATH "/test.empty\",7]",
              .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SFTP_LAST_ERROR, .resultUInt = LIBSSH2_FX_FAILURE},
             {.function = HRNLIBSSH2_SFTP_UNLINK_EX, .param = "[\"" TEST_PATH "/test.empty\"]", .resultInt = LIBSSH2_ERROR_EAGAIN},
             {.function = HRNLIBSSH2_SESSION_BLOCK_DIRECTIONS, .resultInt = SSH2_NO_BLOCK_READING_WRITING},
             {.function = HRNLIBSSH2_SFTP_UNLINK_EX, .param = "[\"" TEST_PATH "/test.empty\"]", .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_RENAME_EX,
-             .param = "[\"" TEST_PATH "/test.empty.pgbackrest.tmp\",\"" TEST_PATH "/test.empty\",7]",
+             .param = "[\"" TEST_PATH "/test.empty.pgbunker.tmp\",\"" TEST_PATH "/test.empty\",7]",
              .resultInt = LIBSSH2_ERROR_EAGAIN},
             {.function = HRNLIBSSH2_SESSION_BLOCK_DIRECTIONS, .resultInt = SSH2_NO_BLOCK_READING_WRITING},
             {.function = HRNLIBSSH2_SFTP_RENAME_EX,
-             .param = "[\"" TEST_PATH "/test.empty.pgbackrest.tmp\",\"" TEST_PATH "/test.empty\",7]",
+             .param = "[\"" TEST_PATH "/test.empty.pgbunker.tmp\",\"" TEST_PATH "/test.empty\",7]",
              .resultInt = LIBSSH2_ERROR_EAGAIN},
             {.function = HRNLIBSSH2_SESSION_BLOCK_DIRECTIONS, .resultInt = SSH2_BLOCK_READING_WRITING},
             HRNLIBSSH2_MACRO_SHUTDOWN()
@@ -5622,7 +5622,7 @@ testRun(void)
 
         TEST_ERROR(
             storagePutP(storageNewWriteP(storageTest, emptyFile), NULL), FileWriteError,
-            "timeout moving '" TEST_PATH "/test.empty.pgbackrest.tmp' to '" TEST_PATH "/test.empty'");
+            "timeout moving '" TEST_PATH "/test.empty.pgbunker.tmp' to '" TEST_PATH "/test.empty'");
 
         memContextFree(objMemContext((StorageSftp *)storageDriver(storageTest)));
 
@@ -5632,22 +5632,22 @@ testRun(void)
         hrnLibSsh2ScriptSet((HrnLibSsh2 [])
         {
             HRNLIBSSH2_MACRO_STARTUP(),
-            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/test.empty.pgbackrest.tmp\",26,416,0]"},
+            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/test.empty.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SFTP_FSYNC, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_CLOSE_HANDLE, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_RENAME_EX,
-             .param = "[\"" TEST_PATH "/test.empty.pgbackrest.tmp\",\"" TEST_PATH "/test.empty\",7]",
+             .param = "[\"" TEST_PATH "/test.empty.pgbunker.tmp\",\"" TEST_PATH "/test.empty\",7]",
              .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SFTP_LAST_ERROR, .resultUInt = LIBSSH2_FX_FAILURE},
             {.function = HRNLIBSSH2_SFTP_UNLINK_EX, .param = "[\"" TEST_PATH "/test.empty\"]", .resultInt = LIBSSH2_ERROR_EAGAIN},
             {.function = HRNLIBSSH2_SESSION_BLOCK_DIRECTIONS, .resultInt = SSH2_NO_BLOCK_READING_WRITING},
             {.function = HRNLIBSSH2_SFTP_UNLINK_EX, .param = "[\"" TEST_PATH "/test.empty\"]", .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_RENAME_EX,
-             .param = "[\"" TEST_PATH "/test.empty.pgbackrest.tmp\",\"" TEST_PATH "/test.empty\",7]",
+             .param = "[\"" TEST_PATH "/test.empty.pgbunker.tmp\",\"" TEST_PATH "/test.empty\",7]",
              .resultInt = LIBSSH2_ERROR_EAGAIN},
             {.function = HRNLIBSSH2_SESSION_BLOCK_DIRECTIONS, .resultInt = SSH2_NO_BLOCK_READING_WRITING},
             {.function = HRNLIBSSH2_SFTP_RENAME_EX,
-             .param = "[\"" TEST_PATH "/test.empty.pgbackrest.tmp\",\"" TEST_PATH "/test.empty\",7]",
+             .param = "[\"" TEST_PATH "/test.empty.pgbunker.tmp\",\"" TEST_PATH "/test.empty\",7]",
              .resultInt = LIBSSH2_ERROR_SOCKET_SEND},
             {.function = HRNLIBSSH2_SFTP_LAST_ERROR, .resultUInt = LIBSSH2_FX_OK},
             HRNLIBSSH2_MACRO_SHUTDOWN()
@@ -5666,7 +5666,7 @@ testRun(void)
 
         TEST_ERROR(
             storagePutP(storageNewWriteP(storageTest, emptyFile), NULL), FileRemoveError,
-            "unable to move '" TEST_PATH "/test.empty.pgbackrest.tmp' to '" TEST_PATH "/test.empty': libssh2 error [-7]");
+            "unable to move '" TEST_PATH "/test.empty.pgbunker.tmp' to '" TEST_PATH "/test.empty': libssh2 error [-7]");
 
         memContextFree(objMemContext((StorageSftp *)storageDriver(storageTest)));
 
@@ -5676,11 +5676,11 @@ testRun(void)
         hrnLibSsh2ScriptSet((HrnLibSsh2 [])
         {
             HRNLIBSSH2_MACRO_STARTUP(),
-            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/test.empty.pgbackrest.tmp\",26,416,0]"},
+            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/test.empty.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SFTP_FSYNC, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_CLOSE_HANDLE, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_RENAME_EX,
-             .param = "[\"" TEST_PATH "/test.empty.pgbackrest.tmp\",\"" TEST_PATH "/test.empty\",7]",
+             .param = "[\"" TEST_PATH "/test.empty.pgbunker.tmp\",\"" TEST_PATH "/test.empty\",7]",
              .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SFTP_LAST_ERROR, .resultUInt = LIBSSH2_FX_FAILURE},
             {.function = HRNLIBSSH2_SFTP_UNLINK_EX, .param = "[\"" TEST_PATH "/test.empty\"]", .resultInt = LIBSSH2_ERROR_EAGAIN},
@@ -5717,7 +5717,7 @@ testRun(void)
         hrnLibSsh2ScriptSet((HrnLibSsh2 [])
         {
             HRNLIBSSH2_MACRO_STARTUP(),
-            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/test.txt.pgbackrest.tmp\",26,416,0]"},
+            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/test.txt.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SFTP_WRITE, .param = "[2]", .resultInt = LIBSSH2_ERROR_EAGAIN},
             {.function = HRNLIBSSH2_SESSION_BLOCK_DIRECTIONS, .resultInt = SSH2_NO_BLOCK_READING_WRITING},
             {.function = HRNLIBSSH2_SFTP_WRITE, .param = "[2]", .resultInt = LIBSSH2_ERROR_EAGAIN},
@@ -5738,7 +5738,7 @@ testRun(void)
 
         TEST_ERROR(
             storagePutP(storageNewWriteP(storageTest, STRDEF(TEST_PATH "/test.txt")), failBuffer), FileWriteError,
-            "timeout writing '" TEST_PATH "/test.txt.pgbackrest.tmp'");
+            "timeout writing '" TEST_PATH "/test.txt.pgbunker.tmp'");
 
         memContextFree(objMemContext((StorageSftp *)storageDriver(storageTest)));
 
@@ -5750,7 +5750,7 @@ testRun(void)
         hrnLibSsh2ScriptSet((HrnLibSsh2 [])
         {
             HRNLIBSSH2_MACRO_STARTUP(),
-            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/test.txt.pgbackrest.tmp\",26,416,0]"},
+            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/test.txt.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SFTP_WRITE, .param = "[2]", .resultInt = LIBSSH2_ERROR_SOCKET_SEND},
             {.function = HRNLIBSSH2_SFTP_LAST_ERROR, .resultUInt = LIBSSH2_ERROR_NONE},
             HRNLIBSSH2_MACRO_SHUTDOWN()
@@ -5769,7 +5769,7 @@ testRun(void)
 
         TEST_ERROR(
             storagePutP(storageNewWriteP(storageTest, STRDEF(TEST_PATH "/test.txt")), failBuffer), FileWriteError,
-            "unable to write '" TEST_PATH "/test.txt.pgbackrest.tmp': libssh2 error [-7]");
+            "unable to write '" TEST_PATH "/test.txt.pgbunker.tmp': libssh2 error [-7]");
 
         memContextFree(objMemContext((StorageSftp *)storageDriver(storageTest)));
 
@@ -5781,7 +5781,7 @@ testRun(void)
         hrnLibSsh2ScriptSet((HrnLibSsh2 [])
         {
             HRNLIBSSH2_MACRO_STARTUP(),
-            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/test.txt.pgbackrest.tmp\",26,416,0]"},
+            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/test.txt.pgbunker.tmp\",26,416,0]"},
             // Not passing buffer param, see shim function, initial passed buffer contains random data
             {.function = HRNLIBSSH2_SFTP_WRITE, .param = "[2]", .resultInt = LIBSSH2_ERROR_EAGAIN},
             {.function = HRNLIBSSH2_SESSION_BLOCK_DIRECTIONS, .resultInt = SSH2_NO_BLOCK_READING_WRITING},
@@ -5796,7 +5796,7 @@ testRun(void)
             {.function = HRNLIBSSH2_SFTP_FSYNC, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_CLOSE_HANDLE, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_RENAME_EX,
-             .param = "[\"" TEST_PATH "/test.txt.pgbackrest.tmp\",\"" TEST_PATH "/test.txt\",7]",
+             .param = "[\"" TEST_PATH "/test.txt.pgbunker.tmp\",\"" TEST_PATH "/test.txt\",7]",
              .resultInt = LIBSSH2_ERROR_NONE},
             HRNLIBSSH2_MACRO_SHUTDOWN()
         });
@@ -6372,17 +6372,17 @@ testRun(void)
         {
             HRNLIBSSH2_MACRO_STARTUP(),
             {.function = HRNLIBSSH2_SFTP_OPEN_EX, .resultNull = true,
-             .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",26,416,0]"},
+             .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SFTP_LAST_ERROR, .resultUInt = LIBSSH2_FX_NO_SUCH_FILE},
             {.function = HRNLIBSSH2_SFTP_MKDIR_EX, .param = "[\"" TEST_PATH "/sub1\",488]"},
             {.function = HRNLIBSSH2_SFTP_OPEN_EX, .resultNull = true, .resultInt = LIBSSH2_ERROR_EAGAIN,
-             .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",26,416,0]"},
+             .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_EAGAIN},
             {.function = HRNLIBSSH2_SESSION_BLOCK_DIRECTIONS, .resultInt = SSH2_BLOCK_READING},
             {.function = HRNLIBSSH2_SFTP_OPEN_EX, .resultNull = true, .resultInt = LIBSSH2_ERROR_EAGAIN,
-             .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",26,416,0]"},
+             .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_EAGAIN},
             {.function = HRNLIBSSH2_SESSION_BLOCK_DIRECTIONS, .resultInt = SSH2_BLOCK_READING_WRITING},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_EAGAIN},
@@ -6412,13 +6412,13 @@ testRun(void)
         {
             HRNLIBSSH2_MACRO_STARTUP(),
             {.function = HRNLIBSSH2_SFTP_OPEN_EX, .resultNull = true,
-             .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",26,416,0]"},
+             .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SFTP_LAST_ERROR, .resultUInt = LIBSSH2_FX_NO_SUCH_FILE},
             {.function = HRNLIBSSH2_SFTP_MKDIR_EX, .param = "[\"" TEST_PATH "/sub1\",488]"},
             {.function = HRNLIBSSH2_SFTP_OPEN_EX, .resultNull = true, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL,
-             .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",26,416,0]"},
+             .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SFTP_PROTOCOL},
             {.function = HRNLIBSSH2_SFTP_LAST_ERROR, .resultUInt = LIBSSH2_FX_PERMISSION_DENIED},
@@ -6450,7 +6450,7 @@ testRun(void)
         {
             HRNLIBSSH2_MACRO_STARTUP(),
             {.function = HRNLIBSSH2_SFTP_OPEN_EX, .resultNull = true,
-             .param = "[\"" TEST_PATH "/sub1/testfile.pgbackrest.tmp\",26,416,0]"},
+             .param = "[\"" TEST_PATH "/sub1/testfile.pgbunker.tmp\",26,416,0]"},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SOCKET_SEND},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SOCKET_SEND},
             {.function = HRNLIBSSH2_SESSION_LAST_ERRNO, .resultInt = LIBSSH2_ERROR_SOCKET_SEND},
@@ -6879,7 +6879,7 @@ testRun(void)
              .resultInt = 0},
             {.function = HRNLIBSSH2_SFTP_INIT},
             // Open file
-            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/sub1/test.file.pgbackrest.tmp\",26,416,0]"},
+            {.function = HRNLIBSSH2_SFTP_OPEN_EX, .param = "[\"" TEST_PATH "/sub1/test.file.pgbunker.tmp\",26,416,0]"},
             // Write null and zero size buffers are noops
             // Write filled buffer to file
             {.function = HRNLIBSSH2_SFTP_WRITE, .param = "[9]", .resultInt = 9},
@@ -6887,7 +6887,7 @@ testRun(void)
             {.function = HRNLIBSSH2_SFTP_FSYNC, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_CLOSE_HANDLE, .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SFTP_RENAME_EX,
-             .param = "[\"" TEST_PATH "/sub1/test.file.pgbackrest.tmp\",\"" TEST_PATH "/sub1/test.file\",7]",
+             .param = "[\"" TEST_PATH "/sub1/test.file.pgbunker.tmp\",\"" TEST_PATH "/sub1/test.file\",7]",
              .resultInt = LIBSSH2_ERROR_NONE},
             // Move context
             // Open file
@@ -7324,10 +7324,10 @@ testRun(void)
             {.function = HRNLIBSSH2_SESSION_BLOCK_DIRECTIONS, .resultInt = SSH2_NO_BLOCK_READING_WRITING},
 
             {.function = HRNLIBSSH2_SFTP_SHUTDOWN, .resultInt = LIBSSH2_ERROR_NONE},
-            {.function = HRNLIBSSH2_SESSION_DISCONNECT_EX, .param = "[11,\"pgBackRest instance shutdown\",\"\"]",
+            {.function = HRNLIBSSH2_SESSION_DISCONNECT_EX, .param = "[11,\"pgBunker instance shutdown\",\"\"]",
              .resultInt = LIBSSH2_ERROR_EAGAIN},
             {.function = HRNLIBSSH2_SESSION_BLOCK_DIRECTIONS, .resultInt = SSH2_NO_BLOCK_READING_WRITING},
-            {.function = HRNLIBSSH2_SESSION_DISCONNECT_EX, .param = "[11,\"pgBackRest instance shutdown\",\"\"]",
+            {.function = HRNLIBSSH2_SESSION_DISCONNECT_EX, .param = "[11,\"pgBunker instance shutdown\",\"\"]",
              .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SESSION_FREE, .resultInt = LIBSSH2_ERROR_EAGAIN},
             {.function = HRNLIBSSH2_SESSION_BLOCK_DIRECTIONS, .resultInt = SSH2_NO_BLOCK_READING_WRITING},
@@ -7602,7 +7602,7 @@ testRun(void)
         {
             HRNLIBSSH2_MACRO_STARTUP(),
             {.function = HRNLIBSSH2_SFTP_SHUTDOWN, .resultInt = LIBSSH2_ERROR_NONE},
-            {.function = HRNLIBSSH2_SESSION_DISCONNECT_EX, .param = "[11,\"pgBackRest instance shutdown\",\"\"]",
+            {.function = HRNLIBSSH2_SESSION_DISCONNECT_EX, .param = "[11,\"pgBunker instance shutdown\",\"\"]",
              .resultInt = LIBSSH2_ERROR_SOCKET_DISCONNECT},
             {.function = NULL},
         });
@@ -7632,7 +7632,7 @@ testRun(void)
         {
             HRNLIBSSH2_MACRO_STARTUP(),
             {.function = HRNLIBSSH2_SFTP_SHUTDOWN, .resultInt = LIBSSH2_ERROR_NONE},
-            {.function = HRNLIBSSH2_SESSION_DISCONNECT_EX, .param = "[11,\"pgBackRest instance shutdown\",\"\"]",
+            {.function = HRNLIBSSH2_SESSION_DISCONNECT_EX, .param = "[11,\"pgBunker instance shutdown\",\"\"]",
              .resultInt = LIBSSH2_ERROR_EAGAIN},
             {.function = HRNLIBSSH2_SESSION_BLOCK_DIRECTIONS, .resultInt = SSH2_BLOCK_READING_WRITING},
             {.function = NULL},
@@ -7663,7 +7663,7 @@ testRun(void)
         {
             HRNLIBSSH2_MACRO_STARTUP(),
             {.function = HRNLIBSSH2_SFTP_SHUTDOWN, .resultInt = LIBSSH2_ERROR_NONE},
-            {.function = HRNLIBSSH2_SESSION_DISCONNECT_EX, .param = "[11,\"pgBackRest instance shutdown\",\"\"]",
+            {.function = HRNLIBSSH2_SESSION_DISCONNECT_EX, .param = "[11,\"pgBunker instance shutdown\",\"\"]",
              .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SESSION_FREE, .resultInt = LIBSSH2_ERROR_SOCKET_DISCONNECT},
             {.function = NULL},
@@ -7694,7 +7694,7 @@ testRun(void)
         {
             HRNLIBSSH2_MACRO_STARTUP(),
             {.function = HRNLIBSSH2_SFTP_SHUTDOWN, .resultInt = LIBSSH2_ERROR_NONE},
-            {.function = HRNLIBSSH2_SESSION_DISCONNECT_EX, .param = "[11,\"pgBackRest instance shutdown\",\"\"]",
+            {.function = HRNLIBSSH2_SESSION_DISCONNECT_EX, .param = "[11,\"pgBunker instance shutdown\",\"\"]",
              .resultInt = LIBSSH2_ERROR_NONE},
             {.function = HRNLIBSSH2_SESSION_FREE, .resultInt = LIBSSH2_ERROR_EAGAIN},
             {.function = HRNLIBSSH2_SESSION_BLOCK_DIRECTIONS, .resultInt = SSH2_BLOCK_READING_WRITING},

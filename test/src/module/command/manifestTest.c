@@ -34,7 +34,7 @@ testRun(void)
 
     // Common config
     HRN_STORAGE_PUT_Z(
-        storageTest, "pgbackrest.conf",
+        storageTest, "pgbunker.conf",
         "[global]\n"
         "repo1-path=" TEST_PATH "/repo1\n"
         "repo1-retention-full=999\n"
@@ -56,7 +56,7 @@ testRun(void)
 
     StringList *const argListCommon = strLstNew();
     hrnCfgArgRawZ(argListCommon, cfgOptStanza, "test");
-    hrnCfgArgRawZ(argListCommon, cfgOptConfig, TEST_PATH "/pgbackrest.conf");
+    hrnCfgArgRawZ(argListCommon, cfgOptConfig, TEST_PATH "/pgbunker.conf");
 
     // Disable most logging
     harnessLogLevelSet(logLevelWarn);

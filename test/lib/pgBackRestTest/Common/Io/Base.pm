@@ -1,7 +1,7 @@
 ####################################################################################################################################
 # Base IO Module
 ####################################################################################################################################
-package pgBackRestTest::Common::Io::Base;
+package pgBunkerTest::Common::Io::Base;
 
 use strict;
 use warnings FATAL => qw(all);
@@ -12,7 +12,7 @@ use Exporter qw(import);
     our @EXPORT = qw();
 use Scalar::Util qw(blessed);
 
-use pgBackRestDoc::Common::Log;
+use pgBunkerDoc::Common::Log;
 
 ####################################################################################################################################
 # Package name constant

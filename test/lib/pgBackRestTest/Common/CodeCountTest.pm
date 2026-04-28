@@ -1,7 +1,7 @@
 ####################################################################################################################################
 # Classify files and generate code totals
 ####################################################################################################################################
-package pgBackRestTest::Common::CodeCountTest;
+package pgBunkerTest::Common::CodeCountTest;
 
 ####################################################################################################################################
 # Perl includes
@@ -14,9 +14,9 @@ use English '-no_match_vars';
 use Exporter qw(import);
     our @EXPORT = qw();
 
-use pgBackRestDoc::Common::Log;
+use pgBunkerDoc::Common::Log;
 
-use pgBackRestTest::Common::ExecuteTest;
+use pgBunkerTest::Common::ExecuteTest;
 
 ####################################################################################################################################
 # Scan all files and assign types
@@ -83,7 +83,7 @@ sub codeCountScan
         {
             $strClass = 'build';
         }
-        elsif ($strFile =~ '^test/lib/pgBackRestTest/Module/' || $strFile =~ '^test/src/module/')
+        elsif ($strFile =~ '^test/lib/pgBunkerTest/Module/' || $strFile =~ '^test/src/module/')
         {
             $strClass = 'test/module';
         }

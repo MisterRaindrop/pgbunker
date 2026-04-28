@@ -1,7 +1,7 @@
 ####################################################################################################################################
 # VmTest.pm - Vm constants and data
 ####################################################################################################################################
-package pgBackRestTest::Common::VmTest;
+package pgBunkerTest::Common::VmTest;
 
 ####################################################################################################################################
 # Perl includes
@@ -13,11 +13,11 @@ use Carp qw(confess);
 use Exporter qw(import);
     our @EXPORT = qw();
 
-use pgBackRestDoc::Common::Exception;
-use pgBackRestDoc::Common::Log;
-use pgBackRestDoc::Common::String;
+use pgBunkerDoc::Common::Exception;
+use pgBunkerDoc::Common::Log;
+use pgBunkerDoc::Common::String;
 
-use pgBackRestTest::Common::DbVersion;
+use pgBunkerTest::Common::DbVersion;
 
 ####################################################################################################################################
 # VM hash keywords

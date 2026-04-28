@@ -400,7 +400,7 @@ testRun(void)
         // Create tmp file to make it look like a prior push failed partway through to ensure that retries work
         HRN_STORAGE_PUT_Z(
             storageTest,
-            zNewFmt("repo/archive/test/11-1/0000000100000001/000000010000000100000002-%s.gz.pgbackrest.tmp", walBuffer2Sha1),
+            zNewFmt("repo/archive/test/11-1/0000000100000001/000000010000000100000002-%s.gz.pgbunker.tmp", walBuffer2Sha1),
             "PARTIAL", .comment = "write WAL tmp file");
 
         TEST_RESULT_VOID(cmdArchivePush(), "push the WAL segment");
@@ -413,7 +413,7 @@ testRun(void)
         TEST_RESULT_BOOL(
             storageExistsP(
                 storageTest,
-                strNewFmt("repo/archive/test/11-1/0000000100000001/000000010000000100000002-%s.gz.pgbackrest.tmp", walBuffer2Sha1)),
+                strNewFmt("repo/archive/test/11-1/0000000100000001/000000010000000100000002-%s.gz.pgbunker.tmp", walBuffer2Sha1)),
             false, "check WAL tmp file is gone");
 
         // -------------------------------------------------------------------------------------------------------------------------

@@ -7,7 +7,7 @@ Test Configuration Parse
 
 #include "common/harnessConfig.h"
 
-#define TEST_BACKREST_EXE                                           "pgbackrest"
+#define TEST_BACKREST_EXE                                           "pgbunker"
 
 #define TEST_COMMAND_ARCHIVE_GET                                    "archive-get"
 #define TEST_COMMAND_BACKUP                                         "backup"
@@ -108,8 +108,8 @@ testRun(void)
         // -------------------------------------------------------------------------------------------------------------------------
         TEST_TITLE("check old config file constants");
 
-        TEST_RESULT_Z(PGBACKREST_CONFIG_ORIG_PATH_FILE, "/etc/pgbackrest.conf", "check old config path");
-        TEST_RESULT_STR_Z(PGBACKREST_CONFIG_ORIG_PATH_FILE_STR, "/etc/pgbackrest.conf", "check old config path str");
+        TEST_RESULT_Z(PGBACKREST_CONFIG_ORIG_PATH_FILE, "/etc/pgbunker.conf", "check old config path");
+        TEST_RESULT_STR_Z(PGBACKREST_CONFIG_ORIG_PATH_FILE_STR, "/etc/pgbunker.conf", "check old config path str");
 
         // -------------------------------------------------------------------------------------------------------------------------
         TEST_TITLE("confirm same behavior with multiple config include files");
@@ -471,7 +471,7 @@ testRun(void)
             .valueList = value,
         };
 
-        // Override default paths for config and config-include-path - but no pgbackrest.conf file in override path only in old
+        // Override default paths for config and config-include-path - but no pgbunker.conf file in override path only in old
         // default so ignored
         TEST_RESULT_STR_Z(
             cfgFileLoad(storageTest, parseOptionList, backupCmdDefConfigValue, backupCmdDefConfigInclPathValue, oldConfigDefault),
@@ -518,9 +518,9 @@ testRun(void)
             "spool-path=/path/to/spool\n",
             "config-path changed config-include-path default but directory does not exist - only config read");
 
-        // Copy the configFile to pgbackrest.conf (default is /etc/pgbackrest/pgbackrest.conf and new value is testPath so copy the
-        // config file (that was not read in the previous test) to pgbackrest.conf so it will be read by the override
-        HRN_SYSTEM_FMT("cp %s " TEST_PATH "/pgbackrest.conf", strZ(configFile));
+        // Copy the configFile to pgbunker.conf (default is /etc/pgbunker/pgbunker.conf and new value is testPath so copy the
+        // config file (that was not read in the previous test) to pgbunker.conf so it will be read by the override
+        HRN_SYSTEM_FMT("cp %s " TEST_PATH "/pgbunker.conf", strZ(configFile));
 
         parseOptionList[cfgOptConfig].indexList[0].found = false;
         parseOptionList[cfgOptConfig].indexList[0].source = cfgSourceDefault;
@@ -2102,7 +2102,7 @@ testRun(void)
         TEST_RESULT_VOID(
             cfgParseP(storageTest, strLstSize(argList), strLstPtr(argList), .noResetLogLevel = true), "load local config");
 
-        TEST_RESULT_STR_Z(cfgBin(), "pgbackrest", "--cmd not provided; cfgBin() returns " TEST_BACKREST_EXE);
+        TEST_RESULT_STR_Z(cfgBin(), "pgbunker", "--cmd not provided; cfgBin() returns " TEST_BACKREST_EXE);
 
         argList = strLstNew();
         hrnCfgArgRawZ(argList, cfgOptStanza, "db");
@@ -2116,12 +2116,12 @@ testRun(void)
         strLstAddZ(argList, TEST_COMMAND_BACKUP);
         hrnCfgArgRawZ(argList, cfgOptStanza, "db");
         hrnCfgArgKeyRawZ(argList, cfgOptPgPath, 1, "/path/to/1");
-        hrnCfgArgRawZ(argList, cfgOptCmd, "pgbackrest_wrapper.sh");
+        hrnCfgArgRawZ(argList, cfgOptCmd, "pgbunker_wrapper.sh");
         TEST_RESULT_VOID(
             cfgParseP(storageTest, strLstSize(argList), strLstPtr(argList), .noResetLogLevel = true), "load local config");
 
         TEST_RESULT_STR_Z(
-            cfgOptionStr(cfgOptCmd), "pgbackrest_wrapper.sh", "--cmd provided; cmd is returned as pgbackrest_wrapper.sh");
+            cfgOptionStr(cfgOptCmd), "pgbunker_wrapper.sh", "--cmd provided; cmd is returned as pgbunker_wrapper.sh");
 
         // -------------------------------------------------------------------------------------------------------------------------
         TEST_TITLE("default job retry and valid duplicate options");
@@ -2356,7 +2356,7 @@ testRun(void)
         TEST_RESULT_UINT(cfgOptionGroupIdxToKey(cfgOptGrpRepo, 0), 5, "check repo5 key");
         TEST_RESULT_Z(cfgOptionGroupName(cfgOptGrpRepo, 0), "repo5", "check repo5 name");
         TEST_RESULT_STR_Z(cfgOptionIdxStr(cfgOptRepoHost, 0), "repo5", "check repo5-host");
-        TEST_RESULT_STR_Z(cfgOptionIdxStr(cfgOptRepoPath, 0), "/var/lib/pgbackrest", "check repo5-path");
+        TEST_RESULT_STR_Z(cfgOptionIdxStr(cfgOptRepoPath, 0), "/var/lib/pgbunker", "check repo5-path");
         TEST_RESULT_UINT(cfgOptionGroupIdxToKey(cfgOptGrpRepo, 1), 112, "check repo112 key");
         TEST_RESULT_Z(cfgOptionGroupName(cfgOptGrpRepo, 1), "repo112", "check repo112 name");
         TEST_RESULT_STR_Z(cfgOptionIdxStr(cfgOptRepoPath, 1), "/repo112", "check repo112-path");
@@ -2377,7 +2377,7 @@ testRun(void)
         TEST_RESULT_UINT(cfgOptionGroupIdxTotal(cfgOptGrpRepo), 1, "check repo group total");
         TEST_RESULT_UINT(cfgOptionGroupIdxToKey(cfgOptGrpRepo, 0), 1, "check repo1 key");
         TEST_RESULT_Z(cfgOptionGroupName(cfgOptGrpRepo, 0), "repo1", "check repo1 name");
-        TEST_RESULT_STR_Z(cfgOptionIdxStr(cfgOptRepoPath, 0), "/var/lib/pgbackrest", "check repo1-path");
+        TEST_RESULT_STR_Z(cfgOptionIdxStr(cfgOptRepoPath, 0), "/var/lib/pgbunker", "check repo1-path");
 
         // -------------------------------------------------------------------------------------------------------------------------
         TEST_TITLE("conditional option value -- value not found and no next value");
@@ -2411,9 +2411,9 @@ testRun(void)
 
             TEST_ERROR(
                 cfgParseOptionValueCondition(true, packRead, true, cfgOptCompressType, 0, STRDEF("lz4")), OptionInvalidValueError,
-                "pgBackRest not built with 'compress-type=lz4' support\n"
-                "HINT: if pgBackRest was installed from a package, does the package support this feature?\n"
-                "HINT: if pgBackRest was built from source, were the required development packages installed?");
+                "pgBunker not built with 'compress-type=lz4' support\n"
+                "HINT: if pgBunker was installed from a package, does the package support this feature?\n"
+                "HINT: if pgBunker was built from source, were the required development packages installed?");
         }
 
         // -------------------------------------------------------------------------------------------------------------------------
@@ -2451,7 +2451,7 @@ testRun(void)
             // Error on unreadable config
             TEST_ERROR(
                 cfgParseP(storageTest, strLstSize(argList), strLstPtr(argList), .noResetLogLevel = true),
-                FileOpenError, "unable to open file '/etc/pgbackrest.conf' for read: [13] Permission denied");
+                FileOpenError, "unable to open file '/etc/pgbunker.conf' for read: [13] Permission denied");
 
             // No error on unreadable config
             argList = strLstNew();

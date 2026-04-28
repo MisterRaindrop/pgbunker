@@ -1,7 +1,7 @@
 ####################################################################################################################################
 # JobTest.pm - Run a test job and monitor progress
 ####################################################################################################################################
-package pgBackRestTest::Common::JobTest;
+package pgBunkerTest::Common::JobTest;
 
 ####################################################################################################################################
 # Perl includes
@@ -18,18 +18,18 @@ use File::Basename qw(dirname basename);
 use POSIX qw(ceil);
 use Time::HiRes qw(gettimeofday usleep);
 
-use pgBackRestDoc::Common::Exception;
-use pgBackRestDoc::Common::Log;
-use pgBackRestDoc::Common::String;
-use pgBackRestDoc::ProjectInfo;
+use pgBunkerDoc::Common::Exception;
+use pgBunkerDoc::Common::Log;
+use pgBunkerDoc::Common::String;
+use pgBunkerDoc::ProjectInfo;
 
-use pgBackRestTest::Common::BuildTest;
-use pgBackRestTest::Common::ContainerTest;
-use pgBackRestTest::Common::DbVersion;
-use pgBackRestTest::Common::DefineTest;
-use pgBackRestTest::Common::ExecuteTest;
-use pgBackRestTest::Common::ListTest;
-use pgBackRestTest::Common::VmTest;
+use pgBunkerTest::Common::BuildTest;
+use pgBunkerTest::Common::ContainerTest;
+use pgBunkerTest::Common::DbVersion;
+use pgBunkerTest::Common::DefineTest;
+use pgBunkerTest::Common::ExecuteTest;
+use pgBunkerTest::Common::ListTest;
+use pgBunkerTest::Common::VmTest;
 
 ####################################################################################################################################
 # new
@@ -256,7 +256,7 @@ sub run
 
             my $strCommand =
                 ($strVm ne VM_NONE ? "docker exec -i -u ${\TEST_USER} ${strImage} bash -l -c '\\\n" : '') .
-                $self->{strTestPath} . "/build/${strVm}/test/src/test-pgbackrest" .
+                $self->{strTestPath} . "/build/${strVm}/test/src/test-pgbunker" .
                     ' --repo-path=' . $self->{strTestPath} . '/repo' . ' --test-path=' . $self->{strTestPath} .
                     " --log-level=$self->{strLogLevel}" . ' --vm=' . $self->{oTest}->{&TEST_VM} .
                     (defined($self->{strVmArch}) ? ' --vm-arch=' . $self->{strVmArch} : '') .
@@ -277,7 +277,7 @@ sub run
                     "$self->{strUnitPath}/build/test-unit 2>&1 1>&3 | tee /dev/stderr" .
                 ($strVm ne VM_NONE ? "'" : '');
 
-            my $oExec = new pgBackRestTest::Common::ExecuteTest(
+            my $oExec = new pgBunkerTest::Common::ExecuteTest(
                 $strCommand, {bSuppressError => true, bShowOutputAsync => $self->{bShowOutputAsync}});
 
             $oExec->begin();

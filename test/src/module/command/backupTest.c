@@ -1725,7 +1725,7 @@ testRun(void)
             " <REPO:BACKUP>/20191003-105320F/backup.manifest.copy");
 
         // -------------------------------------------------------------------------------------------------------------------------
-        TEST_TITLE("cannot resume when pgBackRest version has changed");
+        TEST_TITLE("cannot resume when pgBunker version has changed");
 
         Manifest *manifestResume = NULL;
 
@@ -1754,7 +1754,7 @@ testRun(void)
 
         TEST_RESULT_LOG(
             "P00   WARN: backup '20191003-105320F' cannot be resumed:"
-            " new pgBackRest version 'BOGUS' does not match resumable pgBackRest version '" PROJECT_VERSION "'");
+            " new pgBunker version 'BOGUS' does not match resumable pgBunker version '" PROJECT_VERSION "'");
 
         TEST_STORAGE_LIST_EMPTY(storageRepo(), STORAGE_REPO_BACKUP, .comment = "check backup path removed");
 

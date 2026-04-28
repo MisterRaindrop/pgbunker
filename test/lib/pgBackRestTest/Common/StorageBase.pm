@@ -1,7 +1,7 @@
 ####################################################################################################################################
 # Base Storage Module
 ####################################################################################################################################
-package pgBackRestTest::Common::StorageBase;
+package pgBunkerTest::Common::StorageBase;
 
 use strict;
 use warnings FATAL => qw(all);
@@ -10,9 +10,9 @@ use English '-no_match_vars';
 
 use Exporter qw(import);
     our @EXPORT = qw();
-use pgBackRestDoc::Common::Log;
+use pgBunkerDoc::Common::Log;
 
-use pgBackRestTest::Common::Io::Base;
+use pgBunkerTest::Common::Io::Base;
 
 ####################################################################################################################################
 # Storage constants

@@ -36,7 +36,7 @@ testRun(void)
                 StringList *argList = strLstNew();
                 hrnCfgArgRawZ(argList, cfgOptPgPath, "/BOGUS");
                 hrnCfgArgRaw(argList, cfgOptRepoHost, hrnServerHost());
-                hrnCfgArgRawZ(argList, cfgOptRepoHostConfig, TEST_PATH "/pgbackrest.conf");
+                hrnCfgArgRawZ(argList, cfgOptRepoHostConfig, TEST_PATH "/pgbunker.conf");
                 hrnCfgArgRawZ(argList, cfgOptRepoHostType, "tls");
 #if !TEST_IN_CONTAINER
                 hrnCfgArgRawZ(argList, cfgOptRepoHostCaFile, HRN_SERVER_CA);
@@ -126,17 +126,17 @@ testRun(void)
                         // Write a config file to demonstrate that options are loaded and reloaded
                         HRN_STORAGE_PUT_Z(
                             storageTest,
-                            "pgbackrest.conf",
+                            "pgbunker.conf",
                             "[global]\n"
                             CFGOPT_TLS_SERVER_ADDRESS "=127.0.0.1\n"
                             CFGOPT_TLS_SERVER_CA_FILE "=" HRN_SERVER_CA "\n"
                             CFGOPT_TLS_SERVER_CERT_FILE "=" HRN_SERVER_CERT "\n"
                             CFGOPT_TLS_SERVER_KEY_FILE "=" HRN_SERVER_KEY "\n"
-                            CFGOPT_TLS_SERVER_AUTH "=pgbackrest-client=bogus1,db,bogus2\n"
+                            CFGOPT_TLS_SERVER_AUTH "=pgbunker-client=bogus1,db,bogus2\n"
                             "repo1-path=" TEST_PATH "/repo\n");
 
                         StringList *argList = strLstNew();
-                        hrnCfgArgRawZ(argList, cfgOptConfig, TEST_PATH "/pgbackrest.conf");
+                        hrnCfgArgRawZ(argList, cfgOptConfig, TEST_PATH "/pgbunker.conf");
                         hrnCfgArgRawFmt(argList, cfgOptTlsServerPort, "%u", testPort);
                         hrnCfgArgRawZ(argList, cfgOptLogLevelStderr, "off");
                         HRN_CFG_LOAD(cfgCmdServer, argList);

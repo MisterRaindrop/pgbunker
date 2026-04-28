@@ -1,7 +1,7 @@
 ####################################################################################################################################
 # ExecuteTest.pm - Module to execute external commands
 ####################################################################################################################################
-package pgBackRestTest::Common::ExecuteTest;
+package pgBunkerTest::Common::ExecuteTest;
 
 ####################################################################################################################################
 # Perl includes
@@ -17,11 +17,11 @@ use IPC::Open3;
 use POSIX ':sys_wait_h';
 use Symbol 'gensym';
 
-use pgBackRestDoc::Common::Log;
+use pgBunkerDoc::Common::Log;
 
-use pgBackRestTest::Common::Io::Handle;
-use pgBackRestTest::Common::Io::Buffered;
-use pgBackRestTest::Common::Wait;
+use pgBunkerTest::Common::Io::Handle;
+use pgBunkerTest::Common::Io::Buffered;
+use pgBunkerTest::Common::Wait;
 
 ####################################################################################################################################
 # new
@@ -102,11 +102,11 @@ sub begin
     $self->{pId} = open3(undef, $self->{hOut}, $self->{hError}, $self->{strCommand});
 
     # Create buffered read object
-    $self->{oIo} = new pgBackRestTest::Common::Io::Buffered(new pgBackRestTest::Common::Io::Handle('exec test', $self->{hOut}), 0, 65536);
+    $self->{oIo} = new pgBunkerTest::Common::Io::Buffered(new pgBunkerTest::Common::Io::Handle('exec test', $self->{hOut}), 0, 65536);
 
     # Create buffered error object
-    $self->{oIoError} = new pgBackRestTest::Common::Io::Buffered(
-        new pgBackRestTest::Common::Io::Handle('exec test', $self->{hError}), 0, 65536);
+    $self->{oIoError} = new pgBunkerTest::Common::Io::Buffered(
+        new pgBunkerTest::Common::Io::Handle('exec test', $self->{hError}), 0, 65536);
 
     # Record start time and set process timeout
     $self->{iProcessTimeout} = 300;
@@ -331,7 +331,7 @@ sub executeTest
     my $strCommand = shift;
     my $oParam = shift;
 
-    my $oExec = new pgBackRestTest::Common::ExecuteTest($strCommand, $oParam);
+    my $oExec = new pgBunkerTest::Common::ExecuteTest($strCommand, $oParam);
     $oExec->begin();
     $oExec->end();
 

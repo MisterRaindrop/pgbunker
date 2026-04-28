@@ -35,7 +35,7 @@ testRun(void)
     {
         // Common config
         HRN_STORAGE_PUT_Z(
-            storageTest, "pgbackrest.conf",
+            storageTest, "pgbunker.conf",
             "[global]\n"
             "repo1-path=" TEST_PATH "/repo1\n"
             "repo1-cipher-type=aes-256-cbc\n"
@@ -57,7 +57,7 @@ testRun(void)
             "pg1-path=" TEST_PATH "/test1-pg1\n");
 
         StringList *const argListCommon = strLstNew();
-        hrnCfgArgRawZ(argListCommon, cfgOptConfig, TEST_PATH "/pgbackrest.conf");
+        hrnCfgArgRawZ(argListCommon, cfgOptConfig, TEST_PATH "/pgbunker.conf");
 
         // -------------------------------------------------------------------------------------------------------------------------
         TEST_TITLE("no env, no config");
@@ -434,12 +434,12 @@ testRun(void)
         TEST_TITLE("multi-repo - primary database only, WAL not found");
 
         HRN_STORAGE_PUT_Z(
-            storageTest, "pgbackrest.conf",
+            storageTest, "pgbunker.conf",
             "[test1]\n"
             "pg1-path=" TEST_PATH "/pg\n");
 
         argList = strLstNew();
-        hrnCfgArgRawZ(argList, cfgOptConfig, TEST_PATH "/pgbackrest.conf");
+        hrnCfgArgRawZ(argList, cfgOptConfig, TEST_PATH "/pgbunker.conf");
         hrnCfgArgRawZ(argList, cfgOptRepoPath, TEST_PATH "/repo");
         hrnCfgArgKeyRawZ(argList, cfgOptRepoPath, 2, TEST_PATH "/repo2");
         hrnCfgArgRawZ(argList, cfgOptArchiveTimeout, "500ms");
@@ -491,7 +491,7 @@ testRun(void)
         TEST_TITLE("no stanzas in config file");
 
         HRN_STORAGE_PUT_Z(
-            storageTest, "pgbackrest.conf",
+            storageTest, "pgbunker.conf",
             "[test1]\n");
         HRN_CFG_LOAD(cfgCmdCheck, argList);
 
@@ -565,7 +565,7 @@ testRun(void)
         // -------------------------------------------------------------------------------------------------------------------------
         TEST_TITLE("checkArchiveCommand() valid");
 
-        TEST_RESULT_BOOL(checkArchiveCommand(STRDEF("pgbackrest --stanza=demo archive-push %p")), true, "archive_command valid");
+        TEST_RESULT_BOOL(checkArchiveCommand(STRDEF("pgbunker --stanza=demo archive-push %p")), true, "archive_command valid");
 
         // -------------------------------------------------------------------------------------------------------------------------
         TEST_TITLE("checkDbConfig() valid");

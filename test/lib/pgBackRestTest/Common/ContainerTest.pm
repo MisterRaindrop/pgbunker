@@ -1,7 +1,7 @@
 ####################################################################################################################################
 # ContainerTest.pm - Build containers for testing and documentation
 ####################################################################################################################################
-package pgBackRestTest::Common::ContainerTest;
+package pgBunkerTest::Common::ContainerTest;
 
 ####################################################################################################################################
 # Perl includes
@@ -18,12 +18,12 @@ use Exporter qw(import);
 use File::Basename qw(dirname);
 use Getopt::Long qw(GetOptions);
 
-use pgBackRestDoc::Common::Log;
-use pgBackRestDoc::Common::String;
-use pgBackRestDoc::ProjectInfo;
+use pgBunkerDoc::Common::Log;
+use pgBunkerDoc::Common::String;
+use pgBunkerDoc::ProjectInfo;
 
-use pgBackRestTest::Common::ExecuteTest;
-use pgBackRestTest::Common::VmTest;
+use pgBunkerTest::Common::ExecuteTest;
+use pgBunkerTest::Common::VmTest;
 
 ####################################################################################################################################
 # User/group definitions
@@ -216,7 +216,7 @@ sub sshSetup
         "    echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDlXJKkRqflGftBDlc/XdiRfFOD5en0355zIOEP3Y5CTRVk4WcQqVdRoxcfRZWNFGCOBsXvwk" .
              "cVsRCNQeKZvOv16/Ui4NohLjYTWdSQFoeCCcc0BbZqq1zNQNKcsZxep3Rd4O3CmOPUjTFY54mWL/GNT55LCPOo2BfplfY/S5Nd+W7bni5KM4XcgBGj0" .
              "WIMQpB2SyjE04CEJNiAMDKeaRx8n17zsWOJMaZ+dk7cfqBTaSJ1IVevB0e103dCW/pGAKugsYBlmma2oGitPBKFZFJxYACD86pbAumF81tcggdk7gQn" .
-             "hLYkuCyAkdvbRInZcQjYiWf2yP6gJaAsnab5Eu9b user\@pgbackrest-test' > ${strUserPath}/.ssh/authorized_keys && \\\n" .
+             "hLYkuCyAkdvbRInZcQjYiWf2yP6gJaAsnab5Eu9b user\@pgbunker-test' > ${strUserPath}/.ssh/authorized_keys && \\\n" .
         "    echo 'Host *' > ${strUserPath}/.ssh/config && \\\n" .
         "    echo '    StrictHostKeyChecking no' >> ${strUserPath}/.ssh/config && \\\n";
 
@@ -275,7 +275,7 @@ sub caSetup
         confess &log(ERROR, "unable to install CA for ${strOsBase}");
     }
 
-    $strCertFile .= '/pgbackrest-test-ca.crt';
+    $strCertFile .= '/pgbunker-test-ca.crt';
 
     # Write CA
     my $strScript =
@@ -592,11 +592,11 @@ sub containerBuild
             }
 
             #-----------------------------------------------------------------------------------------------------------------------
-            $strScript .= caSetup($strOS, $oStorageDocker, "test/certificate/pgbackrest-test-ca.crt");
+            $strScript .= caSetup($strOS, $oStorageDocker, "test/certificate/pgbunker-test-ca.crt");
 
             #-----------------------------------------------------------------------------------------------------------------------
             $strScript .= sectionHeader() .
-                "# Create banner to make sure pgBackRest ignores it\n" .
+                "# Create banner to make sure pgBunker ignores it\n" .
                 "    echo '***********************************************' >  /etc/issue.net && \\\n" .
                 "    echo 'Sample banner to make sure banners are skipped.' >> /etc/issue.net && \\\n" .
                 "    echo ''                                                >> /etc/issue.net && \\\n" .

@@ -1,8 +1,8 @@
 ####################################################################################################################################
 # Posix File Write
 ####################################################################################################################################
-package pgBackRestTest::Common::StoragePosixWrite;
-use parent 'pgBackRestTest::Common::Io::Handle';
+package pgBunkerTest::Common::StoragePosixWrite;
+use parent 'pgBunkerTest::Common::Io::Handle';
 
 use strict;
 use warnings FATAL => qw(all);
@@ -12,11 +12,11 @@ use English '-no_match_vars';
 use Fcntl qw(O_RDONLY O_WRONLY O_CREAT O_TRUNC);
 use File::Basename qw(dirname);
 
-use pgBackRestDoc::Common::Exception;
-use pgBackRestDoc::Common::Log;
+use pgBunkerDoc::Common::Exception;
+use pgBunkerDoc::Common::Log;
 
-use pgBackRestTest::Common::Io::Handle;
-use pgBackRestTest::Common::StorageBase;
+use pgBunkerTest::Common::Io::Handle;
+use pgBunkerTest::Common::StorageBase;
 
 ####################################################################################################################################
 # CONSTRUCTOR

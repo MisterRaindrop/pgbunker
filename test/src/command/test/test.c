@@ -106,7 +106,7 @@ cmdTest(
 
         CHECK_FMT(ParamInvalidError, module != NULL, "'%s' is not a valid test", strZ(moduleName));
 
-        // Vm used for integration and the pgbackrest binary
+        // Vm used for integration and the pgbunker binary
         const String *const vmInt = vm;
 
         // If integration then the vm should be none. Integration tests do not run in containers but instead spawn their own.

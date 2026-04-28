@@ -1,7 +1,7 @@
 ####################################################################################################################################
 # COMMON WAIT MODULE
 ####################################################################################################################################
-package pgBackRestTest::Common::Wait;
+package pgBunkerTest::Common::Wait;
 
 use strict;
 use warnings FATAL => qw(all);
@@ -11,7 +11,7 @@ use Exporter qw(import);
     our @EXPORT = qw();
 use Time::HiRes qw(gettimeofday usleep);
 
-use pgBackRestDoc::Common::Log;
+use pgBunkerDoc::Common::Log;
 
 ####################################################################################################################################
 # waitHiRes

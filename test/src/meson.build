@@ -51,7 +51,7 @@ src_test = [
 ]
 
 executable(
-    'test-pgbackrest',
+    'test-pgbunker',
     src_common,
     src_test,
     test_help_auto_c_inc,

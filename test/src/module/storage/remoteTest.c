@@ -488,7 +488,7 @@ testRun(void)
         TEST_RESULT_VOID(ioWriteClose(storageWriteIo(write3)), "close file 3");
 
         TEST_RESULT_UINT(
-            storageInfoP(storageTest, STRDEF("pg256/test2.txt.pgbackrest.tmp")).size, 16384, "file exists and is partial");
+            storageInfoP(storageTest, STRDEF("pg256/test2.txt.pgbunker.tmp")).size, 16384, "file exists and is partial");
         TEST_RESULT_BOOL(bufEq(storageGetP(storageNewReadP(storagePg, STRDEF("test3.txt"))), contentBuf), true, "check file 3");
 
         // -------------------------------------------------------------------------------------------------------------------------
@@ -591,7 +591,7 @@ testRun(void)
         // -------------------------------------------------------------------------------------------------------------------------
         TEST_TITLE("remote remove path");
 
-        // Write the file to the repo via the remote so owner is pgbackrest
+        // Write the file to the repo via the remote so owner is pgbunker
         TEST_RESULT_VOID(storagePutP(storageNewWriteP(storageRepoWrite, file), BUFSTRDEF("TEST")), "new file");
 
         // Check the repo via the local test storage to ensure the remote wrote it, then remove via the remote and confirm removed

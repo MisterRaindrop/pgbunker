@@ -1010,7 +1010,7 @@ testRun(void)
         TEST_ASSIGN(file, storageNewWriteP(storageTest, fileName, .user = STRDEF("root")), "new write file (defaults)");
         TEST_ERROR(
             ioWriteOpen(storageWriteIo(file)), FileOwnerError,
-            "unable to set ownership for '" TEST_PATH "/sub1/testfile-abort.pgbackrest.tmp' to root[0]:[none] from " TEST_USER "["
+            "unable to set ownership for '" TEST_PATH "/sub1/testfile-abort.pgbunker.tmp' to root[0]:[none] from " TEST_USER "["
             TEST_USER_ID_Z "]:" TEST_GROUP "[" TEST_GROUP_ID_Z "]: [1] Operation not permitted");
 
         TEST_ASSIGN(
@@ -1032,7 +1032,7 @@ testRun(void)
             "new write file (defaults)");
         TEST_ERROR(
             ioWriteOpen(storageWriteIo(file)), FileOwnerError,
-            "unable to set ownership for '" TEST_PATH "/sub1/testfile-abort.pgbackrest.tmp' to " TEST_USER "[" TEST_USER_ID_Z
+            "unable to set ownership for '" TEST_PATH "/sub1/testfile-abort.pgbunker.tmp' to " TEST_USER "[" TEST_USER_ID_Z
             "]:root[0] from " TEST_USER "[" TEST_USER_ID_Z "]:" TEST_GROUP "[" TEST_GROUP_ID_Z "]: [1] Operation not permitted");
 
         fileName = STRDEF(TEST_PATH "/sub2/testfile");
@@ -1357,7 +1357,7 @@ testRun(void)
         // -------------------------------------------------------------------------------------------------------------------------
         TEST_TITLE("bad file descriptor");
 
-        String *fileTmp = strNewFmt("%s.pgbackrest.tmp", strZ(fileName));
+        String *fileTmp = strNewFmt("%s.pgbunker.tmp", strZ(fileName));
         ioBufferSizeSet(10);
         const Buffer *buffer = BUFSTRDEF("TESTFILE\n");
 
@@ -1371,7 +1371,7 @@ testRun(void)
 
         TEST_ERROR_FMT(
             storageWritePosix(ioWriteDriver(storageWriteIo(file)), buffer), FileWriteError,
-            "unable to write '%s.pgbackrest.tmp': [9] Bad file descriptor", strZ(fileName));
+            "unable to write '%s.pgbunker.tmp': [9] Bad file descriptor", strZ(fileName));
         TEST_ERROR_FMT(
             storageWritePosixClose(ioWriteDriver(storageWriteIo(file))), FileSyncError,
             STORAGE_ERROR_WRITE_SYNC ": [9] Bad file descriptor", strZ(fileTmp));

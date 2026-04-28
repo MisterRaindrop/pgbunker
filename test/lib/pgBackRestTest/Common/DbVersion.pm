@@ -1,7 +1,7 @@
 ####################################################################################################################################
 # DB VERSION MODULE
 ####################################################################################################################################
-package pgBackRestTest::Common::DbVersion;
+package pgBunkerTest::Common::DbVersion;
 
 use strict;
 use warnings FATAL => qw(all);
@@ -10,7 +10,7 @@ use Carp qw(confess);
 use Exporter qw(import);
     our @EXPORT = qw();
 
-use pgBackRestDoc::Common::Log;
+use pgBunkerDoc::Common::Log;
 
 ####################################################################################################################################
 # PostgreSQL version numbers

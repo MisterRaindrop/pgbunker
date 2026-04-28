@@ -384,7 +384,7 @@ testRun(void)
     // *****************************************************************************************************************************
     if (testBegin("protocolRemoteParam() and protocolRemoteParamSsh()"))
     {
-        storagePutP(storageNewWriteP(storageTest, STRDEF("pgbackrest.conf")), bufNew(0));
+        storagePutP(storageNewWriteP(storageTest, STRDEF("pgbunker.conf")), bufNew(0));
 
         // -------------------------------------------------------------------------------------------------------------------------
         TEST_TITLE("local config params not passed to remote");
@@ -395,7 +395,7 @@ testRun(void)
         hrnCfgArgKeyRawZ(argList, cfgOptRepoHost, 1, "repo-host");
         hrnCfgArgKeyRawZ(argList, cfgOptRepoHostUser, 1, "repo-host-user");
         // Local config settings should never be passed to the remote
-        hrnCfgArgRawZ(argList, cfgOptConfig, TEST_PATH "/pgbackrest.conf");
+        hrnCfgArgRawZ(argList, cfgOptConfig, TEST_PATH "/pgbunker.conf");
         hrnCfgArgRawZ(argList, cfgOptConfigIncludePath, TEST_PATH);
         hrnCfgArgRawZ(argList, cfgOptConfigPath, TEST_PATH);
         HRN_CFG_LOAD(cfgCmdArchiveGet, argList, .noStd = true);
@@ -416,7 +416,7 @@ testRun(void)
         hrnCfgArgRawZ(argList, cfgOptPgPath, "/unused");            // Will be passed to remote (required)
         hrnCfgArgRawZ(argList, cfgOptRepoHost, "repo-host");
         hrnCfgArgRawZ(argList, cfgOptRepoHostPort, "444");
-        hrnCfgArgRawZ(argList, cfgOptRepoHostConfig, "/path/pgbackrest.conf");
+        hrnCfgArgRawZ(argList, cfgOptRepoHostConfig, "/path/pgbunker.conf");
         hrnCfgArgRawZ(argList, cfgOptRepoHostConfigIncludePath, "/path/include");
         hrnCfgArgRawZ(argList, cfgOptRepoHostConfigPath, "/path/config");
         hrnCfgArgRawZ(argList, cfgOptRepoHostUser, "repo-host-user");
@@ -428,7 +428,7 @@ testRun(void)
         TEST_RESULT_STRLST_Z(
             protocolRemoteParamSsh(protocolStorageTypeRepo, 0),
             "-o\nLogLevel=error\n-o\nCompression=no\n-o\nPasswordAuthentication=no\n-p\n444\nrepo-host-user@repo-host\n"
-            TEST_PROJECT_EXE " --config=/path/pgbackrest.conf --config-include-path=/path/include --config-path=/path/config"
+            TEST_PROJECT_EXE " --config=/path/pgbunker.conf --config-include-path=/path/include --config-path=/path/config"
             " --exec-id=1-test --log-level-console=off --log-level-file=info --log-level-stderr=error --log-subprocess"
             " --pg1-path=/unused --process=0 --remote-type=repo --repo=1 --stanza=test1 check:remote\n",
             "check config");
@@ -447,7 +447,7 @@ testRun(void)
 
         TEST_RESULT_STRLST_Z(
             protocolRemoteParamSsh(protocolStorageTypeRepo, 0),
-            "-o\nLogLevel=error\n-o\nCompression=no\n-o\nPasswordAuthentication=no\npgbackrest@repo-host\n"
+            "-o\nLogLevel=error\n-o\nCompression=no\n-o\nPasswordAuthentication=no\npgbunker@repo-host\n"
             TEST_PROJECT_EXE " --exec-id=1-test --log-level-console=off --log-level-file=off --log-level-stderr=error"
             " --pg1-path=/path/to/pg --process=3 --remote-type=repo --repo=1 --stanza=test1 archive-get:remote\n",
             "check config");
@@ -535,10 +535,10 @@ testRun(void)
                 ioWriteFlush(HRN_FORK_CHILD_WRITE());
                 ioWriteStrLine(HRN_FORK_CHILD_WRITE(), STRDEF("{\"name\":\"bogus\"}"));
                 ioWriteFlush(HRN_FORK_CHILD_WRITE());
-                ioWriteStrLine(HRN_FORK_CHILD_WRITE(), STRDEF("{\"name\":\"pgBackRest\",\"service\":\"bogus\"}"));
+                ioWriteStrLine(HRN_FORK_CHILD_WRITE(), STRDEF("{\"name\":\"pgBunker\",\"service\":\"bogus\"}"));
                 ioWriteFlush(HRN_FORK_CHILD_WRITE());
                 ioWriteStrLine(
-                    HRN_FORK_CHILD_WRITE(), STRDEF("{\"name\":\"pgBackRest\",\"service\":\"test\",\"version\":\"bogus\"}"));
+                    HRN_FORK_CHILD_WRITE(), STRDEF("{\"name\":\"pgBunker\",\"service\":\"test\",\"version\":\"bogus\"}"));
                 ioWriteFlush(HRN_FORK_CHILD_WRITE());
 
                 // -----------------------------------------------------------------------------------------------------------------
@@ -613,7 +613,7 @@ testRun(void)
                 TEST_ERROR(
                     protocolClientNew(STRDEF("test client"), STRDEF("test"), HRN_FORK_PARENT_READ(0), HRN_FORK_PARENT_WRITE(0)),
                     ProtocolError,
-                    "expected value 'pgBackRest' for greeting key 'name' but got 'bogus'\n"
+                    "expected value 'pgBunker' for greeting key 'name' but got 'bogus'\n"
                     "HINT: is the same version of " PROJECT_NAME " installed on the local and remote host?");
                 TEST_ERROR(
                     protocolClientNew(STRDEF("test client"), STRDEF("test"), HRN_FORK_PARENT_READ(0), HRN_FORK_PARENT_WRITE(0)),
@@ -974,7 +974,7 @@ testRun(void)
                 hrnCfgArgRawZ(argListBase, cfgOptTlsServerKeyFile, HRN_SERVER_KEY);
 
                 StringList *argList = strLstDup(argListBase);
-                hrnCfgArgRawZ(argList, cfgOptTlsServerAuth, "pgbackrest-client=db");
+                hrnCfgArgRawZ(argList, cfgOptTlsServerAuth, "pgbunker-client=db");
                 HRN_CFG_LOAD(cfgCmdServer, argList);
 
                 socketSession = ioServerAccept(socketServer, NULL);
@@ -986,7 +986,7 @@ testRun(void)
                 // Repo server access denied (archive-get) invalid stanza
                 // -----------------------------------------------------------------------------------------------------------------
                 argList = strLstDup(argListBase);
-                hrnCfgArgRawZ(argList, cfgOptTlsServerAuth, "pgbackrest-client=bogus");
+                hrnCfgArgRawZ(argList, cfgOptTlsServerAuth, "pgbunker-client=bogus");
                 HRN_CFG_LOAD(cfgCmdServer, argList);
 
                 socketSession = ioServerAccept(socketServer, NULL);
@@ -1006,7 +1006,7 @@ testRun(void)
                 // Repo server access denied (info)
                 // -----------------------------------------------------------------------------------------------------------------
                 argList = strLstDup(argListBase);
-                hrnCfgArgRawZ(argList, cfgOptTlsServerAuth, "pgbackrest-client=db");
+                hrnCfgArgRawZ(argList, cfgOptTlsServerAuth, "pgbunker-client=db");
                 HRN_CFG_LOAD(cfgCmdServer, argList);
 
                 socketSession = ioServerAccept(socketServer, NULL);
@@ -1016,7 +1016,7 @@ testRun(void)
                 // Pg server (backup)
                 // -----------------------------------------------------------------------------------------------------------------
                 argList = strLstDup(argListBase);
-                hrnCfgArgRawZ(argList, cfgOptTlsServerAuth, "pgbackrest-client=*");
+                hrnCfgArgRawZ(argList, cfgOptTlsServerAuth, "pgbunker-client=*");
                 HRN_CFG_LOAD(cfgCmdServer, argList);
 
                 socketSession = ioServerAccept(socketServer, NULL);
@@ -1316,7 +1316,7 @@ testRun(void)
         TEST_TITLE("start protocol with local encryption settings");
 
         storagePut(
-            storageNewWriteP(storageTest, STRDEF("pgbackrest.conf")),
+            storageNewWriteP(storageTest, STRDEF("pgbunker.conf")),
             BUFSTRDEF(
                 "[global]\n"
                 "repo1-cipher-type=aes-256-cbc\n"
@@ -1326,7 +1326,7 @@ testRun(void)
         hrnCfgArgRawZ(argList, cfgOptStanza, "db");
         hrnCfgArgRawZ(argList, cfgOptPgPath, "/path/to/pg");
         hrnCfgArgRawZ(argList, cfgOptProtocolTimeout, "10");
-        hrnCfgArgRawZ(argList, cfgOptConfig, TEST_PATH "/pgbackrest.conf");
+        hrnCfgArgRawZ(argList, cfgOptConfig, TEST_PATH "/pgbunker.conf");
         hrnCfgArgKeyRawZ(argList, cfgOptRepoHost, 1, "localhost");
         hrnCfgArgKeyRawZ(argList, cfgOptRepoHostUser, 1, TEST_USER);
         hrnCfgArgKeyRawZ(argList, cfgOptRepoPath, 1, TEST_PATH);
@@ -1356,7 +1356,7 @@ testRun(void)
         TEST_TITLE("start protocol with remote encryption settings");
 
         storagePut(
-            storageNewWriteP(storageTest, STRDEF("pgbackrest.conf")),
+            storageNewWriteP(storageTest, STRDEF("pgbunker.conf")),
             BUFSTRDEF(
                 "[global]\n"
                 "repo1-cipher-type=aes-256-cbc\n"
@@ -1368,11 +1368,11 @@ testRun(void)
         hrnCfgArgRawZ(argList, cfgOptStanza, "db");
         hrnCfgArgRawZ(argList, cfgOptPgPath, "/pg");
         hrnCfgArgRawZ(argList, cfgOptProtocolTimeout, "10");
-        hrnCfgArgKeyRawZ(argList, cfgOptRepoHostConfig, 1, TEST_PATH "/pgbackrest.conf");
+        hrnCfgArgKeyRawZ(argList, cfgOptRepoHostConfig, 1, TEST_PATH "/pgbunker.conf");
         hrnCfgArgKeyRawZ(argList, cfgOptRepoHost, 1, "localhost");
         hrnCfgArgKeyRawZ(argList, cfgOptRepoHostUser, 1, TEST_USER);
         hrnCfgArgKeyRawZ(argList, cfgOptRepoPath, 1, TEST_PATH);
-        hrnCfgArgKeyRawZ(argList, cfgOptRepoHostConfig, 2, TEST_PATH "/pgbackrest.conf");
+        hrnCfgArgKeyRawZ(argList, cfgOptRepoHostConfig, 2, TEST_PATH "/pgbunker.conf");
         hrnCfgArgKeyRawZ(argList, cfgOptRepoHost, 2, "localhost");
         hrnCfgArgKeyRawZ(argList, cfgOptRepoHostUser, 2, TEST_USER);
         hrnCfgArgKeyRawZ(argList, cfgOptRepoPath, 2, TEST_PATH "2");

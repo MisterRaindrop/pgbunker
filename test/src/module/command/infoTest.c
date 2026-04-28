@@ -3548,11 +3548,11 @@ testRun(void)
         TEST_TITLE("encryption error");
 
         // Change repo1 to have the same cipher type as repo2 even though on disk it does not
-        HRN_STORAGE_PUT_Z(storageTest, TEST_PATH "/pgbackrest.conf", "[global]\nrepo-cipher-pass=123abc\n");
+        HRN_STORAGE_PUT_Z(storageTest, TEST_PATH "/pgbunker.conf", "[global]\nrepo-cipher-pass=123abc\n");
 
         argList2 = strLstDup(argListMultiRepo);
         hrnCfgArgKeyRawStrId(argList2, cfgOptRepoCipherType, 1, cipherTypeAes256Cbc);
-        hrnCfgArgRawZ(argList2, cfgOptConfig, TEST_PATH "/pgbackrest.conf");
+        hrnCfgArgRawZ(argList2, cfgOptConfig, TEST_PATH "/pgbunker.conf");
         HRN_CFG_LOAD(cfgCmdInfo, argList2);
 
         TEST_RESULT_STR_Z(

@@ -1,8 +1,8 @@
 ####################################################################################################################################
 # Posix File Read
 ####################################################################################################################################
-package pgBackRestTest::Common::StoragePosixRead;
-use parent 'pgBackRestTest::Common::Io::Handle';
+package pgBunkerTest::Common::StoragePosixRead;
+use parent 'pgBunkerTest::Common::Io::Handle';
 
 use strict;
 use warnings FATAL => qw(all);
@@ -11,8 +11,8 @@ use English '-no_match_vars';
 
 use Fcntl qw(O_RDONLY);
 
-use pgBackRestDoc::Common::Exception;
-use pgBackRestDoc::Common::Log;
+use pgBunkerDoc::Common::Exception;
+use pgBunkerDoc::Common::Log;
 
 ####################################################################################################################################
 # CONSTRUCTOR

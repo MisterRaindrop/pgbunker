@@ -1,7 +1,7 @@
 ####################################################################################################################################
 # DefineTest.pm - Defines all tests that can be run
 ####################################################################################################################################
-package pgBackRestTest::Common::DefineTest;
+package pgBunkerTest::Common::DefineTest;
 
 ####################################################################################################################################
 # Perl includes
@@ -13,10 +13,10 @@ use Carp qw(confess);
 use Exporter qw(import);
     our @EXPORT = qw();
 
-use pgBackRestDoc::Common::Log;
-use pgBackRestDoc::Common::String;
+use pgBunkerDoc::Common::Log;
+use pgBunkerDoc::Common::String;
 
-use pgBackRestTest::Common::VmTest;
+use pgBunkerTest::Common::VmTest;
 
 ################################################################################################################################
 # Test definition constants

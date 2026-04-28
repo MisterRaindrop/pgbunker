@@ -1,7 +1,7 @@
 ####################################################################################################################################
 # Build Binaries and Auto-Generate Code
 ####################################################################################################################################
-package pgBackRestTest::Common::BuildTest;
+package pgBunkerTest::Common::BuildTest;
 
 ####################################################################################################################################
 # Perl includes
@@ -15,8 +15,8 @@ use English '-no_match_vars';
 use Exporter qw(import);
     our @EXPORT = qw();
 
-use pgBackRestDoc::Common::Log;
-use pgBackRestDoc::Common::String;
+use pgBunkerDoc::Common::Log;
+use pgBunkerDoc::Common::String;
 
 ####################################################################################################################################
 # Save contents to a file if the file is missing or the contents are different. This saves write IO and prevents the timestamp from

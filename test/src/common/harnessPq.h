@@ -139,7 +139,7 @@ Macros for defining groups of functions that implement various queries and comma
 
 #define HRN_PQ_SCRIPT_CREATE_RESTORE_POINT(sessionParam, lsnParam)                                                                 \
     {.session = sessionParam,                                                                                                      \
-        .function = HRN_PQ_SENDQUERY, .param = "[\"select pg_catalog.pg_create_restore_point('pgBackRest Archive Check')::text\"]",\
+        .function = HRN_PQ_SENDQUERY, .param = "[\"select pg_catalog.pg_create_restore_point('pgBunker Archive Check')::text\"]",\
         .resultInt = 1},                                                                                                           \
     {.session = sessionParam, .function = HRN_PQ_CONSUMEINPUT},                                                                    \
     {.session = sessionParam, .function = HRN_PQ_ISBUSY},                                                                          \
@@ -219,7 +219,7 @@ Macros for defining groups of functions that implement various queries and comma
         .param = zNewFmt(                                                                                                          \
             "[\"select lsn::text as lsn,\\n"                                                                                       \
             "       pg_catalog.pg_xlogfile_name(lsn)::text as wal_segment_name\\n"                                                 \
-            "  from pg_catalog.pg_start_backup('pgBackRest backup started at ' || current_timestamp, %s, false) as lsn\"]",        \
+            "  from pg_catalog.pg_start_backup('pgBunker backup started at ' || current_timestamp, %s, false) as lsn\"]",        \
             cvtBoolToConstZ(startFastParam)),                                                                                      \
         .resultInt = 1},                                                                                                           \
     {.session = sessionParam, .function = HRN_PQ_CONSUMEINPUT},                                                                    \
@@ -241,7 +241,7 @@ Macros for defining groups of functions that implement various queries and comma
         .param = zNewFmt(                                                                                                          \
             "[\"select lsn::text as lsn,\\n"                                                                                       \
             "       pg_catalog.pg_walfile_name(lsn)::text as wal_segment_name\\n"                                                  \
-            "  from pg_catalog.pg_start_backup('pgBackRest backup started at ' || current_timestamp, %s, false) as lsn\"]",        \
+            "  from pg_catalog.pg_start_backup('pgBunker backup started at ' || current_timestamp, %s, false) as lsn\"]",        \
             cvtBoolToConstZ(startFastParam)),                                                                                      \
         .resultInt = 1},                                                                                                           \
     {.session = sessionParam, .function = HRN_PQ_CONSUMEINPUT},                                                                    \
@@ -263,7 +263,7 @@ Macros for defining groups of functions that implement various queries and comma
         .param = zNewFmt(                                                                                                          \
             "[\"select lsn::text as lsn,\\n"                                                                                       \
             "       pg_catalog.pg_walfile_name(lsn)::text as wal_segment_name\\n"                                                  \
-            "  from pg_catalog.pg_backup_start('pgBackRest backup started at ' || current_timestamp, %s) as lsn\"]",               \
+            "  from pg_catalog.pg_backup_start('pgBunker backup started at ' || current_timestamp, %s) as lsn\"]",               \
             cvtBoolToConstZ(startFastParam)),                                                                                      \
         .resultInt = 1},                                                                                                           \
     {.session = sessionParam, .function = HRN_PQ_CONSUMEINPUT},                                                                    \

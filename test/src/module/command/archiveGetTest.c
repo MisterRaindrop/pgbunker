@@ -222,7 +222,7 @@ testRun(void)
             "repo1: 10-1/0000000100000001/000000010000000100000001-abcdabcdabcdabcdabcdabcdabcdabcdabcdabcd.gz [FormatError]"
             " unexpected eof in compressed data",
             .remove = true);
-        TEST_STORAGE_LIST(storageSpool(), STORAGE_SPOOL_ARCHIVE_IN, "000000010000000100000001.pgbackrest.tmp\n");
+        TEST_STORAGE_LIST(storageSpool(), STORAGE_SPOOL_ARCHIVE_IN, "000000010000000100000001.pgbunker.tmp\n");
 
         TEST_STORAGE_EXISTS(
             storageRepoWrite(), STORAGE_REPO_ARCHIVE "/10-1/000000010000000100000001-abcdabcdabcdabcdabcdabcdabcdabcdabcdabcd.gz",
@@ -235,7 +235,7 @@ testRun(void)
             storageRepoWrite(), STORAGE_REPO_ARCHIVE "/10-1/000000010000000100000001-abcdabcdabcdabcdabcdabcdabcdabcdabcdabcd");
 
         // There should be a temp file left over. Make sure it still exists to test that temp files are removed on retry.
-        TEST_STORAGE_EXISTS(storageSpool(), STORAGE_SPOOL_ARCHIVE_IN "/000000010000000100000001.pgbackrest.tmp");
+        TEST_STORAGE_EXISTS(storageSpool(), STORAGE_SPOOL_ARCHIVE_IN "/000000010000000100000001.pgbunker.tmp");
 
         TEST_RESULT_VOID(cmdArchiveGetAsync(), "archive async");
 
@@ -552,7 +552,7 @@ testRun(void)
             " '" HRN_PG_SYSTEMID_10_Z "'",
             .remove = true);
         TEST_STORAGE_LIST(
-            storageSpoolWrite(), STORAGE_SPOOL_ARCHIVE_IN, "000000010000000200000000.pgbackrest.tmp\n", .remove = true);
+            storageSpoolWrite(), STORAGE_SPOOL_ARCHIVE_IN, "000000010000000200000000.pgbunker.tmp\n", .remove = true);
 
         // -------------------------------------------------------------------------------------------------------------------------
         TEST_TITLE("global error on invalid executable");
@@ -573,14 +573,14 @@ testRun(void)
 
         TEST_ERROR(
             cmdArchiveGetAsync(), ExecuteError,
-            "local-1 process terminated unexpectedly [102]: unable to execute 'pgbackrest-bogus': [2] No such file or directory");
+            "local-1 process terminated unexpectedly [102]: unable to execute 'pgbunker-bogus': [2] No such file or directory");
 
         TEST_RESULT_LOG(
             "P00   INFO: get 3 WAL file(s) from archive: 0000000100000001000000FE...000000010000000200000000");
 
         TEST_RESULT_STR_Z(
             strNewBuf(storageGetP(storageNewReadP(storageSpool(), STRDEF(STORAGE_SPOOL_ARCHIVE_IN "/global.error")))),
-            "102\nlocal-1 process terminated unexpectedly [102]: unable to execute 'pgbackrest-bogus':"
+            "102\nlocal-1 process terminated unexpectedly [102]: unable to execute 'pgbunker-bogus':"
             " [2] No such file or directory",
             "check global error");
 

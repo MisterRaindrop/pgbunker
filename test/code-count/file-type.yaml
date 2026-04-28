@@ -3,75 +3,75 @@ doc/doc.pl:
   class: doc/core
   type: perl
 
-doc/lib/pgBackRestDoc/Common/Doc.pm:
+doc/lib/pgBunkerDoc/Common/Doc.pm:
   class: doc/core
   type: perl
 
-doc/lib/pgBackRestDoc/Common/DocExecute.pm:
+doc/lib/pgBunkerDoc/Common/DocExecute.pm:
   class: doc/core
   type: perl
 
-doc/lib/pgBackRestDoc/Common/DocManifest.pm:
+doc/lib/pgBunkerDoc/Common/DocManifest.pm:
   class: doc/core
   type: perl
 
-doc/lib/pgBackRestDoc/Common/DocRender.pm:
+doc/lib/pgBunkerDoc/Common/DocRender.pm:
   class: doc/core
   type: perl
 
-doc/lib/pgBackRestDoc/Common/Exception.pm:
+doc/lib/pgBunkerDoc/Common/Exception.pm:
   class: doc/core
   type: perl
 
-doc/lib/pgBackRestDoc/Common/Host.pm:
+doc/lib/pgBunkerDoc/Common/Host.pm:
   class: doc/core
   type: perl
 
-doc/lib/pgBackRestDoc/Common/HostGroup.pm:
+doc/lib/pgBunkerDoc/Common/HostGroup.pm:
   class: doc/core
   type: perl
 
-doc/lib/pgBackRestDoc/Common/Ini.pm:
+doc/lib/pgBunkerDoc/Common/Ini.pm:
   class: doc/core
   type: perl
 
-doc/lib/pgBackRestDoc/Common/Log.pm:
+doc/lib/pgBunkerDoc/Common/Log.pm:
   class: doc/core
   type: perl
 
-doc/lib/pgBackRestDoc/Common/String.pm:
+doc/lib/pgBunkerDoc/Common/String.pm:
   class: doc/core
   type: perl
 
-doc/lib/pgBackRestDoc/Custom/DocCustomRelease.pm:
+doc/lib/pgBunkerDoc/Custom/DocCustomRelease.pm:
   class: doc/core
   type: perl
 
-doc/lib/pgBackRestDoc/Html/DocHtmlBuilder.pm:
+doc/lib/pgBunkerDoc/Html/DocHtmlBuilder.pm:
   class: doc/core
   type: perl
 
-doc/lib/pgBackRestDoc/Html/DocHtmlElement.pm:
+doc/lib/pgBunkerDoc/Html/DocHtmlElement.pm:
   class: doc/core
   type: perl
 
-doc/lib/pgBackRestDoc/Html/DocHtmlPage.pm:
+doc/lib/pgBunkerDoc/Html/DocHtmlPage.pm:
   class: doc/core
   type: perl
 
-doc/lib/pgBackRestDoc/Html/DocHtmlSite.pm:
+doc/lib/pgBunkerDoc/Html/DocHtmlSite.pm:
   class: doc/core
   type: perl
 
-doc/lib/pgBackRestDoc/Markdown/DocMarkdown.pm:
+doc/lib/pgBunkerDoc/Markdown/DocMarkdown.pm:
   class: doc/core
   type: perl
 
-doc/lib/pgBackRestDoc/Markdown/DocMarkdownRender.pm:
+doc/lib/pgBunkerDoc/Markdown/DocMarkdownRender.pm:
   class: doc/core
   type: perl
 
-doc/lib/pgBackRestDoc/ProjectInfo.pm:
+doc/lib/pgBunkerDoc/ProjectInfo.pm:
   class: doc/core
   type: perl
 
@@ -2515,79 +2515,79 @@ test/define.yaml:
   class: test/harness
   type: yaml
 
-test/lib/pgBackRestTest/Common/BuildTest.pm:
+test/lib/pgBunkerTest/Common/BuildTest.pm:
   class: test/harness
   type: perl
 
-test/lib/pgBackRestTest/Common/CodeCountTest.pm:
+test/lib/pgBunkerTest/Common/CodeCountTest.pm:
   class: test/harness
   type: perl
 
-test/lib/pgBackRestTest/Common/ContainerTest.pm:
+test/lib/pgBunkerTest/Common/ContainerTest.pm:
   class: test/harness
   type: perl
 
-test/lib/pgBackRestTest/Common/DbVersion.pm:
+test/lib/pgBunkerTest/Common/DbVersion.pm:
   class: test/harness
   type: perl
 
-test/lib/pgBackRestTest/Common/DefineTest.pm:
+test/lib/pgBunkerTest/Common/DefineTest.pm:
   class: test/harness
   type: perl
 
-test/lib/pgBackRestTest/Common/ExecuteTest.pm:
+test/lib/pgBunkerTest/Common/ExecuteTest.pm:
   class: test/harness
   type: perl
 
-test/lib/pgBackRestTest/Common/Io/Base.pm:
+test/lib/pgBunkerTest/Common/Io/Base.pm:
   class: test/harness
   type: perl
 
-test/lib/pgBackRestTest/Common/Io/Buffered.pm:
+test/lib/pgBunkerTest/Common/Io/Buffered.pm:
   class: test/harness
   type: perl
 
-test/lib/pgBackRestTest/Common/Io/Filter.pm:
+test/lib/pgBunkerTest/Common/Io/Filter.pm:
   class: test/harness
   type: perl
 
-test/lib/pgBackRestTest/Common/Io/Handle.pm:
+test/lib/pgBunkerTest/Common/Io/Handle.pm:
   class: test/harness
   type: perl
 
-test/lib/pgBackRestTest/Common/JobTest.pm:
+test/lib/pgBunkerTest/Common/JobTest.pm:
   class: test/harness
   type: perl
 
-test/lib/pgBackRestTest/Common/ListTest.pm:
+test/lib/pgBunkerTest/Common/ListTest.pm:
   class: test/harness
   type: perl
 
-test/lib/pgBackRestTest/Common/Storage.pm:
+test/lib/pgBunkerTest/Common/Storage.pm:
   class: test/harness
   type: perl
 
-test/lib/pgBackRestTest/Common/StorageBase.pm:
+test/lib/pgBunkerTest/Common/StorageBase.pm:
   class: test/harness
   type: perl
 
-test/lib/pgBackRestTest/Common/StoragePosix.pm:
+test/lib/pgBunkerTest/Common/StoragePosix.pm:
   class: test/harness
   type: perl
 
-test/lib/pgBackRestTest/Common/StoragePosixRead.pm:
+test/lib/pgBunkerTest/Common/StoragePosixRead.pm:
   class: test/harness
   type: perl
 
-test/lib/pgBackRestTest/Common/StoragePosixWrite.pm:
+test/lib/pgBunkerTest/Common/StoragePosixWrite.pm:
   class: test/harness
   type: perl
 
-test/lib/pgBackRestTest/Common/VmTest.pm:
+test/lib/pgBunkerTest/Common/VmTest.pm:
   class: test/harness
   type: perl
 
-test/lib/pgBackRestTest/Common/Wait.pm:
+test/lib/pgBunkerTest/Common/Wait.pm:
   class: test/harness
   type: perl
 

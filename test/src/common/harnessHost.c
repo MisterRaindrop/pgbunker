@@ -49,7 +49,7 @@ Constants
 // S3 constants
 #define HRN_HOST_S3_ACCESS_KEY                                      "accessKey1"
 #define HRN_HOST_S3_ACCESS_SECRET_KEY                               "verySecretKey1"
-#define HRN_HOST_S3_BUCKET                                          "pgbackrest-dev"
+#define HRN_HOST_S3_BUCKET                                          "pgbunker-dev"
 #define HRN_HOST_S3_ENDPOINT                                        "s3.amazonaws.com"
 #define HRN_HOST_S3_REGION                                          "us-east-1"
 
@@ -61,11 +61,11 @@ Constants
 
 // TLS constants
 #define HRN_HOST_TLS_CERT_PATH                                      "test/certificate"
-#define HRN_HOST_TLS_CLIENT_CERT                                    HRN_HOST_TLS_CERT_PATH "/pgbackrest-test-client.crt"
-#define HRN_HOST_TLS_CLIENT_KEY                                     HRN_HOST_TLS_CERT_PATH "/pgbackrest-test-client.key"
-#define HRN_HOST_TLS_SERVER_CA                                      HRN_HOST_TLS_CERT_PATH "/pgbackrest-test-ca.crt"
-#define HRN_HOST_TLS_SERVER_CERT                                    HRN_HOST_TLS_CERT_PATH "/pgbackrest-test-server.crt"
-#define HRN_HOST_TLS_SERVER_KEY                                     HRN_HOST_TLS_CERT_PATH "/pgbackrest-test-server.key"
+#define HRN_HOST_TLS_CLIENT_CERT                                    HRN_HOST_TLS_CERT_PATH "/pgbunker-test-client.crt"
+#define HRN_HOST_TLS_CLIENT_KEY                                     HRN_HOST_TLS_CERT_PATH "/pgbunker-test-client.key"
+#define HRN_HOST_TLS_SERVER_CA                                      HRN_HOST_TLS_CERT_PATH "/pgbunker-test-ca.crt"
+#define HRN_HOST_TLS_SERVER_CERT                                    HRN_HOST_TLS_CERT_PATH "/pgbunker-test-server.crt"
+#define HRN_HOST_TLS_SERVER_KEY                                     HRN_HOST_TLS_CERT_PATH "/pgbunker-test-server.key"
 
 // Cipher passphrase
 #define HRN_CIPHER_PASSPHRASE                                       "x"
@@ -124,7 +124,7 @@ hrnHostNew(const StringId id, const String *const container, const String *const
                 .container = strDup(container),
                 .image = strDup(image),
                 .user = param.user == NULL ? strNewZ("root") : strDup(param.user),
-                .brBin = strNewZ("pgbackrest"),
+                .brBin = strNewZ("pgbunker"),
                 .pgStandby = param.pgStandby,
                 .updateHosts = !param.noUpdateHosts,
                 .isPg = param.isPg,
@@ -286,7 +286,7 @@ hrnHostExecBr(HrnHost *const this, const char *const command, const HrnHostExecB
     MEM_CONTEXT_TEMP_BEGIN()
     {
         const String *const user = param.user == NULL ? NULL : STR(param.user);
-        String *const commandStr = strCatFmt(strNew(), "pgbackrest --stanza=" HRN_STANZA);
+        String *const commandStr = strCatFmt(strNew(), "pgbunker --stanza=" HRN_STANZA);
 
         if (param.option != NULL)
             strCatFmt(commandStr, " %s", param.option);
@@ -334,7 +334,7 @@ hrnHostPgConf(HrnHost *const this)
         strCatZ(config, "wal_level = hot_standby\n");
         strCatZ(config, "max_wal_senders = 3\n");
         strCatZ(config, "hot_standby = on\n");
-        strCatZ(config, "archive_command = 'pgbackrest --stanza=" HRN_STANZA " archive-push \"%p\"'\n");
+        strCatZ(config, "archive_command = 'pgbunker --stanza=" HRN_STANZA " archive-push \"%p\"'\n");
 
         // Log options
         strCatZ(config, "\n");
@@ -612,7 +612,7 @@ hrnHostSqlTest(HrnHost *const this, const String *const statement, const String 
 }
 
 /***********************************************************************************************************************************
-Host pgBackRest configuration
+Host pgBunker configuration
 ***********************************************************************************************************************************/
 // Helper to configure TLS
 static void
@@ -914,7 +914,7 @@ hrnHostConfig(HrnHost *const this)
         }
 
         storagePutP(
-            storageNewWriteP(hrnHostDataStorage(this), STRDEF("cfg/pgbackrest.conf"), .modeFile = 0600), BUFSTR(config));
+            storageNewWriteP(hrnHostDataStorage(this), STRDEF("cfg/pgbunker.conf"), .modeFile = 0600), BUFSTR(config));
     }
     MEM_CONTEXT_TEMP_END();
 
@@ -1093,7 +1093,7 @@ hrnHostConfigUpdate(const HrnHostConfigUpdateParam param)
     if (param.archiveAsync != NULL)
         hrnHostLocal.archiveAsync = varBool(param.archiveAsync);
 
-    // Write pgBackRest configuration for hosts
+    // Write pgBunker configuration for hosts
     hrnHostConfig(hrnHostPg1());
     hrnHostConfig(hrnHostPg2());
 
@@ -1124,7 +1124,7 @@ hrnHostBuildRun(const int line, const StringId id, const String *const image)
         const String *const container = strNewFmt("test-%u-%s", testIdx(), strZ(name));
         const String *const dataPath = strNewFmt("%s/%s", testPath(), strZ(name));
         String *const option = strNewFmt(
-            "-v '%s/cfg:/etc/pgbackrest:ro' -v '%s:/usr/bin/pgbackrest:ro' -v '%s:%s:ro'", strZ(dataPath), testProjectExe(),
+            "-v '%s/cfg:/etc/pgbunker:ro' -v '%s:/usr/bin/pgbunker:ro' -v '%s:%s:ro'", strZ(dataPath), testProjectExe(),
             hrnPathRepo(), hrnPathRepo());
         const String *param = NULL;
         const String *entryPoint = NULL;
@@ -1141,14 +1141,14 @@ hrnHostBuildRun(const int line, const StringId id, const String *const image)
             param = strNewFmt(
                 "server --log-level-console=info --tls-server-ca-file=%s/" HRN_HOST_TLS_SERVER_CA " --tls-server-cert-file=%s/"
                 HRN_HOST_TLS_SERVER_CERT " --tls-server-key-file=%s/" HRN_HOST_TLS_SERVER_KEY
-                " --tls-server-auth=pgbackrest-client=* --tls-server-address=0.0.0.0", hrnPathRepo(), hrnPathRepo(), hrnPathRepo());
-            entryPoint = strNewZ("/usr/bin/pgbackrest");
+                " --tls-server-auth=pgbunker-client=* --tls-server-address=0.0.0.0", hrnPathRepo(), hrnPathRepo(), hrnPathRepo());
+            entryPoint = strNewZ("/usr/bin/pgbunker");
         }
 
         MEM_CONTEXT_PRIOR_BEGIN()
         {
             Storage *const storageData = storagePosixNewP(dataPath, .write = true);
-            storagePutP(storageNewWriteP(storageData, STRDEF("cfg/pgbackrest.conf"), .modeFile = 0600), BUFSTRDEF(""));
+            storagePutP(storageNewWriteP(storageData, STRDEF("cfg/pgbunker.conf"), .modeFile = 0600), BUFSTRDEF(""));
 
             result = hrnHostNewP(
                 id, container, image, .user = STR(testUser()), .dataPath = dataPath, .option = option, .param = param,
@@ -1235,7 +1235,7 @@ hrnHostBuild(const int line, const HrnHostTestDefine *const testMatrix, const si
         hrnHostLocal.nonVersionSpecific);
 
     // Create pg hosts
-    const String *const image = strNewFmt("pgbackrest/test:%s-test-%s", testVm(), testArchitecture());
+    const String *const image = strNewFmt("pgbunker/test:%s-test-%s", testVm(), testArchitecture());
 
     hrnHostBuildRun(line, HRN_HOST_PG1, image);
     HrnHost *const pg2 = hrnHostBuildRun(line, HRN_HOST_PG2, image);
@@ -1334,7 +1334,7 @@ hrnHostBuild(const int line, const HrnHostTestDefine *const testMatrix, const si
     }
     MEM_CONTEXT_TEMP_END();
 
-    // Write pgBackRest configuration for hosts
+    // Write pgBunker configuration for hosts
     hrnHostConfigUpdateP();
 
     // Create the bucket/container for object stores

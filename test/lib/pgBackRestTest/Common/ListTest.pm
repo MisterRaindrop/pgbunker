@@ -1,7 +1,7 @@
 ####################################################################################################################################
 # ListTest.pm - Creates a list of tests to be run based on input criteria
 ####################################################################################################################################
-package pgBackRestTest::Common::ListTest;
+package pgBunkerTest::Common::ListTest;
 
 ####################################################################################################################################
 # Perl includes
@@ -13,11 +13,11 @@ use Carp qw(confess);
 use Exporter qw(import);
     our @EXPORT = qw();
 
-use pgBackRestDoc::Common::Log;
-use pgBackRestDoc::Common::String;
+use pgBunkerDoc::Common::Log;
+use pgBunkerDoc::Common::String;
 
-use pgBackRestTest::Common::DefineTest;
-use pgBackRestTest::Common::VmTest;
+use pgBunkerTest::Common::DefineTest;
+use pgBunkerTest::Common::VmTest;
 
 ################################################################################################################################
 # Test constants

@@ -1039,7 +1039,7 @@ testRun(void)
                 #define TEST_SERVICE_TOKEN_FILE                     TEST_PATH "/web-id-token"
                 #define TEST_SERVICE_URI                                                                                           \
                     "/?Action=AssumeRoleWithWebIdentity&RoleArn=arn%3Aaws%3Aiam%3A%3A123456789012%3Arole%2FTestRole"               \
-                        "&RoleSessionName=pgBackRest&Version=2011-06-15&WebIdentityToken=" TEST_SERVICE_TOKEN
+                        "&RoleSessionName=pgBunker&Version=2011-06-15&WebIdentityToken=" TEST_SERVICE_TOKEN
                 // {uncrustify_off - comment inside string}
                 #define TEST_SERVICE_RESPONSE                                                                                      \
                     "<AssumeRoleWithWebIdentityResponse xmlns=\"https://sts.amazonaws.com/doc/2011-06-15/\">\n"                    \

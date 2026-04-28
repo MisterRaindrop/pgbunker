@@ -245,7 +245,7 @@ testRun(void)
         TEST_ERROR(
             cmdStanzaDelete(), FileMissingError,
             "stop file does not exist for stanza 'db'\n"
-            "HINT: has the pgbackrest stop command been run on this server for this stanza?");
+            "HINT: has the pgbunker stop command been run on this server for this stanza?");
 
         // Create the stop file
         HRN_STORAGE_PUT_EMPTY(storageHrn, strZ(lockStopFileName(cfgOptionStr(cfgOptStanza))));

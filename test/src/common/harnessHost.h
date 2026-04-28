@@ -91,7 +91,7 @@ typedef struct HrnHostPub
     const String *dataPath;                                         // Data path
     const Storage *dataStorage;                                     // Data storage
     const String *logPath;                                          // Log path
-    const String *brBin;                                            // pgBackRest binary
+    const String *brBin;                                            // pgBunker binary
     bool pgStandby;                                                 // Pg Standby
     const String *pgPath;                                           // Pg path
     const String *pgDataPath;                                       // Pg data path
@@ -178,7 +178,7 @@ hrnHostLogPath(const HrnHost *const this)
     return THIS_PUB(HrnHost)->logPath;
 }
 
-// pgBackRest binary
+// pgBunker binary
 FN_INLINE_ALWAYS const String *
 hrnHostBrBin(const HrnHost *const this)
 {
@@ -298,14 +298,14 @@ typedef struct HrnHostExecParam
 
 String *hrnHostExec(HrnHost *this, const String *command, HrnHostExecParam param);
 
-// Execute pgbackrest
+// Execute pgbunker
 #define TEST_HOST_BR(this, command, ...)                                                                                           \
     do                                                                                                                             \
     {                                                                                                                              \
         const HrnHostExecBrParam param = {VAR_PARAM_INIT, __VA_ARGS__};                                                            \
                                                                                                                                    \
         TEST_RESULT_INFO_FMT(                                                                                                      \
-            "%s: pgbackrest%s %s%s%s", strZ(hrnHostName(this)), param.option == NULL ? "" : zNewFmt(" %s", param.option), command, \
+            "%s: pgbunker%s %s%s%s", strZ(hrnHostName(this)), param.option == NULL ? "" : zNewFmt(" %s", param.option), command, \
             param.param == NULL ? "" : zNewFmt(" %s", param.param),                                                                \
             param.resultExpect != 0 ? zNewFmt(" -- result %d", param.resultExpect) : "");                                          \
         hrnHostExecBrP(this, command , __VA_ARGS__);                                                                               \

@@ -352,7 +352,7 @@ testCvgMerge(const TestCoverage *const this, const String *const json, const Str
 /***********************************************************************************************************************************
 Coverage report
 ***********************************************************************************************************************************/
-#define TEST_CVG_HTML_TITLE                                         "pgBackRest Coverage Report"
+#define TEST_CVG_HTML_TITLE                                         "pgBunker Coverage Report"
 
 // {uncrustify_off -  - comment inside string}
 #define TEST_CVG_HTML_PRE                                                                                                          \

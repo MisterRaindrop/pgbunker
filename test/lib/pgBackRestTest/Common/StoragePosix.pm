@@ -3,7 +3,7 @@
 #
 # Implements storage functions for Posix-compliant file systems.
 ####################################################################################################################################
-package pgBackRestTest::Common::StoragePosix;
+package pgBunkerTest::Common::StoragePosix;
 
 use strict;
 use warnings FATAL => qw(all);
@@ -16,12 +16,12 @@ use File::Basename qw(basename dirname);
 use Fcntl qw(:mode);
 use File::stat qw{lstat};
 
-use pgBackRestDoc::Common::Exception;
-use pgBackRestDoc::Common::Log;
+use pgBunkerDoc::Common::Exception;
+use pgBunkerDoc::Common::Log;
 
-use pgBackRestTest::Common::StorageBase;
-use pgBackRestTest::Common::StoragePosixRead;
-use pgBackRestTest::Common::StoragePosixWrite;
+use pgBunkerTest::Common::StorageBase;
+use pgBunkerTest::Common::StoragePosixRead;
+use pgBunkerTest::Common::StoragePosixWrite;
 
 ####################################################################################################################################
 # Package name constant
@@ -544,7 +544,7 @@ sub openRead
         {name => 'bIgnoreMissing', optional => true, default => false, trace => true},
     );
 
-    my $oFileIO = new pgBackRestTest::Common::StoragePosixRead($self, $strFile, {bIgnoreMissing => $bIgnoreMissing});
+    my $oFileIO = new pgBunkerTest::Common::StoragePosixRead($self, $strFile, {bIgnoreMissing => $bIgnoreMissing});
 
     # Return from function and log return values if any
     return logDebugReturn
@@ -585,7 +585,7 @@ sub openWrite
         {name => 'bAtomic', optional => true, trace => true},
     );
 
-    my $oFileIO = new pgBackRestTest::Common::StoragePosixWrite(
+    my $oFileIO = new pgBunkerTest::Common::StoragePosixWrite(
         $self, $strFile,
         {strMode => $strMode, strUser => $strUser, strGroup => $strGroup, lTimestamp => $lTimestamp, bPathCreate => $bPathCreate,
             bAtomic => $bAtomic, bSync => $self->{bFileSync}});

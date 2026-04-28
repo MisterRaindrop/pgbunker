@@ -43,7 +43,7 @@ Test statuses
 #define TEST_STATUS_TIMELINE                                        "timeline"
 #define TEST_STATUS_XID                                             "xid"
 
-#define TEST_RESTORE_POINT                                          "pgbackrest"
+#define TEST_RESTORE_POINT                                          "pgbunker"
 
 /***********************************************************************************************************************************
 Test Run
@@ -449,7 +449,7 @@ testRun(void)
             // If repo is versioned then delete the repo to test repo-target-time
             if (hrnHostRepoVersioning())
             {
-                // Stop pgbackrest
+                // Stop pgbunker
                 TEST_HOST_BR(repo, CFGCMD_STOP);
 
                 // Delete stanza
@@ -470,12 +470,12 @@ testRun(void)
         // -------------------------------------------------------------------------------------------------------------------------
         if (!hrnHostRepoVersioning() && hrnHostNonVersionSpecific())
         {
-            TEST_TITLE("stanza-delete --force with pgbackrest stopped");
+            TEST_TITLE("stanza-delete --force with pgbunker stopped");
 
             // Stop the cluster
             HRN_HOST_PG_STOP(pg1);
 
-            // Stop pgbackrest
+            // Stop pgbunker
             TEST_HOST_BR(pg1, CFGCMD_STOP);
             TEST_HOST_BR(repo, CFGCMD_STOP);
 

@@ -50,7 +50,7 @@ testRun(void)
         "%s - General help\n"
         "\n"
         "Usage:\n"
-        "    pgbackrest [options] [command]\n"
+        "    pgbunker [options] [command]\n"
         "\n"
         "Commands:\n"
         "    annotate        add or modify backup annotation\n"
@@ -64,17 +64,17 @@ testRun(void)
         "    repo-get        get a file from a repository\n"
         "    repo-ls         list files in a repository\n"
         "    restore         restore a database cluster\n"
-        "    server          pgBackRest server\n"
-        "    server-ping     ping pgBackRest server\n"
+        "    server          pgBunker server\n"
+        "    server-ping     ping pgBunker server\n"
         "    stanza-create   create the required stanza data\n"
         "    stanza-delete   delete a stanza\n"
         "    stanza-upgrade  upgrade a stanza\n"
-        "    start           allow pgBackRest processes to run\n"
-        "    stop            stop pgBackRest processes from running\n"
+        "    start           allow pgBunker processes to run\n"
+        "    stop            stop pgBunker processes from running\n"
         "    verify          verify contents of a repository\n"
         "    version         get version\n"
         "\n"
-        "Use 'pgbackrest help [command]' for more information.\n",
+        "Use 'pgbunker help [command]' for more information.\n",
         helpVersion);
 
     // *****************************************************************************************************************************
@@ -144,27 +144,27 @@ testRun(void)
         const char *versionOnly = zNewFmt("%s\n", helpVersion);
 
         argList = strLstNew();
-        strLstAddZ(argList, "/path/to/pgbackrest");
+        strLstAddZ(argList, "/path/to/pgbunker");
         strLstAddZ(argList, "version");
         TEST_RESULT_VOID(testCfgLoad(argList), "version from version command");
         TEST_RESULT_STR_Z(helpRender(helpData), versionOnly, "check text");
 
         argList = strLstNew();
-        strLstAddZ(argList, "/path/to/pgbackrest");
+        strLstAddZ(argList, "/path/to/pgbunker");
         strLstAddZ(argList, "version");
         hrnCfgArgRawZ(argList, cfgOptOutput, "text");
         TEST_RESULT_VOID(testCfgLoad(argList), "version text output from version command");
         TEST_RESULT_STR_Z(helpRender(helpData), versionOnly, "check text");
 
         argList = strLstNew();
-        strLstAddZ(argList, "/path/to/pgbackrest");
+        strLstAddZ(argList, "/path/to/pgbunker");
         strLstAddZ(argList, "version");
         hrnCfgArgRawZ(argList, cfgOptOutput, "num");
         TEST_RESULT_VOID(testCfgLoad(argList), "version num output from version command");
         TEST_RESULT_STR_Z(helpRender(helpData), zNewFmt("%d", PROJECT_VERSION_NUM), "check text");
 
         argList = strLstNew();
-        strLstAddZ(argList, "/path/to/pgbackrest");
+        strLstAddZ(argList, "/path/to/pgbunker");
         strLstAddZ(argList, "--version");
         TEST_RESULT_VOID(testCfgLoad(argList), "version from version option");
         TEST_RESULT_STR_Z(helpRender(helpData), versionOnly, "check text");
@@ -173,18 +173,18 @@ testRun(void)
         TEST_TITLE("general invocation");
 
         argList = strLstNew();
-        strLstAddZ(argList, "/path/to/pgbackrest");
+        strLstAddZ(argList, "/path/to/pgbunker");
         TEST_RESULT_VOID(testCfgLoad(argList), "help from empty command line");
         TEST_RESULT_STR_Z(helpRender(helpData), generalHelp, "check text");
 
         argList = strLstNew();
-        strLstAddZ(argList, "/path/to/pgbackrest");
+        strLstAddZ(argList, "/path/to/pgbunker");
         strLstAddZ(argList, "help");
         TEST_RESULT_VOID(testCfgLoad(argList), "help from help command");
         TEST_RESULT_STR_Z(helpRender(helpData), generalHelp, "check text");
 
         argList = strLstNew();
-        strLstAddZ(argList, "/path/to/pgbackrest");
+        strLstAddZ(argList, "/path/to/pgbunker");
         strLstAddZ(argList, "--version");
         strLstAddZ(argList, "--help");
         TEST_RESULT_VOID(testCfgLoad(argList), "help from help option");
@@ -204,7 +204,7 @@ testRun(void)
             "The restore command automatically defaults to selecting the latest backup from\n"
             "the first repository where backups exist (see Quick Start - Restore a Backup).\n"
             "The order in which the repositories are checked is dictated by the\n"
-            "pgbackrest.conf (e.g. repo1 will be checked before repo2). To select from a\n"
+            "pgbunker.conf (e.g. repo1 will be checked before repo2). To select from a\n"
             "specific repository, the --repo option can be passed (e.g. --repo=1). The --set\n"
             "option can be passed if a backup other than the latest is desired.\n"
             "\n"
@@ -252,22 +252,22 @@ testRun(void)
             "\n"
             "  --buffer-size                       buffer size for I/O operations\n"
             "                                      [current=32768, default=1MiB]\n"
-            "  --cmd                               pgBackRest command\n"
-            "                                      [default=/path/to/pgbackrest]\n"
+            "  --cmd                               pgBunker command\n"
+            "                                      [default=/path/to/pgbunker]\n"
             "  --cmd-ssh                           SSH client command [default=ssh]\n"
             "  --compress-level-network            network compression level [default=1]\n"
-            "  --config                            pgBackRest configuration file\n"
-            "                                      [default=/etc/pgbackrest/pgbackrest.conf]\n"
-            "  --config-include-path               path to additional pgBackRest\n"
+            "  --config                            pgBunker configuration file\n"
+            "                                      [default=/etc/pgbunker/pgbunker.conf]\n"
+            "  --config-include-path               path to additional pgBunker\n"
             "                                      configuration files\n"
-            "                                      [default=/etc/pgbackrest/conf.d]\n"
-            "  --config-path                       base path of pgBackRest configuration\n"
-            "                                      files [default=/etc/pgbackrest]\n"
+            "                                      [default=/etc/pgbunker/conf.d]\n"
+            "  --config-path                       base path of pgBunker configuration\n"
+            "                                      files [default=/etc/pgbunker]\n"
             "  --delta                             restore or backup using checksums\n"
             "                                      [default=n]\n"
             "  --io-timeout                        I/O timeout [default=1m]\n"
             "  --lock-path                         path where lock files are stored\n"
-            "                                      [default=/tmp/pgbackrest]\n"
+            "                                      [default=/tmp/pgbunker]\n"
             "  --neutral-umask                     use a neutral umask [default=y]\n"
             "  --priority                          set process priority\n"
             "  --process-max                       max processes to use for\n"
@@ -287,7 +287,7 @@ testRun(void)
             "  --log-level-file                    level for file logging [default=info]\n"
             "  --log-level-stderr                  level for stderr logging [default=off]\n"
             "  --log-path                          path where log files are stored\n"
-            "                                      [default=/var/log/pgbackrest]\n"
+            "                                      [default=/var/log/pgbunker]\n"
             "  --log-subprocess                    enable logging in subprocesses [default=n]\n"
             "  --log-timestamp                     enable timestamp in logging [default=y]\n"
             "\n",
@@ -318,24 +318,24 @@ testRun(void)
             "  --repo-host-ca-file                 repository host certificate authority file\n"
             "  --repo-host-ca-path                 repository host certificate authority path\n"
             "  --repo-host-cert-file               repository host certificate file\n"
-            "  --repo-host-cmd                     repository host pgBackRest command\n"
-            "                                      [default=/path/to/pgbackrest]\n"
-            "  --repo-host-config                  pgBackRest repository host configuration\n"
+            "  --repo-host-cmd                     repository host pgBunker command\n"
+            "                                      [default=/path/to/pgbunker]\n"
+            "  --repo-host-config                  pgBunker repository host configuration\n"
             "                                      file\n"
-            "                                      [default=/etc/pgbackrest/pgbackrest.conf]\n"
-            "  --repo-host-config-include-path     pgBackRest repository host configuration\n"
+            "                                      [default=/etc/pgbunker/pgbunker.conf]\n"
+            "  --repo-host-config-include-path     pgBunker repository host configuration\n"
             "                                      include path\n"
-            "                                      [default=/etc/pgbackrest/conf.d]\n"
-            "  --repo-host-config-path             pgBackRest repository host configuration\n"
-            "                                      path [default=/etc/pgbackrest]\n"
+            "                                      [default=/etc/pgbunker/conf.d]\n"
+            "  --repo-host-config-path             pgBunker repository host configuration\n"
+            "                                      path [default=/etc/pgbunker]\n"
             "  --repo-host-key-file                repository host key file\n"
             "  --repo-host-port                    repository host port when repo-host is set\n"
             "  --repo-host-type                    repository host protocol type\n"
             "                                      [default=ssh]\n"
             "  --repo-host-user                    repository host user when repo-host is\n"
-            "                                      set [default=pgbackrest]\n"
+            "                                      set [default=pgbunker]\n"
             "  --repo-path                         path where backups and archive are stored\n"
-            "                                      [default=/var/lib/pgbackrest]\n"
+            "                                      [default=/var/lib/pgbunker]\n"
             "  --repo-s3-bucket                    S3 repository bucket\n"
             "  --repo-s3-endpoint                  S3 repository endpoint\n"
             "  --repo-s3-key                       S3 repository access key\n"
@@ -373,10 +373,10 @@ testRun(void)
             "\n"
             "  --pg-path                           PostgreSQL data directory\n"
             "\n"
-            "Use 'pgbackrest help restore [option]' for more information.\n");
+            "Use 'pgbunker help restore [option]' for more information.\n");
 
         argList = strLstNew();
-        strLstAddZ(argList, "/path/to/pgbackrest");
+        strLstAddZ(argList, "/path/to/pgbunker");
         strLstAddZ(argList, "help");
         strLstAddZ(argList, "restore");
         hrnCfgArgRawZ(argList, cfgOptBufferSize, "32768");
@@ -396,7 +396,7 @@ testRun(void)
         TEST_TITLE("errors with specified options");
 
         argList = strLstNew();
-        strLstAddZ(argList, "/path/to/pgbackrest");
+        strLstAddZ(argList, "/path/to/pgbunker");
         strLstAddZ(argList, "help");
         strLstAddZ(argList, "archive-push");
         strLstAddZ(argList, "buffer-size");
@@ -405,7 +405,7 @@ testRun(void)
         TEST_ERROR(helpRender(helpData), ParamInvalidError, "only one option allowed for option help");
 
         argList = strLstNew();
-        strLstAddZ(argList, "/path/to/pgbackrest");
+        strLstAddZ(argList, "/path/to/pgbunker");
         strLstAddZ(argList, "help");
         strLstAddZ(argList, "archive-push");
         strLstAddZ(argList, BOGUS_STR);
@@ -413,7 +413,7 @@ testRun(void)
         TEST_ERROR(helpRender(helpData), OptionInvalidError, "option 'BOGUS' is not valid for command 'archive-push'");
 
         argList = strLstNew();
-        strLstAddZ(argList, "/path/to/pgbackrest");
+        strLstAddZ(argList, "/path/to/pgbunker");
         strLstAddZ(argList, CFGCMD_HELP);
         strLstAddZ(argList, CFGCMD_ARCHIVE_PUSH);
         strLstAddZ(argList, CFGOPT_PROCESS);
@@ -437,7 +437,7 @@ testRun(void)
             helpVersion);
 
         argList = strLstNew();
-        strLstAddZ(argList, "/path/to/pgbackrest");
+        strLstAddZ(argList, "/path/to/pgbunker");
         strLstAddZ(argList, "help");
         strLstAddZ(argList, "archive-push");
         strLstAddZ(argList, "buffer-size");
@@ -471,7 +471,7 @@ testRun(void)
             helpVersion);
 
         argList = strLstNew();
-        strLstAddZ(argList, "/path/to/pgbackrest");
+        strLstAddZ(argList, "/path/to/pgbunker");
         strLstAddZ(argList, "help");
         strLstAddZ(argList, "archive-push");
         strLstAddZ(argList, "repo1-s3-host");
@@ -505,7 +505,7 @@ testRun(void)
             helpVersion);
 
         argList = strLstNew();
-        strLstAddZ(argList, "/path/to/pgbackrest");
+        strLstAddZ(argList, "/path/to/pgbunker");
         strLstAddZ(argList, "help");
         hrnCfgArgRawZ(argList, cfgOptRepoCipherType, "aes-256-cbc");
         hrnCfgEnvRawZ(cfgOptRepoCipherPass, TEST_CIPHER_PASS);
@@ -534,7 +534,7 @@ testRun(void)
             helpVersion);
 
         argList = strLstNew();
-        strLstAddZ(argList, "/path/to/pgbackrest");
+        strLstAddZ(argList, "/path/to/pgbunker");
         strLstAddZ(argList, "help");
         strLstAddZ(argList, "backup");
         strLstAddZ(argList, "repo-hardlink");
@@ -542,7 +542,7 @@ testRun(void)
         TEST_RESULT_STR_Z(helpRender(helpData), optionHelp, "check text");
 
         argList = strLstNew();
-        strLstAddZ(argList, "/path/to/pgbackrest");
+        strLstAddZ(argList, "/path/to/pgbunker");
         strLstAddZ(argList, "help");
         strLstAddZ(argList, "backup");
         strLstAddZ(argList, "hardlink");
@@ -578,7 +578,7 @@ testRun(void)
             helpVersion);
 
         argList = strLstNew();
-        strLstAddZ(argList, "/path/to/pgbackrest");
+        strLstAddZ(argList, "/path/to/pgbunker");
         strLstAddZ(argList, "help");
         strLstAddZ(argList, "backup");
         strLstAddZ(argList, "repo-retention-archive");
@@ -604,7 +604,7 @@ testRun(void)
             helpVersion);
 
         argList = strLstNew();
-        strLstAddZ(argList, "/path/to/pgbackrest");
+        strLstAddZ(argList, "/path/to/pgbunker");
         hrnCfgArgKeyRawZ(argList, cfgOptRepoHost, 1, "backup.example.net");
         hrnCfgArgKeyRawZ(argList, cfgOptRepoHost, 3, "dr.test.org");
         strLstAddZ(argList, "help");
@@ -631,7 +631,7 @@ testRun(void)
             helpVersion);
 
         argList = strLstNew();
-        strLstAddZ(argList, "/path/to/pgbackrest");
+        strLstAddZ(argList, "/path/to/pgbunker");
         hrnCfgArgKeyRawZ(argList, cfgOptRepoType, 1, "s3");
         hrnCfgArgKeyRawZ(argList, cfgOptRepoHost, 3, "dr.test.org");
         strLstAddZ(argList, "help");
@@ -676,7 +676,7 @@ testRun(void)
             helpVersion);
 
         argList = strLstNew();
-        strLstAddZ(argList, "/path/to/pgbackrest");
+        strLstAddZ(argList, "/path/to/pgbunker");
         hrnCfgArgKeyRawZ(argList, cfgOptRepoType, 1, "s3");
         hrnCfgArgKeyRawZ(argList, cfgOptRepoType, 2, "azure");
         hrnCfgArgKeyRawZ(argList, cfgOptRepoType, 3, "gcs");
@@ -695,7 +695,7 @@ testRun(void)
     if (testBegin("cmdHelp() to file"))
     {
         StringList *argList = strLstNew();
-        strLstAddZ(argList, "/path/to/pgbackrest");
+        strLstAddZ(argList, "/path/to/pgbunker");
         TEST_RESULT_VOID(testCfgLoad(argList), "parse help from empty command line");
 
         // Redirect stdout to a file

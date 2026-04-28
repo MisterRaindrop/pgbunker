@@ -23,13 +23,13 @@ use lib dirname($0) . '/lib';
 use lib dirname(dirname($0)) . '/lib';
 use lib dirname(dirname($0)) . '/doc/lib';
 
-use pgBackRestDoc::Common::Exception;
-use pgBackRestDoc::Common::Log;
-use pgBackRestDoc::ProjectInfo;
+use pgBunkerDoc::Common::Exception;
+use pgBunkerDoc::Common::Log;
+use pgBunkerDoc::ProjectInfo;
 
-use pgBackRestTest::Common::ContainerTest;
-use pgBackRestTest::Common::ExecuteTest;
-use pgBackRestTest::Common::VmTest;
+use pgBunkerTest::Common::ContainerTest;
+use pgBunkerTest::Common::ExecuteTest;
+use pgBunkerTest::Common::VmTest;
 
 ####################################################################################################################################
 # Usage
@@ -186,8 +186,8 @@ eval
             $strPackage .= " libdbd-pg-perl";
         }
 
-        processBegin('/tmp/pgbackrest owned by root so tests cannot use it');
-        processExec('sudo mkdir -p /tmp/pgbackrest && sudo chown root:root /tmp/pgbackrest && sudo chmod 700 /tmp/pgbackrest');
+        processBegin('/tmp/pgbunker owned by root so tests cannot use it');
+        processExec('sudo mkdir -p /tmp/pgbunker && sudo chown root:root /tmp/pgbunker && sudo chmod 700 /tmp/pgbunker');
         processEnd();
 
         processBegin('install test packages');

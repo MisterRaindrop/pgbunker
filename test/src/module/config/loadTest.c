@@ -121,7 +121,7 @@ testRun(void)
         hrnCfgArgKeyRawStrId(argList, cfgOptRepoType, 2, STORAGE_CIFS_TYPE);
         TEST_ERROR(
             hrnCfgLoadP(cfgCmdInfo, argList), OptionInvalidValueError,
-            "local repo1 and repo2 paths are both '/var/lib/pgbackrest' but must be different");
+            "local repo1 and repo2 paths are both '/var/lib/pgbunker' but must be different");
 
         // -------------------------------------------------------------------------------------------------------------------------
         TEST_TITLE("local repo paths same but types different");
