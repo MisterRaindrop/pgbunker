@@ -1,12 +1,16 @@
-# pgBackRest <br/> Reliable PostgreSQL Backup & Restore
+# pgBunker <br/> Reliable PostgreSQL Backup & Restore
+
+## About this fork
+
+pgBunker is a community-maintained continuation of [pgBackRest](https://github.com/pgbackrest/pgbackrest), which the original author [David Steele](https://github.com/dwsteele) [stopped maintaining in April 2026](https://github.com/pgbackrest/pgbackrest/blob/eol/README.md). In line with David's request that forks adopt a new identity, this project has been renamed to **pgBunker**. We are deeply grateful for thirteen years of work by David and the original contributors — without them, none of this would exist.
+
+This fork is based on `pgbackrest/pgbackrest` `main` at v2.58.0 and is licensed under the original MIT terms.
 
 ## Introduction
 
-pgBackRest is a reliable backup and restore solution for PostgreSQL that seamlessly scales up to the largest databases and workloads.
+pgBunker is a reliable backup and restore solution for PostgreSQL that seamlessly scales up to the largest databases and workloads, continuing the pgBackRest codebase under new maintenance.
 
-pgBackRest [v2.58.0](https://github.com/pgbackrest/pgbackrest/releases/tag/release/2.58.0) is the current stable release. Release notes are on the [Releases](http://www.pgbackrest.org/release.html) page.
-
-Please give us a star on [GitHub](https://github.com/pgbackrest/pgbackrest) if you like pgBackRest! Consider a [sponsorship](https://github.com/sponsors/dwsteele) if you use pgBackRest in your enterprise.
+The last upstream stable release before pgBackRest was discontinued is [v2.58.0](https://github.com/pgbackrest/pgbackrest/releases/tag/release/2.58.0). pgBunker releases will continue from this baseline.
 
 ## Features
 
