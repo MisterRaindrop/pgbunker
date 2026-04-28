@@ -83,7 +83,7 @@
         "commit": "5b4b20a8d7d17c2bffe106595310853e3f3a9604",
         "date": "2026-01-07 08:22:01 +0700",
         "subject": "Require TLS >= 1.2 unless verification is disabled.",
-        "body": "TLS 1.0 and 1.1 have been deprecated since 2021 (see RFC-8996) and TLS 1.2 has been available since 2008. As such it makes sense to require TLS >= 1.2 when verification is enabled. Verification is always enabled for TLS protocol sessions within pgBackRest but can be disabled for object stores (.e.g. S3) to support self-signed certificates on internal servers.\n\nThere is a slight change in behavior when verification is disabled. In prior versions SSL 2/3 would be disabled but now they are allowed (as well as TLS 1.0/1.2). With verification disabled it doesn't seem useful to be picky about protocol versions and disabling TLS 1.0/1.1 could easily cause breakage on older TLS servers."
+        "body": "TLS 1.0 and 1.1 have been deprecated since 2021 (see RFC-8996) and TLS 1.2 has been available since 2008. As such it makes sense to require TLS >= 1.2 when verification is enabled. Verification is always enabled for TLS protocol sessions within pgBunker but can be disabled for object stores (.e.g. S3) to support self-signed certificates on internal servers.\n\nThere is a slight change in behavior when verification is disabled. In prior versions SSL 2/3 would be disabled but now they are allowed (as well as TLS 1.0/1.2). With verification disabled it doesn't seem useful to be picky about protocol versions and disabling TLS 1.0/1.1 could easily cause breakage on older TLS servers."
     },
     {
         "commit": "38f14d73b6a62d06e1ead7942e49a2bb2ae90dab",
@@ -146,7 +146,7 @@
         "commit": "e13c462908c6ee25f8795b5d1373981549d4d5cf",
         "date": "2025-12-22 14:43:15 +0700",
         "subject": "Fix deadlock due to logging in signal handler.",
-        "body": "Previously it was possible to achieve a deadlock in a signal handler, for example when SIGTERM (i.e. sent by `pgbackrest stop --force`) arrives when a lock used in `gmtime_r` is taken. Then the next time logging is done, it will deadlock on `gmtime_r`.\n\nIn general, most stdlib functions are not safe to call in signal handlers, only so called async-signal safe functions are. In particular, `snprintf` isn't safe since it is allowed to internally call `malloc`. The `exitSafe` function isn't safe due to extensive use of allocations. Because of this, we need to use a simpler logging format in signal handlers, one that only uses async-signal safe functions."
+        "body": "Previously it was possible to achieve a deadlock in a signal handler, for example when SIGTERM (i.e. sent by `pgbunker stop --force`) arrives when a lock used in `gmtime_r` is taken. Then the next time logging is done, it will deadlock on `gmtime_r`.\n\nIn general, most stdlib functions are not safe to call in signal handlers, only so called async-signal safe functions are. In particular, `snprintf` isn't safe since it is allowed to internally call `malloc`. The `exitSafe` function isn't safe due to extensive use of allocations. Because of this, we need to use a simpler logging format in signal handlers, one that only uses async-signal safe functions."
     },
     {
         "commit": "cc7b9b72718c091de54417f9f35761dcfab610d9",
@@ -198,7 +198,7 @@
         "commit": "bce97d3ea80675b8eab3dbf692e8bc8f077f30c7",
         "date": "2025-11-19 10:40:02 +0200",
         "subject": "Remove explicit max_wal_senders/wal_level configuration from user guide.",
-        "body": "Since PostgreSQL 10 these settings have been defaulted to values required by the user guide so there is no need to explicitly set them.\n\nPostgreSQL 9.5/9.6 are still supported by pgBackRest but are not represented in the user guide since they are EOL."
+        "body": "Since PostgreSQL 10 these settings have been defaulted to values required by the user guide so there is no need to explicitly set them.\n\nPostgreSQL 9.5/9.6 are still supported by pgBunker but are not represented in the user guide since they are EOL."
     },
     {
         "commit": "d83019924bd07bf563ec2d8f7b8417694fd51519",
@@ -215,7 +215,7 @@
         "commit": "0fc7e96f5addb01e7f6f3585e37d209cc17dd956",
         "date": "2025-11-11 21:06:42 +0200",
         "subject": "Allow process priority to be set.",
-        "body": "Decreasing process priority makes the pgBackRest processes less likely to interfere with the normal operation of PostgreSQL."
+        "body": "Decreasing process priority makes the pgBunker processes less likely to interfere with the normal operation of PostgreSQL."
     },
     {
         "commit": "8b9a19e078a9650786433047a05f15637dcac8c6",
@@ -293,7 +293,7 @@
         "commit": "5171e8bde31b9711c9c5b4ccc5170b61c5235548",
         "date": "2025-11-07 10:01:50 +0200",
         "subject": "Remove support for PostgreSQL 9.5.",
-        "body": "Per our policy to support five EOL versions of PostgreSQL, 9.5 is no longer supported by pgBackRest. Remove all logic associated with 9.5 and update the tests.\n\nAn effort was made to advance versions as much as possible in the tests while still providing coverage. Hopefully this will reduce churn when future versions expire, though it has created a bit more here.\n\nTests for 9.4/9.5 are left in the expire/info tests to demonstrate that these commands work with old versions present."
+        "body": "Per our policy to support five EOL versions of PostgreSQL, 9.5 is no longer supported by pgBunker. Remove all logic associated with 9.5 and update the tests.\n\nAn effort was made to advance versions as much as possible in the tests while still providing coverage. Hopefully this will reduce churn when future versions expire, though it has created a bit more here.\n\nTests for 9.4/9.5 are left in the expire/info tests to demonstrate that these commands work with old versions present."
     },
     {
         "commit": "1f2b2778ab661155850c88f3d99aaaab617f1483",
@@ -424,7 +424,7 @@
         "commit": "adc5e5b23b9b544745724a7eaa0461b88b691e36",
         "date": "2025-08-25 11:51:54 -0400",
         "subject": "Fix possible segfault in page checksum error message.",
-        "body": "The STRDEF definition of plural is out of scope in the error message just below it, which may lead to either garbage in the log message or a crash with SIGSEGV.\n\nThis is particularly visible with pg_tde, which encrypts tables: if pgbackrest is run with checksum enabled, it tries to emit this message for all encrypted files.\n\nFix by using simple char * constants in the error message."
+        "body": "The STRDEF definition of plural is out of scope in the error message just below it, which may lead to either garbage in the log message or a crash with SIGSEGV.\n\nThis is particularly visible with pg_tde, which encrypts tables: if pgbunker is run with checksum enabled, it tries to emit this message for all encrypted files.\n\nFix by using simple char * constants in the error message."
     },
     {
         "commit": "779cb763afa6fc8e7e6b92ef8c2c64ee1c1b2c2e",
@@ -612,7 +612,7 @@
     {
         "commit": "1e98684148c0095d2c8e4cabc033e2aa3b0c2554",
         "date": "2025-05-08 09:16:30 -0400",
-        "subject": "Add default type for current pgbackrest binary.",
+        "subject": "Add default type for current pgbunker binary.",
         "body": "These defaults were being set in cfgLoadUpdate() but they can be better documented if they are part of the option rules. This is part of a general trend to move away from custom-coded defaults."
     },
     {
@@ -872,7 +872,7 @@
         "commit": "750a051b7aeccc3dd7ae9c07af2c73cb25057de9",
         "date": "2025-02-28 16:53:03 -0600",
         "subject": "Add numeric output to version command.",
-        "body": "Add a new output option to the version command that defaults to text (current behavior) but can be set to num to output the version in a numeric format, e.g. 2055000.\n\nThis makes it easier to compare and identify versions of pgBackRest."
+        "body": "Add a new output option to the version command that defaults to text (current behavior) but can be set to num to output the version in a numeric format, e.g. 2055000.\n\nThis makes it easier to compare and identify versions of pgBunker."
     },
     {
         "commit": "57ffd2dfcbc47300d61d901789c6d09ffc8e25b2",
@@ -918,7 +918,7 @@
     {
         "commit": "82299eb4cd997524eeddef170ad99669ed6651cf",
         "date": "2025-02-15 12:00:00 -0600",
-        "subject": "Clarify requirement for local/remote pgBackRest versions to match."
+        "subject": "Clarify requirement for local/remote pgBunker versions to match."
     },
     {
         "commit": "47f050f8fd816e57326d881f4253d8a13c0f8da6",
@@ -941,7 +941,7 @@
         "commit": "922e9f0775c39b64e009251a6bec8ef9b83c190f",
         "date": "2025-02-04 10:06:17 -0500",
         "subject": "Verify recovery target timeline.",
-        "body": "If the user picks an invalid timeline (or the default is invalid) they will not discover it until after the restore is complete and recovery starts. In that case they'll receive a message like this:\n\nFATAL:  requested timeline 2 is not a child of this server's history\nDETAIL:  Latest checkpoint is at 0/7000028 on timeline 1, but in the history of the requested timeline, the server forked off from that timeline at 0/600AA20.\n\nThis message generally causes confusion unless one is familiar with it. In this case 1) a standby was promoted creating a new timeline 2) a new backup was made from the primary 3) the new backup was restored but could not follow the new timeline because the backup was made after the new timeline forked off. Since PostgreSQL 12 following the latest timeline has been the default so this error has become common in split brain situations.\n\nImprove pgBackRest to read the history files and provide better error messages. Now this error is thrown before the restore starts:\n\nERROR: [058]: target timeline 2 forked from backup timeline 1 at 0/600aa20 which is before backup lsn of 0/7000028\n       HINT: was the target timeline created by accidentally promoting a standby?\n       HINT: was the target timeline created by testing a restore without --archive-mode=off?\n       HINT: was the backup made after the target timeline was created?\n\nThis saves time since it happens before the restore and gives more information about what has gone wrong.\n\nIf the backup timeline is not an ancestor of the target timeline the error message is:\n\nERROR: [058]: backup timeline 6, lsn 0/4ffffff is not in the history of target timeline B\n       HINT: was the target timeline created by promoting from a timeline < latest?\n\nThis situation should be rare but can happen during complex recovery scenarios where the user is explicitly setting the target time."
+        "body": "If the user picks an invalid timeline (or the default is invalid) they will not discover it until after the restore is complete and recovery starts. In that case they'll receive a message like this:\n\nFATAL:  requested timeline 2 is not a child of this server's history\nDETAIL:  Latest checkpoint is at 0/7000028 on timeline 1, but in the history of the requested timeline, the server forked off from that timeline at 0/600AA20.\n\nThis message generally causes confusion unless one is familiar with it. In this case 1) a standby was promoted creating a new timeline 2) a new backup was made from the primary 3) the new backup was restored but could not follow the new timeline because the backup was made after the new timeline forked off. Since PostgreSQL 12 following the latest timeline has been the default so this error has become common in split brain situations.\n\nImprove pgBunker to read the history files and provide better error messages. Now this error is thrown before the restore starts:\n\nERROR: [058]: target timeline 2 forked from backup timeline 1 at 0/600aa20 which is before backup lsn of 0/7000028\n       HINT: was the target timeline created by accidentally promoting a standby?\n       HINT: was the target timeline created by testing a restore without --archive-mode=off?\n       HINT: was the backup made after the target timeline was created?\n\nThis saves time since it happens before the restore and gives more information about what has gone wrong.\n\nIf the backup timeline is not an ancestor of the target timeline the error message is:\n\nERROR: [058]: backup timeline 6, lsn 0/4ffffff is not in the history of target timeline B\n       HINT: was the target timeline created by promoting from a timeline < latest?\n\nThis situation should be rare but can happen during complex recovery scenarios where the user is explicitly setting the target time."
     },
     {
         "commit": "322e764f295f65b2a1189e207f6115471f943b1b",
@@ -1224,8 +1224,8 @@
     {
         "commit": "c9c73ede9d8182374372c46face4433997e8c0ea",
         "date": "2024-11-07 10:30:16 -0500",
-        "subject": "Fix issue with version/help commands attempting to load pgbackrest.conf.",
-        "body": "8d6bceb5 refactored version/help to operate more like regular commands in part to simplify the implementation of --version and --help. Unfortunately this had the side effect of these commands also loading pgbackrest.conf which would lead to an error if the file could not be read or parsed.\r\n\r\nAdd a filter to prevent version or help from loading pgbackrest.conf. Also prevent reads from the env to stop any warnings or errors from that source."
+        "subject": "Fix issue with version/help commands attempting to load pgbunker.conf.",
+        "body": "8d6bceb5 refactored version/help to operate more like regular commands in part to simplify the implementation of --version and --help. Unfortunately this had the side effect of these commands also loading pgbunker.conf which would lead to an error if the file could not be read or parsed.\r\n\r\nAdd a filter to prevent version or help from loading pgbunker.conf. Also prevent reads from the env to stop any warnings or errors from that source."
     },
     {
         "commit": "c6785431653d81d793b9c683091bfa20156c0c2f",
@@ -1291,7 +1291,7 @@
         "commit": "48f511dad339ef9357e00f7bd8e2bf4b7c800dd4",
         "date": "2024-10-21 13:56:04 +0300",
         "subject": "Remove support for PostgreSQL 9.4.",
-        "body": "Per our policy to support five EOL versions of PostgreSQL, 9.4 is no longer supported by pgBackRest. Remove all logic associated with 9.4 and update the tests.\r\n\r\nThis includes a small fix in infoPg.c to allow backup.info files with old versions to be saved. This allows expire to function when old versions are present. Even though those older versions cannot be used, they can be expired.\r\n\r\nTests for 9.4 are left in the expire/info tests to demonstrate that these commands work with old versions present."
+        "body": "Per our policy to support five EOL versions of PostgreSQL, 9.4 is no longer supported by pgBunker. Remove all logic associated with 9.4 and update the tests.\r\n\r\nThis includes a small fix in infoPg.c to allow backup.info files with old versions to be saved. This allows expire to function when old versions are present. Even though those older versions cannot be used, they can be expired.\r\n\r\nTests for 9.4 are left in the expire/info tests to demonstrate that these commands work with old versions present."
     },
     {
         "commit": "89c9baba72fc99616083a7adc4be2c3e2bf9e4dd",
@@ -1434,7 +1434,7 @@
         "commit": "f73c6382752ca8cad43a412a03b6b5f34cf94984",
         "date": "2024-09-20 15:21:38 +0300",
         "subject": "Skip command-line options in configuration reference.",
-        "body": "Options that are only valid on the command-line should not appear in the configuration reference because it implies that they can be added to pgbackrest.conf, which is not the case.\n\nMost command-line options were already excluded because they lacked a section, but a few were slipping through."
+        "body": "Options that are only valid on the command-line should not appear in the configuration reference because it implies that they can be added to pgbunker.conf, which is not the case.\n\nMost command-line options were already excluded because they lacked a section, but a few were slipping through."
     },
     {
         "commit": "b19134dccd5d0dab87b5d45b443f481df00370b1",
@@ -1888,7 +1888,7 @@
         "commit": "899b8927888f3930f07f5607902d0493bd3b8f05",
         "date": "2024-05-24 12:24:11 +1000",
         "subject": "New CI container build for PostgreSQL 17 beta1.",
-        "body": "Update the catalog version for beta 1 so pgbackrest will not work with any prior development versions.\n\nAlso improve the integration/all test so the catalog version does not need to be updated again during the beta period."
+        "body": "Update the catalog version for beta 1 so pgbunker will not work with any prior development versions.\n\nAlso improve the integration/all test so the catalog version does not need to be updated again during the beta period."
     },
     {
         "commit": "c401ae8fb852d8cd7d10b7b7f3dcf1c42de8d3ee",
@@ -2069,7 +2069,7 @@
     {
         "commit": "7877983acb3b1a27e900f7e7aea89cb7b29a817d",
         "date": "2024-03-27 09:29:37 +1100",
-        "subject": "Tag pgbackrest build target in meson as installable.",
+        "subject": "Tag pgbunker build target in meson as installable.",
         "body": "By default meson does not install anything. Targets can be installed by tagging them as installable in the build definition."
     },
     {
@@ -2146,7 +2146,7 @@
         "commit": "eda7706f53e925a701f85894ab3d8e861e5fcf06",
         "date": "2024-03-10 09:40:13 +1300",
         "subject": "Make valgrind libssh2 leak check less specific.",
-        "body": "The leak kind is usually definite but sometimes flaps to possible. For stability purposes accept any leak kind.\n\nNote that this is a leak in a specific version of libssh2 and not a bug in pgBackRest."
+        "body": "The leak kind is usually definite but sometimes flaps to possible. For stability purposes accept any leak kind.\n\nNote that this is a leak in a specific version of libssh2 and not a bug in pgBunker."
     },
     {
         "commit": "dddcbcd8e9a1cae578b0cc5bb2d1aa768330f3c5",
@@ -2268,7 +2268,7 @@
         "commit": "0aaa0772f56d59178518377b33b3e3d02f0f5483",
         "date": "2024-01-22 12:33:40 -0300",
         "subject": "Fix help not displaying help for the help command.",
-        "body": "'pgbackrest help help' just displayed the help overview, rather than display help for the help command.\n\nFix this by making sure the command is set and routing correctly in the help command."
+        "body": "'pgbunker help help' just displayed the help overview, rather than display help for the help command.\n\nFix this by making sure the command is set and routing correctly in the help command."
     },
     {
         "commit": "68db3075d7ac4a48377967ad54e45b95b9ee6c61",
@@ -2418,7 +2418,7 @@
         "commit": "02eea555c7169e99892fdbc8ce7cc1ee59f50509",
         "date": "2023-12-14 14:21:06 -0300",
         "subject": "Skip files truncated during backup when bundling.",
-        "body": "In bundle mode pgBackRest skips files of zero size, that is, it does not queue them for copying.\r\n\r\nAfter splitting the files into bundles, pgBackRest launches one or more processes that directly perform the backup, namely, read the files and, if necessary, write them to the bundles.\r\n\r\nIf during the time between the distribution of all files among bundles and the direct copying of a file to a bundle, this file of non-zero size was truncated to zero size (for example, when the table was truncated), then pgBackRest still unconditionally places such a zero-size file in the bundle, taking up space in it equal to the size of the headings, and additionally writes the original file size to the manifest.\r\n\r\nIn debug build an assertion was added, that does not allow zero-size files to be written to bundles, which leads to an error.\r\n\r\nTo solve the problem, this patch, when reading the next file, loads one buffer from the file to detect if it is zero-size. If so it marks the file as truncated and continues on to the next file.\r\n\r\nThe advantages of the solution are that, firstly, the assert will not fire on debug builds, and secondly, we will not place zero-size files in bundles, which exactly corresponds to the specification.\r\n\r\nThe patch adds the backupCopyResultTruncate value to the BackupCopyResult enumeration to use it to indicate the result when a non-zero size file is truncated to zero size during the backup process."
+        "body": "In bundle mode pgBunker skips files of zero size, that is, it does not queue them for copying.\r\n\r\nAfter splitting the files into bundles, pgBunker launches one or more processes that directly perform the backup, namely, read the files and, if necessary, write them to the bundles.\r\n\r\nIf during the time between the distribution of all files among bundles and the direct copying of a file to a bundle, this file of non-zero size was truncated to zero size (for example, when the table was truncated), then pgBunker still unconditionally places such a zero-size file in the bundle, taking up space in it equal to the size of the headings, and additionally writes the original file size to the manifest.\r\n\r\nIn debug build an assertion was added, that does not allow zero-size files to be written to bundles, which leads to an error.\r\n\r\nTo solve the problem, this patch, when reading the next file, loads one buffer from the file to detect if it is zero-size. If so it marks the file as truncated and continues on to the next file.\r\n\r\nThe advantages of the solution are that, firstly, the assert will not fire on debug builds, and secondly, we will not place zero-size files in bundles, which exactly corresponds to the specification.\r\n\r\nThe patch adds the backupCopyResultTruncate value to the BackupCopyResult enumeration to use it to indicate the result when a non-zero size file is truncated to zero size during the backup process."
     },
     {
         "commit": "89d5278b74ab0d880345575d7ac4c239cd1fce54",
@@ -2517,13 +2517,13 @@
         "commit": "dcf078198761a2cfe9be6b4c7f4b4fb07ef53cbf",
         "date": "2023-11-09 12:59:12 -0300",
         "subject": "Remove support for PostgreSQL 9.3.",
-        "body": "Per our policy to support five EOL versions of PostgreSQL, 9.3 is no longer supported by pgBackRest.\r\n\r\nRemove all logic associated with 9.3 and update the tests."
+        "body": "Per our policy to support five EOL versions of PostgreSQL, 9.3 is no longer supported by pgBunker.\r\n\r\nRemove all logic associated with 9.3 and update the tests."
     },
     {
         "commit": "fa5b2d44ad9f7591517eecaaaaeb07e9500dd51c",
         "date": "2023-11-09 12:04:25 -0300",
         "subject": "Fix regression in retries.",
-        "body": "5314dbf aimed to make nested Wait objects more accurate with regard to wait time but it also got rid of the \"bonus\" retry that was implicit in the prior implementation. This meant that if an operation used up the entire allotted timeout, it would not be retried. Object stores especially are noisy places and some amount of retry should always be attempted. So even though removing the \"bonus\" retry was intended, it turned out not to be a good idea.\r\n\r\nInstead of an implicit retry, formalize two retries in the Wait object even if the wait time has expired. Any number of retries are allowed during the wait period. Also remove waitRemaining() since it is no longer needed.\r\n\r\nAdjust tests as needed to account for the extra timeouts.\r\n\r\nNote that there may still be an underlying issue here that is simply being masked by retries. That is, the issue expressing was that waiting for a socket to be writable was timing out and without a retry that caused a hard error. This patch does nothing to address the source of the write timeout and perhaps there is nothing we can do about it. It does seem similar to the write issue we had with our blocking TLS implementation, but it was never clear if that was a problem with TLS, the kernel, or a bug in pgBackRest itself. It cropped up after a kernel update and we switched to non-blocking TLS to address the issue (c88684e)."
+        "body": "5314dbf aimed to make nested Wait objects more accurate with regard to wait time but it also got rid of the \"bonus\" retry that was implicit in the prior implementation. This meant that if an operation used up the entire allotted timeout, it would not be retried. Object stores especially are noisy places and some amount of retry should always be attempted. So even though removing the \"bonus\" retry was intended, it turned out not to be a good idea.\r\n\r\nInstead of an implicit retry, formalize two retries in the Wait object even if the wait time has expired. Any number of retries are allowed during the wait period. Also remove waitRemaining() since it is no longer needed.\r\n\r\nAdjust tests as needed to account for the extra timeouts.\r\n\r\nNote that there may still be an underlying issue here that is simply being masked by retries. That is, the issue expressing was that waiting for a socket to be writable was timing out and without a retry that caused a hard error. This patch does nothing to address the source of the write timeout and perhaps there is nothing we can do about it. It does seem similar to the write issue we had with our blocking TLS implementation, but it was never clear if that was a problem with TLS, the kernel, or a bug in pgBunker itself. It cropped up after a kernel update and we switched to non-blocking TLS to address the issue (c88684e)."
     },
     {
         "commit": "3c116e1829a0df62aaf50ce241c63d829eb438e0",
@@ -2701,7 +2701,7 @@
         "commit": "9039d20b5bd73d3732ed6dac0a2bba4558176d8f",
         "date": "2023-09-15 09:30:40 -0400",
         "subject": "Add report option to check command.",
-        "body": "This option is intended to eventually create a comprehensive report about the state of the pgBackRest configuration based on the results of the check command.\r\n\r\nImplement a detailed report of the configuration options in the environment and configuration files. This should be useful information when debugging configuration errors, since invalid options and configurations are automatically noted. While custom config locations will not be found automatically, it will at least be clear that the config is not in a standard location.\r\n\r\nFor now keep this option internal since there is a lot of work to be done, but commit it so that it can be used when needed and tested in various environments.\r\n\r\nNote that for now when --report is specified, the check command is not being run at all. Only the config report is generated. This behavior will be improved in the future."
+        "body": "This option is intended to eventually create a comprehensive report about the state of the pgBunker configuration based on the results of the check command.\r\n\r\nImplement a detailed report of the configuration options in the environment and configuration files. This should be useful information when debugging configuration errors, since invalid options and configurations are automatically noted. While custom config locations will not be found automatically, it will at least be clear that the config is not in a standard location.\r\n\r\nFor now keep this option internal since there is a lot of work to be done, but commit it so that it can be used when needed and tested in various environments.\r\n\r\nNote that for now when --report is specified, the check command is not being run at all. Only the config report is generated. This behavior will be improved in the future."
     },
     {
         "commit": "657c1a3e069910106bc3642153c27b0542c61dc3",
@@ -2723,7 +2723,7 @@
         "commit": "39bb8a0d3a96eef63219dff262a9306a4f59dae9",
         "date": "2023-09-12 18:09:58 -0400",
         "subject": "Support for dual stack connections.",
-        "body": "The prior code would only connect to the first address provided by getaddrinfo().\r\n\r\nInstead try each address in the list. If all connections fail then wait and try them all again until timeout.\r\n\r\nCurrently a round robin approach is used where each connection attempt must fail before the next connection is attempted. This works fine, for example, when an ipv6 address has no route to the host, but will work less well when a host answers but doesn't respond in a timely fashion.\r\n\r\nWe may consider a Happy Eyeballs approach in the future, but since pgBackRest is primarily a background process, it is not clear that slightly improved response time (in the case of failed connections) is worth the extra complexity."
+        "body": "The prior code would only connect to the first address provided by getaddrinfo().\r\n\r\nInstead try each address in the list. If all connections fail then wait and try them all again until timeout.\r\n\r\nCurrently a round robin approach is used where each connection attempt must fail before the next connection is attempted. This works fine, for example, when an ipv6 address has no route to the host, but will work less well when a host answers but doesn't respond in a timely fashion.\r\n\r\nWe may consider a Happy Eyeballs approach in the future, but since pgBunker is primarily a background process, it is not clear that slightly improved response time (in the case of failed connections) is worth the extra complexity."
     },
     {
         "commit": "9d3a605900644059ff0e030d71a818b3965eb031",
@@ -2741,7 +2741,7 @@
         "commit": "f42d927d2dcd58cf5a80d68eaf6888bcf2c67a4b",
         "date": "2023-09-10 09:47:49 -0400",
         "subject": "Retry reads of pg_control until checksum is valid.",
-        "body": "On certain file systems (e.g. ext4) pg_control may appear torn if there is a concurrent write while reading the file. To prevent an invalid read, retry until the checksum matches the control data.\r\n\r\nSpecial handling is required for the pg-version-force feature since the offset of the checksum is not known. In this case, scan from the default position to the end of the data looking for a checksum match. This is a bit imprecise, but better than nothing, and the chance of a random collision in the control data seems very remote considering the ratio of data size (< 512 bytes) to checksum size (4 bytes).\r\n\r\nThis was discovered and a possible solution proposed for PostgreSQL in [1]. The proposed solution may work for backup, but pgBackRest needs to be able to read pg_control reliably outside of backup. So no matter what fix is adopted for PostgreSQL, pgBackRest need retries. Further adjustment may be required as the PostgreSQL fix evolves.\r\n\r\n[1] https://www.postgresql.org/message-id/20221123014224.xisi44byq3cf5psi%40awork3.anarazel.de"
+        "body": "On certain file systems (e.g. ext4) pg_control may appear torn if there is a concurrent write while reading the file. To prevent an invalid read, retry until the checksum matches the control data.\r\n\r\nSpecial handling is required for the pg-version-force feature since the offset of the checksum is not known. In this case, scan from the default position to the end of the data looking for a checksum match. This is a bit imprecise, but better than nothing, and the chance of a random collision in the control data seems very remote considering the ratio of data size (< 512 bytes) to checksum size (4 bytes).\r\n\r\nThis was discovered and a possible solution proposed for PostgreSQL in [1]. The proposed solution may work for backup, but pgBunker needs to be able to read pg_control reliably outside of backup. So no matter what fix is adopted for PostgreSQL, pgBunker need retries. Further adjustment may be required as the PostgreSQL fix evolves.\r\n\r\n[1] https://www.postgresql.org/message-id/20221123014224.xisi44byq3cf5psi%40awork3.anarazel.de"
     },
     {
         "commit": "c1805134b370f0c5c54c40a2df8978599328784f",
@@ -3053,7 +3053,7 @@
         "commit": "36ff81dc6ff7e98e40c0c05a4a343a71b91b1678",
         "date": "2023-05-24 14:17:07 +0300",
         "subject": "Centralize error handling for unsupported features.",
-        "body": "Some features are conditionally compiled into pgBackRest (e.g. lz4). Previously checking to see if the feature existed was the responsibility of the feature's module.\r\n\r\nCentralize this logic in the config/parse module to make the errors more detailed and consistent.\r\n\r\nThis also fixes the assert that is thrown when SFTP storage is specified but SFTP support is not compiled into pgBackRest."
+        "body": "Some features are conditionally compiled into pgBunker (e.g. lz4). Previously checking to see if the feature existed was the responsibility of the feature's module.\r\n\r\nCentralize this logic in the config/parse module to make the errors more detailed and consistent.\r\n\r\nThis also fixes the assert that is thrown when SFTP storage is specified but SFTP support is not compiled into pgBunker."
     },
     {
         "commit": "de46276bf60b8a2181621b123d1a99e56808a089",
@@ -3065,7 +3065,7 @@
         "commit": "48b26bf569664da59bff08eb3ef959f0cd440e29",
         "date": "2023-05-23 12:50:12 +0300",
         "subject": "Fix sftp-all=y in the user guide so it creates a valid configuration.",
-        "body": "This was not tested in 87087fac and the generated config was only valid for pushing from the primary. Also do some general cleanup.\n\nUpdate the SFTP server user to be \"pgbackrest\" instead of \"postgres\".\n\nEven though sftp-all=y now creates a valid configuration, the user guide build still fails because SFTP is too slow and operations time out (particularly starting PostgreSQL). This will need to be addressed in a future commit."
+        "body": "This was not tested in 87087fac and the generated config was only valid for pushing from the primary. Also do some general cleanup.\n\nUpdate the SFTP server user to be \"pgbunker\" instead of \"postgres\".\n\nEven though sftp-all=y now creates a valid configuration, the user guide build still fails because SFTP is too slow and operations time out (particularly starting PostgreSQL). This will need to be addressed in a future commit."
     },
     {
         "commit": "c633b187db32d18ccab24e77ab3413335e067775",
@@ -3480,7 +3480,7 @@
         "commit": "740c2258e36613b1b4e76bab452d0e610a399e7f",
         "date": "2023-03-09 08:23:15 +0700",
         "subject": "Add pg-version-force option for fork integration.",
-        "body": "Forks may update pg_control version or WAL magic without affecting the structures that pgBackRest depends on.\r\n\r\nThis option forces pgBackRest to treat a cluster as the specified version when it cannot be automatically identified."
+        "body": "Forks may update pg_control version or WAL magic without affecting the structures that pgBunker depends on.\r\n\r\nThis option forces pgBunker to treat a cluster as the specified version when it cannot be automatically identified."
     },
     {
         "commit": "2fa7e53c5d4b5a5fd79f62d39763746727a5b9be",
@@ -3891,7 +3891,7 @@
         "commit": "4fb8a0ecdd12bdb01273cebbecf61f6beb22146d",
         "date": "2022-12-31 17:13:41 +0700",
         "subject": "Add meson unity build and tests.",
-        "body": "This is immediately useful because it will detect any extern'd functions or variables that are not being used. It also detects functions or variables that are declared but not defined.\n\nIf a FV/VR_EXTERN macro is missing it will be detected either because of a mismatch in the declaration/definition or because a new defined symbol will appear in the nm test.\n\nEventually the unity build will be used to create a more optimized pgbackrest binary but that will need to wait."
+        "body": "This is immediately useful because it will detect any extern'd functions or variables that are not being used. It also detects functions or variables that are declared but not defined.\n\nIf a FV/VR_EXTERN macro is missing it will be detected either because of a mismatch in the declaration/definition or because a new defined symbol will appear in the nm test.\n\nEventually the unity build will be used to create a more optimized pgbunker binary but that will need to wait."
     },
     {
         "commit": "8aa2b101bbd9fe07971794bf4bb4c8d2a61c7b07",
@@ -4036,7 +4036,7 @@
         "commit": "77c721eb635c6d757d2d5ed6f2ffc083720c10a7",
         "date": "2022-12-20 12:20:47 +0700",
         "subject": "Remove support for PostgreSQL 9.0/9.1/9.2.",
-        "body": "Our new policy is to support ten versions of PostgreSQL, the five supported releases and the last five EOL releases. As of PostgreSQL 15, that means 9.0/9.1/9.2 are no longer supported by pgBackRest.\r\n\r\nRemove all logic associated with 9.0/9.1/9.2 and update the tests.\r\n\r\nDocument the new support policy.\r\n\r\nUpdate InfoPg to read/write control versions for the history in backup.info, since we can no longer rely on the mappings being available. In theory this could have been an issue after removing 8.3/8.4 if anybody was using a version that old."
+        "body": "Our new policy is to support ten versions of PostgreSQL, the five supported releases and the last five EOL releases. As of PostgreSQL 15, that means 9.0/9.1/9.2 are no longer supported by pgBunker.\r\n\r\nRemove all logic associated with 9.0/9.1/9.2 and update the tests.\r\n\r\nDocument the new support policy.\r\n\r\nUpdate InfoPg to read/write control versions for the history in backup.info, since we can no longer rely on the mappings being available. In theory this could have been an issue after removing 8.3/8.4 if anybody was using a version that old."
     },
     {
         "commit": "17ce738ff749c50f4ca721144cd9addce9e895f2",
@@ -4362,7 +4362,7 @@
         "commit": "3b5df1e089234d425dd225f8c1976755dc947c8a",
         "date": "2022-09-02 10:03:18 -0500",
         "subject": "Update archive.info timestamps after a successful backup.",
-        "body": "Lifecycle policies can cause the archive.info file and its copy to be removed since they are only updated on a stanza-upgrade. Update the timestamps after a successful backup to prevent this.\r\n\r\nThis does not mean that lifecycle policies should be used as a replacement for expiration. However, in some cases there may be policies in place that are out of admin control. If the lifecycle expiration is less than pgbackrest expiration then corruption of the earliest backup will occur at the very least and there might be other corruption which would make the repo unrecoverable."
+        "body": "Lifecycle policies can cause the archive.info file and its copy to be removed since they are only updated on a stanza-upgrade. Update the timestamps after a successful backup to prevent this.\r\n\r\nThis does not mean that lifecycle policies should be used as a replacement for expiration. However, in some cases there may be policies in place that are out of admin control. If the lifecycle expiration is less than pgbunker expiration then corruption of the earliest backup will occur at the very least and there might be other corruption which would make the repo unrecoverable."
     },
     {
         "commit": "0f7b6a3344b676d79afa7cd16ab54f67be870fdf",
@@ -4454,7 +4454,7 @@
     {
         "commit": "e9ff5248039eedb25da2fee550ec64fcebbc51c7",
         "date": "2022-07-26 15:15:12 -0400",
-        "subject": "Add absolute path for kill in pgbackrest.service."
+        "subject": "Add absolute path for kill in pgbunker.service."
     },
     {
         "commit": "79d9884141f90a9e93fb2ec8faef15e460dd3442",
@@ -4472,7 +4472,7 @@
         "commit": "cbbe93f592d8097393c5ffe214f0a8c5fb0549c1",
         "date": "2022-07-22 14:45:38 -0400",
         "subject": "Improve warning message on backup resume.",
-        "body": "The prior warning made it sound as if some action was required on the part of the user.\n\nThe new message should make it clearer that this action will be performed by pgBackRest."
+        "body": "The prior warning made it sound as if some action was required on the part of the user.\n\nThe new message should make it clearer that this action will be performed by pgBunker."
     },
     {
         "commit": "4c47cc5d4786b88a06c38aefe628356342433f64",
@@ -4483,7 +4483,7 @@
         "commit": "19d9941367f68d6effb516fbb1444877fea9a9ce",
         "date": "2022-07-21 20:10:51 -0400",
         "subject": "More C test harness improvements and CI.",
-        "body": "Build pgbackrest binary and auto-generated code automatically.\n\nRemove --module option and allow modules to run by parameter. This is less verbose and multiple modules can be run at a time.\n\nAllow filtering of modules. Multiple tests can be passed as parameters and if the module ends in / it will be used as a prefix filter. For example, common/ will run all the common modules.\n\nIf a test errors the remaining tests will still run but the test process will eventually exit with an error.\n\nCI tests are included but unit tests remain on the development branch.\n\nWith these changes all unit tests run except those that specify the define (e.g. common/assert-off) or containerReq (e.g. protocol/protocol) keywords.\n\nBuilding the C test harness has been simplified:\n\nmeson -Dwerror=true -Dfatal-errors=true -Dbuildtype=debug test/build/none pgbackrest\nninja -C test/build/none test/src/test-pgbackrest\n\nTo run all modules:\n\ntest/build/none/test/src/test-pgbackrest test\n\nJust the common/error module:\n\ntest/build/none/test/src/test-pgbackrest test common/error\n\nAll info modules:\n\ntest/build/none/test/src/test-pgbackrest test info/"
+        "body": "Build pgbunker binary and auto-generated code automatically.\n\nRemove --module option and allow modules to run by parameter. This is less verbose and multiple modules can be run at a time.\n\nAllow filtering of modules. Multiple tests can be passed as parameters and if the module ends in / it will be used as a prefix filter. For example, common/ will run all the common modules.\n\nIf a test errors the remaining tests will still run but the test process will eventually exit with an error.\n\nCI tests are included but unit tests remain on the development branch.\n\nWith these changes all unit tests run except those that specify the define (e.g. common/assert-off) or containerReq (e.g. protocol/protocol) keywords.\n\nBuilding the C test harness has been simplified:\n\nmeson -Dwerror=true -Dfatal-errors=true -Dbuildtype=debug test/build/none pgbunker\nninja -C test/build/none test/src/test-pgbunker\n\nTo run all modules:\n\ntest/build/none/test/src/test-pgbunker test\n\nJust the common/error module:\n\ntest/build/none/test/src/test-pgbunker test common/error\n\nAll info modules:\n\ntest/build/none/test/src/test-pgbunker test info/"
     },
     {
         "commit": "edfcf1652c6ab07fe5a147b97df0c563e09d3445",
@@ -4501,7 +4501,7 @@
         "commit": "f9bbafbf3fbd67fc289cf849900799b4718dace1",
         "date": "2022-07-20 19:02:14 -0400",
         "subject": "C test harness improvements.",
-        "body": "Add harness depends when present.\n\nInclude libyaml in all test builds.\n\nFix mode on paths before trying to remove and set test path with mode 770 to match the Perl test harness.\n\nWith these changes all unit tests run except those that specify the define (e.g. common/assert-off), binReq (e.g. command/archive-get), or containerReq (e.g. protocol/protocol) keywords.\n\nBuilds and code generation need to be done in advance. The following commands are required for setup:\n\nmeson setup -Dwerror=true -Dfatal-errors=true -Dbuildtype=debug build pgbackrest\nninja -C build test/src/test-pgbackrest\nbuild/src/build-code help pgbackrest\nbuild/src/build-code postgres pgbackrest\n\nNow tests can be run, e.g.:\n\nbuild/test/src/test-pgbackrest --module=postgres/interface"
+        "body": "Add harness depends when present.\n\nInclude libyaml in all test builds.\n\nFix mode on paths before trying to remove and set test path with mode 770 to match the Perl test harness.\n\nWith these changes all unit tests run except those that specify the define (e.g. common/assert-off), binReq (e.g. command/archive-get), or containerReq (e.g. protocol/protocol) keywords.\n\nBuilds and code generation need to be done in advance. The following commands are required for setup:\n\nmeson setup -Dwerror=true -Dfatal-errors=true -Dbuildtype=debug build pgbunker\nninja -C build test/src/test-pgbunker\nbuild/src/build-code help pgbunker\nbuild/src/build-code postgres pgbunker\n\nNow tests can be run, e.g.:\n\nbuild/test/src/test-pgbunker --module=postgres/interface"
     },
     {
         "commit": "c625f05a13e0238bf06feb26d0d8757dd2bedffd",
@@ -4574,7 +4574,7 @@
         "commit": "0eccbc8bf47073ab8ec1f13fed9865d0bd7c3635",
         "date": "2022-07-06 18:17:52 -0400",
         "subject": "Meson builds work on version 0.45.",
-        "body": "v0.45 ships with Ubuntu 18.04, which is currently the oldest distro we support. We may never do a Meson release on Ubuntu 18.04 but this allows us to start running unit tests with Meson in the meantime.\n\nSome more granular options are not available so we use buildtype in more places.\n\nThe check for a in-tree autoconf/make build had to be removed since the filesystem APIs are not available.\n\nFinally, alias_target was removed. This means that full paths must be used for build targets, which does not seem too bad. For instance, test/src/test-pgbackrest must now be used as a build target instead of simple test-pgbackrest."
+        "body": "v0.45 ships with Ubuntu 18.04, which is currently the oldest distro we support. We may never do a Meson release on Ubuntu 18.04 but this allows us to start running unit tests with Meson in the meantime.\n\nSome more granular options are not available so we use buildtype in more places.\n\nThe check for a in-tree autoconf/make build had to be removed since the filesystem APIs are not available.\n\nFinally, alias_target was removed. This means that full paths must be used for build targets, which does not seem too bad. For instance, test/src/test-pgbunker must now be used as a build target instead of simple test-pgbunker."
     },
     {
         "commit": "72960bbf179b4e8051bd4fc50be57d95159e9e13",
@@ -4738,7 +4738,7 @@
         "commit": "b8fc20d5b8e7ca003ff39f29ea6e3ba57653f55c",
         "date": "2022-06-03 14:13:56 -0400",
         "subject": "Add experimental Meson build.",
-        "body": "Meson is a new build system that offers simpler syntax and superior performance to autoconf/make. In addition, Windows is supported natively.\r\n\r\nThe Meson build appears complete, but currently is used only for auto-generation of code and the host build of pgbackrest. Some container upgrades will be required before Meson can be used for container builds.\r\n\r\nAlso patch the Debian package to force autoconf/make rather than Meson."
+        "body": "Meson is a new build system that offers simpler syntax and superior performance to autoconf/make. In addition, Windows is supported natively.\r\n\r\nThe Meson build appears complete, but currently is used only for auto-generation of code and the host build of pgbunker. Some container upgrades will be required before Meson can be used for container builds.\r\n\r\nAlso patch the Debian package to force autoconf/make rather than Meson."
     },
     {
         "commit": "148956aed8aca201aa800af321d946094b96f176",
@@ -4896,7 +4896,7 @@
         "commit": "19dd015d589ed3efd31a2a238249a150fb3748c1",
         "date": "2022-05-13 09:41:53 -0400",
         "subject": "Fix issues in improved path validation for repo-* commands.",
-        "body": "If the user requested the exact repo path then strSub() would be passed an invalid start value leading to an assertion:\r\n\r\n$ pgbackrest --stanza=test repo-ls /var/lib/pgbackrest\r\nASSERT: [025]: start <= this->pub.size (on dev builds)\r\nASSERT: [025]: string size must be <= 1073741824 bytes (on prod builds)\r\n\r\nFix this by checking if the requested path exactly equals the repo path and returning an empty relative path in this case.\r\n\r\nAnother issue was that invalid subpaths were not detected if they started with the repo path. For example, /var/lib/pgbackrestsub would not generate an error if the repo path was /var/lib/pgbackrest. Fix this by explictly checking for a / between the repo path and the subpath. This also requires special handling when the repo path is /.\r\n\r\nThis is not a live bug since the issues were found in an unreleased feature introduced in 5ae84d5."
+        "body": "If the user requested the exact repo path then strSub() would be passed an invalid start value leading to an assertion:\r\n\r\n$ pgbunker --stanza=test repo-ls /var/lib/pgbunker\r\nASSERT: [025]: start <= this->pub.size (on dev builds)\r\nASSERT: [025]: string size must be <= 1073741824 bytes (on prod builds)\r\n\r\nFix this by checking if the requested path exactly equals the repo path and returning an empty relative path in this case.\r\n\r\nAnother issue was that invalid subpaths were not detected if they started with the repo path. For example, /var/lib/pgbunkersub would not generate an error if the repo path was /var/lib/pgbunker. Fix this by explictly checking for a / between the repo path and the subpath. This also requires special handling when the repo path is /.\r\n\r\nThis is not a live bug since the issues were found in an unreleased feature introduced in 5ae84d5."
     },
     {
         "commit": "024500782e9fde91cf236db70a584beb52586d38",
@@ -4989,7 +4989,7 @@
         "commit": "eefa0b161a6a02b7843e18455443a4bce41cd4b9",
         "date": "2022-05-09 11:59:08 -0400",
         "subject": "Simplify messaging around supported versions in the documentation.",
-        "body": "The version ranges given in the user guides caused confusion. For example, because the user guide for RHEL specified PostgreSQL 9.6-11, users questioned whether pgBackRest worked for PostgreSQL 12 on RHEL.\r\n\r\nRemove these ranges and add more explanatory text to the introduction to try and make it clearer how the user guides work and which versions are covered (basically all of them)."
+        "body": "The version ranges given in the user guides caused confusion. For example, because the user guide for RHEL specified PostgreSQL 9.6-11, users questioned whether pgBunker worked for PostgreSQL 12 on RHEL.\r\n\r\nRemove these ranges and add more explanatory text to the introduction to try and make it clearer how the user guides work and which versions are covered (basically all of them)."
     },
     {
         "commit": "ef4c4ab8525f81c9ed22c7e82ed12096e81703c5",
@@ -5013,7 +5013,7 @@
         "commit": "46b7b7287446d0bb5ed0963fd01c51fb2b08893f",
         "date": "2022-05-06 18:23:36 -0400",
         "subject": "Add hint when unable to find the primary cluster.",
-        "body": "If all available clusters are in recovery, pgBackRest will not be able to find a primary for the backup."
+        "body": "If all available clusters are in recovery, pgBunker will not be able to find a primary for the backup."
     },
     {
         "commit": "53bfdbc01ece396c802022fea2216d3b9d7beaa1",
@@ -5156,7 +5156,7 @@
         "commit": "692fe496bdb5fa6dcffeb9f85b6188ceb1df707a",
         "date": "2022-05-04 08:22:45 -0400",
         "subject": "Remove dependency on pg_database.datlastsysoid.",
-        "body": "This column has been removed in PostgreSQL 15. Rather than add a lot of special handling, it seems better just to update all versions to not depend on this column.\r\n\r\nAdd centralized functions to identify the type of database (i.e. system or user) by name and use FirstNormalObjectId when a name is not available.\r\n\r\nThe new query in the db module will still return the prior result for PostgreSQL <= 15, which will be stored in the manifest. This is important to preserve behavior when downgrading pgBackRest. There are no concerns here for PostgreSQL 15 since older versions of pgBackRest won't be able to restore backups for PostgreSQL 15 anyway."
+        "body": "This column has been removed in PostgreSQL 15. Rather than add a lot of special handling, it seems better just to update all versions to not depend on this column.\r\n\r\nAdd centralized functions to identify the type of database (i.e. system or user) by name and use FirstNormalObjectId when a name is not available.\r\n\r\nThe new query in the db module will still return the prior result for PostgreSQL <= 15, which will be stored in the manifest. This is important to preserve behavior when downgrading pgBunker. There are no concerns here for PostgreSQL 15 since older versions of pgBunker won't be able to restore backups for PostgreSQL 15 anyway."
     },
     {
         "commit": "302e0c09217a2c5c11145e84976b54677f7a544e",
@@ -5949,7 +5949,7 @@
         "commit": "f1bdf3e04b07dc9a2eaa1fdbe5278cc18371e868",
         "date": "2022-03-02 10:59:06 -0600",
         "subject": "Add aliveness check to systemd service configuration.",
-        "body": "If the pgbackrest service service fails to start then the user will get an error. However, retries will continue in the background."
+        "body": "If the pgbunker service service fails to start then the user will get an error. However, retries will continue in the background."
     },
     {
         "commit": "a66ec8d549b8f1f7b38682ad90281f1fcbb2748a",
@@ -6019,7 +6019,7 @@
         "commit": "67bdf07e6969f8160347e895454bf729c9165884",
         "date": "2022-02-23 10:26:39 -0600",
         "subject": "Add XML to invalid XML error message.",
-        "body": "There have been cases where pgBackRest has failed on invalid XML but it is not possible to determine what was wrong with the XML.\n\nThis will only work for XML up to about 8KiB (which is the error message limit) but it should work in most cases."
+        "body": "There have been cases where pgBunker has failed on invalid XML but it is not possible to determine what was wrong with the XML.\n\nThis will only work for XML up to about 8KiB (which is the error message limit) but it should work in most cases."
     },
     {
         "commit": "10038db9c9f2b4753c3821e0b246fa8626527184",
@@ -6059,7 +6059,7 @@
         "commit": "34d649579eb3bd1530aa99f0ed1879e7d3125424",
         "date": "2022-02-14 13:24:14 -0600",
         "subject": "Bundle files in the repository during backup.",
-        "body": "Bundle (combine) smaller files during backup to reduce the number of files written to the repository (enable with --bundle). Reducing the number of files is a benefit on all file systems, but especially so on object stores such as S3 that have a high file creation cost. Another benefit is that zero-length files are only stored as metadata in the manifest.\r\n\r\nFiles are batched up to bundle-size and then compressed/encrypted individually and stored sequentially in the bundle. The bundle id and offset of each file is stored in the manifest so files can be retrieved randomly without needing to read the entire bundle. Files are ordered by timestamp descending when being assigned to bundles to reduce the amount of random access that needs to be done. The idea is that bundles with older files can be read in their entirety on restore and only bundles with newer files will get fragmented.\r\n\r\nBundles are a custom format with metadata stored in the manifest. Tar was considered but it is too limited a format, the major issue being that the size of the file must be known in advance and that is very contrary to how pgBackRest works, especially once we introduce page-level incremental backups.\r\n\r\nBundles are stored numbered in the bundle directory. Some files may still end up in pg_data if they are added after the backup is complete. backup_label is an example.\r\n\r\nCurrently, only the backup command works in batches. The restore and verify commands use the offsets to pull individual files out of the bundle. It seems better to finalize how this is going to work before optimizing the other commands. Even as is, this is a major step forward, and all commands function with bundling.\r\n\r\nOne caveat: resume is currently not supported when bundle is enabled."
+        "body": "Bundle (combine) smaller files during backup to reduce the number of files written to the repository (enable with --bundle). Reducing the number of files is a benefit on all file systems, but especially so on object stores such as S3 that have a high file creation cost. Another benefit is that zero-length files are only stored as metadata in the manifest.\r\n\r\nFiles are batched up to bundle-size and then compressed/encrypted individually and stored sequentially in the bundle. The bundle id and offset of each file is stored in the manifest so files can be retrieved randomly without needing to read the entire bundle. Files are ordered by timestamp descending when being assigned to bundles to reduce the amount of random access that needs to be done. The idea is that bundles with older files can be read in their entirety on restore and only bundles with newer files will get fragmented.\r\n\r\nBundles are a custom format with metadata stored in the manifest. Tar was considered but it is too limited a format, the major issue being that the size of the file must be known in advance and that is very contrary to how pgBunker works, especially once we introduce page-level incremental backups.\r\n\r\nBundles are stored numbered in the bundle directory. Some files may still end up in pg_data if they are added after the backup is complete. backup_label is an example.\r\n\r\nCurrently, only the backup command works in batches. The restore and verify commands use the offsets to pull individual files out of the bundle. It seems better to finalize how this is going to work before optimizing the other commands. Even as is, this is a major step forward, and all commands function with bundling.\r\n\r\nOne caveat: resume is currently not supported when bundle is enabled."
     },
     {
         "commit": "8046f0630715015d5adcced570c54e9a183c0e73",
@@ -6083,7 +6083,7 @@
         "commit": "551e5bc6f67c91cf1e11da0cefe24f9650353adc",
         "date": "2022-02-11 08:11:39 -0600",
         "subject": "Retry errors in S3 batch file delete.",
-        "body": "If the entire batch failed it would be retried, but individual file errors were not retried. This could cause pgBackRest to terminate during expiration or when removing an unresumable backup.\r\n\r\nRather than retry the entire batch, delete the errored files individually to take advantage of the HTTP retry rather than adding a new retry loop. These errors seem rare enough that it should not be a performance issue."
+        "body": "If the entire batch failed it would be retried, but individual file errors were not retried. This could cause pgBunker to terminate during expiration or when removing an unresumable backup.\r\n\r\nRather than retry the entire batch, delete the errored files individually to take advantage of the HTTP retry rather than adding a new retry loop. These errors seem rare enough that it should not be a performance issue."
     },
     {
         "commit": "b26097f8d8a7e2af6e9a21576994cbb47110c6f4",
@@ -6202,7 +6202,7 @@
         "commit": "8c062e1af824c3dc80ff94b3df8d433f95e88d0f",
         "date": "2022-01-20 14:01:10 -0500",
         "subject": "Remove primary flag from manifest.",
-        "body": "This flag was only being used by the backup command after manifestNewBuild() and had no other uses. There was a time when it was important for integration testing but the unit tests now fulfill this role.\r\n\r\nSince backup is the only code concerned with the primary flag, move the code into the backup module.\r\n\r\nWe don't have any cross-version testing but this change was tested manually with the most recent version of pgBackRest to make sure it was tolerant of the missing primary info. When an older version of pgBackRest loads a newer manifest the primary flag will always be set to false, which is fine since it is not used."
+        "body": "This flag was only being used by the backup command after manifestNewBuild() and had no other uses. There was a time when it was important for integration testing but the unit tests now fulfill this role.\r\n\r\nSince backup is the only code concerned with the primary flag, move the code into the backup module.\r\n\r\nWe don't have any cross-version testing but this change was tested manually with the most recent version of pgBunker to make sure it was tolerant of the missing primary info. When an older version of pgBunker loads a newer manifest the primary flag will always be set to false, which is fine since it is not used."
     },
     {
         "commit": "16559d9e421c66596d21b047c8afe1b2c96ccd82",
@@ -6319,7 +6319,7 @@
         "commit": "bb4b30ddd3f80c246c565eb4769efc82b9509648",
         "date": "2022-01-06 15:34:04 -0500",
         "subject": "Remove support for PostgreSQL 8.3/8.4.",
-        "body": "There is no evidence that users need 8.3/8.4 anymore but it does cost us in terms of development and testing, especially now that we have a number of new backup/restore features planned.\r\n\r\nIt seems to make sense to remove this support now. If there are users who need to use/migrate from these versions they can use an older version of pgBackRest."
+        "body": "There is no evidence that users need 8.3/8.4 anymore but it does cost us in terms of development and testing, especially now that we have a number of new backup/restore features planned.\r\n\r\nIt seems to make sense to remove this support now. If there are users who need to use/migrate from these versions they can use an older version of pgBunker."
     },
     {
         "commit": "ef62ef23799f081582295f1f3e8a92691b628f53",
@@ -6436,7 +6436,7 @@
         "commit": "49145d72bac16498cdbf5eeb3cd6128ea0be0667",
         "date": "2021-12-07 09:21:07 -0500",
         "subject": "Add timeline and checkpoint checks to backup.",
-        "body": "Add the following checks:\r\n\r\n* Checkpoint is updated in pg_control after pg_start_backup(). This helps ensure that PostgreSQL and pgBackRest have a consistent view of the storage and that PGDATA paths match.\r\n* Timeline of backup start WAL file matches pg_control. Hard to see how this one could get hit, but we have the power...\r\n* Standby is on the same timeline as the primary. If not, this standby is not following the primary.\r\n* Last standby checkpoint is not greater than the backup checkpoint. If so, this standby is not following the primary.\r\n\r\nThis also requires some additional plumbing to read/write timeline/checkpoint from pg_control and parse timelines from WAL filenames. There were some changes in the backup tests caused by the fact that pg_control now has different contents for each backup.\r\n\r\nThe check to ensure that the required checkpoint was reached on the standby should also be updated to use pg_control (it currently uses pg_control_checkpoint()), but that requires non-trivial changes to the test harness and will need to wait."
+        "body": "Add the following checks:\r\n\r\n* Checkpoint is updated in pg_control after pg_start_backup(). This helps ensure that PostgreSQL and pgBunker have a consistent view of the storage and that PGDATA paths match.\r\n* Timeline of backup start WAL file matches pg_control. Hard to see how this one could get hit, but we have the power...\r\n* Standby is on the same timeline as the primary. If not, this standby is not following the primary.\r\n* Last standby checkpoint is not greater than the backup checkpoint. If so, this standby is not following the primary.\r\n\r\nThis also requires some additional plumbing to read/write timeline/checkpoint from pg_control and parse timelines from WAL filenames. There were some changes in the backup tests caused by the fact that pg_control now has different contents for each backup.\r\n\r\nThe check to ensure that the required checkpoint was reached on the standby should also be updated to use pg_control (it currently uses pg_control_checkpoint()), but that requires non-trivial changes to the test harness and will need to wait."
     },
     {
         "commit": "9c76056dd0d1d2b07a89646b087c5c8d36ab97f5",
@@ -6494,7 +6494,7 @@
         "commit": "1f14f45dfb0d1677a695719381cbd5a8a3c6c986",
         "date": "2021-11-18 16:18:10 -0500",
         "subject": "Check archive immediately after backup start.",
-        "body": "Previously the archive was only checked at the end of the backup to ensure all WAL required to make the backup consistent was present. The problem was that if archiving was not functioning then the backup had to complete before the user found out, which could be a while if the database was large enough.\r\n\r\nAdd an archive check immediately after backup start so failures are reported earlier.\r\n\r\nThe trick is to determine which WAL to check. If the repo is new there may not be any WAL in it and pg_start_backup() will not switch the WAL segment if it is empty. These are both likely scenarios when setting up and/or testing pgBackRest.\r\n\r\nIf the WAL segment is switched by pg_start_backup(), then check the archive for the segment that was detected prior to backup start. This should be common on normal running clusters with regular activity. Note that this might not be the segment immediately prior to the backup start segment if WAL volume is high.\r\n\r\nIf pg_start_backup() did not switch the WAL then we can force a switch on PostgreSQL >= 9.3 by creating a restore point. In that case the WAL to check will be the backup start WAL. This is most likely to happen on idle systems, during testing, or immediately after a repo switch.\r\n\r\nAn advantage of this approach other than earlier notification is that the backup directory will not be created so no resume will be attempted on the next backup.\r\n\r\nNote that some additional churn was created in backup.c because the load of archive.info needs to be done earlier."
+        "body": "Previously the archive was only checked at the end of the backup to ensure all WAL required to make the backup consistent was present. The problem was that if archiving was not functioning then the backup had to complete before the user found out, which could be a while if the database was large enough.\r\n\r\nAdd an archive check immediately after backup start so failures are reported earlier.\r\n\r\nThe trick is to determine which WAL to check. If the repo is new there may not be any WAL in it and pg_start_backup() will not switch the WAL segment if it is empty. These are both likely scenarios when setting up and/or testing pgBunker.\r\n\r\nIf the WAL segment is switched by pg_start_backup(), then check the archive for the segment that was detected prior to backup start. This should be common on normal running clusters with regular activity. Note that this might not be the segment immediately prior to the backup start segment if WAL volume is high.\r\n\r\nIf pg_start_backup() did not switch the WAL then we can force a switch on PostgreSQL >= 9.3 by creating a restore point. In that case the WAL to check will be the backup start WAL. This is most likely to happen on idle systems, during testing, or immediately after a repo switch.\r\n\r\nAn advantage of this approach other than earlier notification is that the backup directory will not be created so no resume will be attempted on the next backup.\r\n\r\nNote that some additional churn was created in backup.c because the load of archive.info needs to be done earlier."
     },
     {
         "commit": "dea752477ab8e812cdbd717eb2091baf3f5d0906",
@@ -6550,7 +6550,7 @@
         "commit": "43cfa9cef776360e592882c0b787704dbeb36cb3",
         "date": "2021-11-10 12:14:41 -0500",
         "subject": "Revive archive performance test.",
-        "body": "This test was lost due to a syntax issue in a58635ac.\n\nUpdate the test to use system() to better mimic what postgres does and add logging so pgBackRest timing can be determined."
+        "body": "This test was lost due to a syntax issue in a58635ac.\n\nUpdate the test to use system() to better mimic what postgres does and add logging so pgBunker timing can be determined."
     },
     {
         "commit": "dd96c29f963609fad38dac3349d7fa41e40722bb",
@@ -6603,7 +6603,7 @@
         "commit": "2a576477b316238473525e56bc8fc8ea5790455f",
         "date": "2021-11-03 11:36:34 -0400",
         "subject": "Add --cmd option.",
-        "body": "Allows users to provide an executable to be used when pgbackrest generates command strings that expect to invoke pgbackrest. These generated commands are written to files by pgbackrest, e.g. recovery.conf."
+        "body": "Allows users to provide an executable to be used when pgbunker generates command strings that expect to invoke pgbunker. These generated commands are written to files by pgbunker, e.g. recovery.conf."
     },
     {
         "commit": "c5b5b5880619d0994ab4a8feb3f60ab52170b61b",
@@ -7028,7 +7028,7 @@
     {
         "commit": "338102861fd0ea4d2773b010dee34a39a96ad702",
         "date": "2021-10-07 11:01:48 -0400",
-        "subject": "Improve instructions for rebuilding pgbackrest during stress testing."
+        "subject": "Improve instructions for rebuilding pgbunker during stress testing."
     },
     {
         "commit": "fb3f6928c9aef499938e195fbb612c1940a2dc19",
@@ -7750,7 +7750,7 @@
         "commit": "563d117967ab9770f9f646c6186d0bc37121611f",
         "date": "2021-07-15 13:02:41 -0400",
         "subject": "Allow restore --type=lsn.",
-        "body": "The LSN recovery target was added in PostgreSQL 10 but did not get added to pgBackRest."
+        "body": "The LSN recovery target was added in PostgreSQL 10 but did not get added to pgBunker."
     },
     {
         "commit": "8fac1ac50d28557d162fbb251fbbdcc3c9fb950c",
@@ -8167,7 +8167,7 @@
         "commit": "58369c02df39ac9916d5de42d2df9ad509c33b6f",
         "date": "2021-05-25 18:16:59 -0400",
         "subject": "Add remote process shim.",
-        "body": "Run the remote process inside a forked child process instead of exec'ing it. This allows coverage to accumulate in the remote process rather than needing to test the remote protocol functions directly, resulting in better end-to-end testing and less test duplication. Another advantage is that the pgbackrest binary does not need to be built for the test and the test does not need to run in a container."
+        "body": "Run the remote process inside a forked child process instead of exec'ing it. This allows coverage to accumulate in the remote process rather than needing to test the remote protocol functions directly, resulting in better end-to-end testing and less test duplication. Another advantage is that the pgbunker binary does not need to be built for the test and the test does not need to run in a container."
     },
     {
         "commit": "441c000b5c3d8a4dfe67616d2a281c58184ef3ea",
@@ -8209,7 +8209,7 @@
         "commit": "2452c4d5a4c230b8e3c33d3bddf69e56dfbec284",
         "date": "2021-05-24 17:17:03 -0400",
         "subject": "Add PostgreSQL 14 support.",
-        "body": "There are no code changes from PostgreSQL 13 so simply add the new version.\r\n\r\nAdd CATALOG_VERSION_NO_MAX to allow the catalog version to \"float\" during the PostgreSQL beta/rc period so new pgBackRest versions are not required when the catalog version changes.\r\n\r\nUpdate the integration tests to handle new PostgreSQL startup messages."
+        "body": "There are no code changes from PostgreSQL 13 so simply add the new version.\r\n\r\nAdd CATALOG_VERSION_NO_MAX to allow the catalog version to \"float\" during the PostgreSQL beta/rc period so new pgBunker versions are not required when the catalog version changes.\r\n\r\nUpdate the integration tests to handle new PostgreSQL startup messages."
     },
     {
         "commit": "eba013b49b850e53d59795ac6358fcb3381048a3",
@@ -8286,7 +8286,7 @@
         "commit": "ef63750e0bc8292caefe8e421a31e985026f72ee",
         "date": "2021-05-21 12:45:00 -0400",
         "subject": "Add local process shim.",
-        "body": "Run the local process inside a forked child process instead of exec'ing it. This allows coverage to accumulate in the local process rather than needing to test the local protocol functions directly, resulting in better end-to-end testing and less test duplication. Another advantage is that the pgbackrest binary does not need to be built for the test.\n\nThe backup, restore, and verify command tests have been updated to use the new shim for coverage."
+        "body": "Run the local process inside a forked child process instead of exec'ing it. This allows coverage to accumulate in the local process rather than needing to test the local protocol functions directly, resulting in better end-to-end testing and less test duplication. Another advantage is that the pgbunker binary does not need to be built for the test.\n\nThe backup, restore, and verify command tests have been updated to use the new shim for coverage."
     },
     {
         "commit": "cab7a97ab6308d72b509ef2e02c559ac691f436b",
@@ -8393,7 +8393,7 @@
         "commit": "9235c62c6b597bc4ed812e0c0a3bc3a36ec30767",
         "date": "2021-05-17 07:12:46 -0400",
         "subject": "Revert ignoring catalog version when identifying a PostgreSQL version.",
-        "body": "927d9adb changed the way CATALOG_VERSION_NO is used to identify PostgreSQL versions since PG_CONTROL_VERSION is generally bumped with each release. The goal was to make the beta/rc period less painful because any CATALOG_VERSION_NO bump renders pgBackRest inoperative.\n\nThis worked, but in fact we'd rather be stricter about which CATALOG_VERSION_NO we accept when identifying a version of PostgreSQL. It is not just about identifying a major version, but making sure the build contains all the functions and catalogs we expect to make pgBackRest work correctly. It is better to reject early dev/beta/rc builds that may not work.\n\nSince 927d9adb was relatively recent the chance that this stricter checking will cause a problem seems minimal, so revert to checking CATALOG_VERSION_NO for every PostgreSQL version.\n\nLeave in place the code that pulls CATALOG_VERSION_NO from pg_control rather than the internal constant since the plan is still to allow catalog versions to \"float\" during the PostgreSQL beta/rc phase, which will be the subject of a future commit."
+        "body": "927d9adb changed the way CATALOG_VERSION_NO is used to identify PostgreSQL versions since PG_CONTROL_VERSION is generally bumped with each release. The goal was to make the beta/rc period less painful because any CATALOG_VERSION_NO bump renders pgBunker inoperative.\n\nThis worked, but in fact we'd rather be stricter about which CATALOG_VERSION_NO we accept when identifying a version of PostgreSQL. It is not just about identifying a major version, but making sure the build contains all the functions and catalogs we expect to make pgBunker work correctly. It is better to reject early dev/beta/rc builds that may not work.\n\nSince 927d9adb was relatively recent the chance that this stricter checking will cause a problem seems minimal, so revert to checking CATALOG_VERSION_NO for every PostgreSQL version.\n\nLeave in place the code that pulls CATALOG_VERSION_NO from pg_control rather than the internal constant since the plan is still to allow catalog versions to \"float\" during the PostgreSQL beta/rc phase, which will be the subject of a future commit."
     },
     {
         "commit": "f45e76fa2e8ce0f62317a74fdd51083d52659cd5",
@@ -8851,7 +8851,7 @@
         "commit": "2789d3b6206c4de9299a3bc459e04cdab793abc9",
         "date": "2021-03-25 12:29:36 -0400",
         "subject": "Improve info command fault tolerance.",
-        "body": "This improvement reduces the number of errors thrown; these errors will now be reported as a status for the stanza or repo as appropriate. Invalid option configurations are still thrown but all other errors are caught, formatted and reported. This was necessary for multiple repositories so that the command can complete gathering information from each repository and report the results rather than immediately aborting when an error occurs.\r\n\r\nTwo new error codes were introduced:\r\n6 = requested backup not found\r\n99 = other, which is used to indicate an error has occurred that requires more details to be provided\r\n\r\nA new stanza name of \"[invalid]\" was created for instances where a stanza was not specified and no stanza can be found.\r\n\r\nIf there is only one repository configured the error will move up to the stanza level with the standard error formatting of 'error (message)' where the message will be \"other\" and the details of the error will be listed on the next line(s):\r\n\r\nstanza: stanza1\r\n    status: error (other)\r\n            [CryptoError] unable to load info file '/var/lib/pgbackrest/repo/backup/stanza1/backup.info' or '/var/lib/pgbackrest/repo/backup/stanza1/backup.info.copy':\r\n            CryptoError: cipher header invalid\r\n            HINT: is or was the repo encrypted?\r\n            FileMissingError: unable to open missing file '/var/lib/pgbackrest/repo/backup/stanza1/backup.info.copy' for read\r\n            HINT: backup.info cannot be opened and is required to perform a backup.\r\n            HINT: has a stanza-create been performed?\r\n            HINT: use option --stanza if encryption settings are different for the stanza than the global\r\n    cipher: aes-256-cbc\r\n\r\nIf a backup set is requested but is not found on any repo, a stanza-level status error of 'requested backup not found' is reported when there are no other errors:\r\n\r\npgbackrest info --stanza=demo --set=bogus\r\nstanza: demo\r\n    status: error (requested backup not found)\r\n    cipher: mixed\r\n        repo1: aes-256-cbc\r\n        repo2: none\r\n\r\nIf there are multiple repositories configured and a single repo is in error but the other repos are ok or have a different error:\r\n\r\npgbackrest info --stanza=demo --set=20210322-171211F\r\nstanza: demo\r\n    status: mixed\r\n        repo1: error\r\n               [CryptoError] unable to load info file '/var/lib/pgbackrest/repo/backup/stanza1/backup.info' or '/var/lib/pgbackrest/repo/backup/stanza1/backup.info.copy':\r\n               CryptoError: cipher header invalid\r\n               HINT: is or was the repo encrypted?\r\n               FileMissingError: unable to open missing file '/var/lib/pgbackrest/repo/backup/stanza1/backup.info.copy' for read\r\n               HINT: backup.info cannot be opened and is required to perform a backup.\r\n               HINT: has a stanza-create been performed?\r\n               HINT: use option --stanza if encryption settings are different for the stanza than the global\r\n        repo2: ok\r\n    cipher: mixed\r\n        repo1: aes-256-cbc\r\n        repo2: none\r\n\r\n    db (current)\r\n        wal archive min/max (12): 000000010000000000000001/000000010000000000000003\r\n\r\n        full backup: 20210322-171211F\r\n            timestamp start/stop: 2021-03-22 17:12:11 / 2021-03-22 17:12:28\r\n            wal start/stop: 000000010000000000000002 / 000000010000000000000002\r\n            database size: 23.4MB, database backup size: 23.4MB\r\n            repo2: backup set size: 2.8MB, backup size: 2.8MB\r\n            database list: postgres (13359)\r\n\r\nJson output will include the repository information and any error information. If no stanzas are found, then [invalid] will be set as the name:\r\n\r\n[\r\n   {\r\n       \"archive\":[],\r\n       \"backup\":[],\r\n       \"cipher\":\"none\",\r\n       \"db\":[],\r\n       \"name\":\"[invalid]\",\r\n       \"repo\":[\r\n           {\r\n               \"cipher\":\"none\",\r\n               \"key\":1,\r\n               \"status\":{\r\n                   \"code\":99,\r\n                   \"message\":\"[PathOpenError] unable to list file info for path '/var/lib/pgbackrest/repo2/backup': [13] Permission denied\"\r\n               }\r\n           }\r\n       ],\r\n       \"status\":{\r\n           \"code\":99,\r\n           \"lock\":{\"backup\":{\"held\":false}},\r\n           \"message\":\"other\"\r\n           }\r\n   }\r\n]"
+        "body": "This improvement reduces the number of errors thrown; these errors will now be reported as a status for the stanza or repo as appropriate. Invalid option configurations are still thrown but all other errors are caught, formatted and reported. This was necessary for multiple repositories so that the command can complete gathering information from each repository and report the results rather than immediately aborting when an error occurs.\r\n\r\nTwo new error codes were introduced:\r\n6 = requested backup not found\r\n99 = other, which is used to indicate an error has occurred that requires more details to be provided\r\n\r\nA new stanza name of \"[invalid]\" was created for instances where a stanza was not specified and no stanza can be found.\r\n\r\nIf there is only one repository configured the error will move up to the stanza level with the standard error formatting of 'error (message)' where the message will be \"other\" and the details of the error will be listed on the next line(s):\r\n\r\nstanza: stanza1\r\n    status: error (other)\r\n            [CryptoError] unable to load info file '/var/lib/pgbunker/repo/backup/stanza1/backup.info' or '/var/lib/pgbunker/repo/backup/stanza1/backup.info.copy':\r\n            CryptoError: cipher header invalid\r\n            HINT: is or was the repo encrypted?\r\n            FileMissingError: unable to open missing file '/var/lib/pgbunker/repo/backup/stanza1/backup.info.copy' for read\r\n            HINT: backup.info cannot be opened and is required to perform a backup.\r\n            HINT: has a stanza-create been performed?\r\n            HINT: use option --stanza if encryption settings are different for the stanza than the global\r\n    cipher: aes-256-cbc\r\n\r\nIf a backup set is requested but is not found on any repo, a stanza-level status error of 'requested backup not found' is reported when there are no other errors:\r\n\r\npgbunker info --stanza=demo --set=bogus\r\nstanza: demo\r\n    status: error (requested backup not found)\r\n    cipher: mixed\r\n        repo1: aes-256-cbc\r\n        repo2: none\r\n\r\nIf there are multiple repositories configured and a single repo is in error but the other repos are ok or have a different error:\r\n\r\npgbunker info --stanza=demo --set=20210322-171211F\r\nstanza: demo\r\n    status: mixed\r\n        repo1: error\r\n               [CryptoError] unable to load info file '/var/lib/pgbunker/repo/backup/stanza1/backup.info' or '/var/lib/pgbunker/repo/backup/stanza1/backup.info.copy':\r\n               CryptoError: cipher header invalid\r\n               HINT: is or was the repo encrypted?\r\n               FileMissingError: unable to open missing file '/var/lib/pgbunker/repo/backup/stanza1/backup.info.copy' for read\r\n               HINT: backup.info cannot be opened and is required to perform a backup.\r\n               HINT: has a stanza-create been performed?\r\n               HINT: use option --stanza if encryption settings are different for the stanza than the global\r\n        repo2: ok\r\n    cipher: mixed\r\n        repo1: aes-256-cbc\r\n        repo2: none\r\n\r\n    db (current)\r\n        wal archive min/max (12): 000000010000000000000001/000000010000000000000003\r\n\r\n        full backup: 20210322-171211F\r\n            timestamp start/stop: 2021-03-22 17:12:11 / 2021-03-22 17:12:28\r\n            wal start/stop: 000000010000000000000002 / 000000010000000000000002\r\n            database size: 23.4MB, database backup size: 23.4MB\r\n            repo2: backup set size: 2.8MB, backup size: 2.8MB\r\n            database list: postgres (13359)\r\n\r\nJson output will include the repository information and any error information. If no stanzas are found, then [invalid] will be set as the name:\r\n\r\n[\r\n   {\r\n       \"archive\":[],\r\n       \"backup\":[],\r\n       \"cipher\":\"none\",\r\n       \"db\":[],\r\n       \"name\":\"[invalid]\",\r\n       \"repo\":[\r\n           {\r\n               \"cipher\":\"none\",\r\n               \"key\":1,\r\n               \"status\":{\r\n                   \"code\":99,\r\n                   \"message\":\"[PathOpenError] unable to list file info for path '/var/lib/pgbunker/repo2/backup': [13] Permission denied\"\r\n               }\r\n           }\r\n       ],\r\n       \"status\":{\r\n           \"code\":99,\r\n           \"lock\":{\"backup\":{\"held\":false}},\r\n           \"message\":\"other\"\r\n           }\r\n   }\r\n]"
     },
     {
         "commit": "7d7ac0e0eb63a02bbc1dd8bd8fc89c6008c740f8",
@@ -9109,7 +9109,7 @@
         "commit": "9243962b9504787c6f4af42318af6dc27094136d",
         "date": "2021-02-25 12:03:44 -0500",
         "subject": "Allow custom config-path default with ./configure --with-configdir.",
-        "body": "Add --with-confdir=DIR option to configure, which can be used to override the default configuration directory of /etc/pgbackrest.\r\n\r\nProbably in the future it would be better to just leverage ${sysconfdir} which is based on prefix, but since previously the config directory was hard coded to /etc/pgbackrest, we retain that default value by not relying on sysconfdir for now."
+        "body": "Add --with-confdir=DIR option to configure, which can be used to override the default configuration directory of /etc/pgbunker.\r\n\r\nProbably in the future it would be better to just leverage ${sysconfdir} which is based on prefix, but since previously the config directory was hard coded to /etc/pgbunker, we retain that default value by not relying on sysconfdir for now."
     },
     {
         "commit": "0ddc0380ff408f9ed6e8bcd4d328df500681ce77",
@@ -9132,7 +9132,7 @@
         "commit": "118d9e64fea71c2e049b52802e55f72f5793871b",
         "date": "2021-02-23 16:17:27 -0500",
         "subject": "Enhance restore command multi-repo support.",
-        "body": "The restore command automatically defaults to selecting the latest backup from a single repository. With multiple repositories configured, the restore command will now default to selecting the latest backup from the first repository where backups exist. The order in which the repositories are checked is dictated by the pgbackrest.conf order.\n\nTo select from a specific repository, the --repo option can be passed (e.g. --repo=1). The --set option can be passed if a backup other than the latest is desired."
+        "body": "The restore command automatically defaults to selecting the latest backup from a single repository. With multiple repositories configured, the restore command will now default to selecting the latest backup from the first repository where backups exist. The order in which the repositories are checked is dictated by the pgbunker.conf order.\n\nTo select from a specific repository, the --repo option can be passed (e.g. --repo=1). The --set option can be passed if a backup other than the latest is desired."
     },
     {
         "commit": "bec3e20b2cb061ef0413df24234ebe246ea53063",
@@ -9669,7 +9669,7 @@
     {
         "commit": "a1365b26d4c2383eaacea3714eeb521435ca79aa",
         "date": "2021-01-18 23:41:09 -0500",
-        "subject": "Remove duplicate mkdir for /tmp/pgbackrest in Vagrantfile."
+        "subject": "Remove duplicate mkdir for /tmp/pgbunker in Vagrantfile."
     },
     {
         "commit": "8322dfd7af97e307b952cfb37e6a65b65f55be0f",
@@ -10190,7 +10190,7 @@
         "commit": "76cfd8ca703f4d6a71c6fe10b683209a2040368c",
         "date": "2020-10-24 11:07:07 -0400",
         "subject": "Allow [, #, and space as the first character in database names.",
-        "body": "iniLoad() was trimming lines which meant that a leading space would not pass checksum validation when a manifest was reloaded. Remove the trims since files we write should never contain extraneous spaces. This further diverges the format for the functions that read conf files (e.g. pgbackrest.conf) and those that read info (e.g. manifest) files.\r\n\r\nWhile we are at it also allow [ and # as initial characters. # was reserved for comments but we never put comments into info files. [ denotes a section but we can get around this by never allowing arrays as values in info files, so if a line ends in ] it must be a section. This is currently the case but enforce it by adding an assert to info/info.c."
+        "body": "iniLoad() was trimming lines which meant that a leading space would not pass checksum validation when a manifest was reloaded. Remove the trims since files we write should never contain extraneous spaces. This further diverges the format for the functions that read conf files (e.g. pgbunker.conf) and those that read info (e.g. manifest) files.\r\n\r\nWhile we are at it also allow [ and # as initial characters. # was reserved for comments but we never put comments into info files. [ denotes a section but we can get around this by never allowing arrays as values in info files, so if a line ends in ] it must be a section. This is currently the case but enforce it by adding an assert to info/info.c."
     },
     {
         "commit": "c573ef281489e274c9b59185275f9c595885f359",
@@ -10374,7 +10374,7 @@
         "commit": "927d9adbee780a51639955edb74ce7a4850db100",
         "date": "2020-09-18 16:55:26 -0400",
         "subject": "Improve PostgreSQL version identification.",
-        "body": "Previously, catalog versions were fixed for all versions which made maintaining the catalog versions during PostgreSQL beta and release candidate cycles very painful. A version of pgBackRest which was functionally compatible was rendered useless by a catalog version bump in PostgreSQL.\r\n\r\nInstead use only the control version to identify a PostgreSQL version when possible. Some older versions require a catalog version to positively identify a PostgreSQL version, so include them when required.\r\n\r\nSince the catalog number is required to work with tablespaces it will need to be stored. There's already a copy of it in backup.info so use that (even though we have been ignoring it in the C versions)."
+        "body": "Previously, catalog versions were fixed for all versions which made maintaining the catalog versions during PostgreSQL beta and release candidate cycles very painful. A version of pgBunker which was functionally compatible was rendered useless by a catalog version bump in PostgreSQL.\r\n\r\nInstead use only the control version to identify a PostgreSQL version when possible. Some older versions require a catalog version to positively identify a PostgreSQL version, so include them when required.\r\n\r\nSince the catalog number is required to work with tablespaces it will need to be stored. There's already a copy of it in backup.info so use that (even though we have been ignoring it in the C versions)."
     },
     {
         "commit": "94475bfbe6a694b150091d5f7208b0d01ab07a40",
@@ -10778,7 +10778,7 @@
         "commit": "63a93db6fd97c6e8e22478ee69b05487fa3db69d",
         "date": "2020-07-28 12:15:33 -0400",
         "subject": "Suppress errors when closing local/remote processes.",
-        "body": "Since the command has completed it is counterproductive to throw an error but still warn to indicate that something unusual happened.\r\n\r\nAlso fix the related issue that the local processes were not being shut down when they completed, which meant that they might timeout before being closed when pgbackrest terminated."
+        "body": "Since the command has completed it is counterproductive to throw an error but still warn to indicate that something unusual happened.\r\n\r\nAlso fix the related issue that the local processes were not being shut down when they completed, which meant that they might timeout before being closed when pgbunker terminated."
     },
     {
         "commit": "d9309f13a4c7b962b401832881a593b92f29c438",
@@ -11085,7 +11085,7 @@
         "commit": "96adf8e513f62d4fbcc2905286127b3558b5aa3d",
         "date": "2020-06-26 07:44:56 -0400",
         "subject": "PostgreSQL 13 beta2 support.",
-        "body": "There don't appear to be any behavioral changes since PostgreSQL 12 and all the tests pass.\n\nChanges to the control/catalog/WAL versions in subsequent betas may break compatibility but pgBackRest will be updated with each release to keep pace."
+        "body": "There don't appear to be any behavioral changes since PostgreSQL 12 and all the tests pass.\n\nChanges to the control/catalog/WAL versions in subsequent betas may break compatibility but pgBunker will be updated with each release to keep pace."
     },
     {
         "commit": "e53de3ce46497edee69dc4fb65d54185ccbcfd66",
@@ -11152,7 +11152,7 @@
         "commit": "d560c1bf19b2ef3699971790e1f887dac4168964",
         "date": "2020-06-23 12:42:46 -0400",
         "subject": "Ignore \"unsupported frontend protocol\" error on Centos/RHEL 6.",
-        "body": "The unsupported version error is showing up on older versions of PostgreSQL (e.g. 9.1, 9.2) on RHEL6 when setting up a standby with streaming replication. The error occurs when a client does not properly send a version number and it's not clear why it is happening here, but it does not appear to have anything to do with pgBackRest and only affects RHEL6, i.e. 9.1 and 9.2 do not show this error on other distros.\n\nFor now ignore the error since RHEL6 is nearly EOL."
+        "body": "The unsupported version error is showing up on older versions of PostgreSQL (e.g. 9.1, 9.2) on RHEL6 when setting up a standby with streaming replication. The error occurs when a client does not properly send a version number and it's not clear why it is happening here, but it does not appear to have anything to do with pgBunker and only affects RHEL6, i.e. 9.1 and 9.2 do not show this error on other distros.\n\nFor now ignore the error since RHEL6 is nearly EOL."
     },
     {
         "commit": "04b2e4a831409d1a2edff669bedb6108a9ca20ed",
@@ -11335,7 +11335,7 @@
         "commit": "ec7b7c5a3e2062de05e68baec987c35eef4d0a27",
         "date": "2020-05-21 13:46:16 -0400",
         "subject": "PostgreSQL 13 beta1 support.",
-        "body": "There don't appear to be any behavioral changes since PostgreSQL 12 and all the tests pass.\r\n\r\nChanges to the control/catalog/WAL versions in subsequent betas may break compatibility but pgBackRest will be updated with each release to keep pace."
+        "body": "There don't appear to be any behavioral changes since PostgreSQL 12 and all the tests pass.\r\n\r\nChanges to the control/catalog/WAL versions in subsequent betas may break compatibility but pgBunker will be updated with each release to keep pace."
     },
     {
         "commit": "ed814321514259a55e84607cd28358ec8cfae754",
@@ -11935,7 +11935,7 @@
         "commit": "63b9f46a34ce20c172394a625858d807b1e2a5a9",
         "date": "2020-04-09 18:25:25 -0400",
         "subject": "Update contributing documentation and remove test/README.md.",
-        "body": "When the Vagrant file was updated to use pgbackrest/ vs /backrest/ as the location for executing tests and building the documentation, parts of the contributing.xml (and hence the CONTRIBUTING.md) were not updated since some parts of the document are not actually executed when the CONTRIBUTING.md is built from contributing.xml: those parts that are executed were updated but those parts that are not executed were not.\n\nThis commit fixes the contributing.xml issue but also removes test/README.md as its contents were out of date and redundant given that they are covered in CONTRIBUTING.md."
+        "body": "When the Vagrant file was updated to use pgbunker/ vs /backrest/ as the location for executing tests and building the documentation, parts of the contributing.xml (and hence the CONTRIBUTING.md) were not updated since some parts of the document are not actually executed when the CONTRIBUTING.md is built from contributing.xml: those parts that are executed were updated but those parts that are not executed were not.\n\nThis commit fixes the contributing.xml issue but also removes test/README.md as its contents were out of date and redundant given that they are covered in CONTRIBUTING.md."
     },
     {
         "commit": "55c3a3c8d3d58c4b02327be39b3cf080f3805358",
@@ -12035,7 +12035,7 @@
     {
         "commit": "f19c59ab38452bd4d247aa3a073c5c525b3b3cbe",
         "date": "2020-04-01 18:03:16 -0400",
-        "subject": "Remove unused exports from pgBackRestBuild::Config::Data.",
+        "subject": "Remove unused exports from pgBunkerBuild::Config::Data.",
         "body": "These were once used heavily in the Perl code but now only a few of them are used in the documentation.\n\nRemove the unused exports as there is generally no need create them for new commands/options."
     },
     {
@@ -12353,7 +12353,7 @@
         "commit": "56fb39937368463474c96307454051a66c1742c4",
         "date": "2020-03-21 18:45:58 -0400",
         "subject": "Build contributing documentation on Travis CI.",
-        "body": "Building the contributing document has some special requirements because it runs Docker in Docker so the repo path must align on the host and all Docker containers. Run `pgbackrest/doc/doc.pl` from within the home directory of the user that will do the doc build, e.g. `home/vagrant`. If the repo is not located directly in the home directory, e.g. `/home/vagrant/pgbackrest`, then a symlink may be used, e.g. `ln -s /path/to/repo /home/vagrant/pgbackrest`.\n\nMount the repo in the Vagrantfile at /home/vagrant/pgbackrest but provide a link from the old location at /backrest to make the transition less painful."
+        "body": "Building the contributing document has some special requirements because it runs Docker in Docker so the repo path must align on the host and all Docker containers. Run `pgbunker/doc/doc.pl` from within the home directory of the user that will do the doc build, e.g. `home/vagrant`. If the repo is not located directly in the home directory, e.g. `/home/vagrant/pgbunker`, then a symlink may be used, e.g. `ln -s /path/to/repo /home/vagrant/pgbunker`.\n\nMount the repo in the Vagrantfile at /home/vagrant/pgbunker but provide a link from the old location at /backrest to make the transition less painful."
     },
     {
         "commit": "ee2e15bf5524cf8bac3454d409dee250792411d9",
@@ -12376,7 +12376,7 @@
         "commit": "782c9f89f47fcb8bac75b21c241c1f34d744c13c",
         "date": "2020-03-20 13:43:08 -0400",
         "subject": "Remove old coverage data before starting new test.",
-        "body": "The old coverage data has been recorded so it is no longer needed. In newer versions of gcc leaving this file around can lead to an error when writing profile data after forking off to a non-pgbackrest binary (which we do in some unit tests)."
+        "body": "The old coverage data has been recorded so it is no longer needed. In newer versions of gcc leaving this file around can lead to an error when writing profile data after forking off to a non-pgbunker binary (which we do in some unit tests)."
     },
     {
         "commit": "787d3fd67b3549b9b04a8053e751cda9494d8df5",
@@ -12400,7 +12400,7 @@
         "commit": "2241524c0bdc92e1a04ac18e91a188a2bc1bcbdf",
         "date": "2020-03-19 18:34:10 -0400",
         "subject": "Remove obsolete deletes from Vagrantfile.",
-        "body": "pgBackRest no longer writes files into the .vagrant path so there's no longer anything to delete."
+        "body": "pgBunker no longer writes files into the .vagrant path so there's no longer anything to delete."
     },
     {
         "commit": "dcddf3a58bc6c4a8fbc9ac2c000cd5ff7b669cb5",
@@ -12485,8 +12485,8 @@
     {
         "commit": "3fbfcba811499a59b943dd893eef9ff52090f7b6",
         "date": "2020-03-16 17:27:01 -0400",
-        "subject": "Forbid access to /tmp/pgbackrest in the Vagrantfile.",
-        "body": "This matches the error that will be thrown in the vm=none test on Travis CI if a unit test writes to /tmp/pgbackrest."
+        "subject": "Forbid access to /tmp/pgbunker in the Vagrantfile.",
+        "body": "This matches the error that will be thrown in the vm=none test on Travis CI if a unit test writes to /tmp/pgbunker."
     },
     {
         "commit": "46911c64c19dc8ff76d2a6ff4548fc01647043e0",
@@ -12521,7 +12521,7 @@
         "commit": "19d975346b2688aa1a7b9e2dc68baecb9f6e7af2",
         "date": "2020-03-15 09:59:22 -0400",
         "subject": "Improve stability of command/check test module.",
-        "body": "When pgbackrest was present this test behaved unexpectedly.\n\nWhile the binary is not currently required for this test is might be in the future so fix the test to prevent a regression."
+        "body": "When pgbunker was present this test behaved unexpectedly.\n\nWhile the binary is not currently required for this test is might be in the future so fix the test to prevent a regression."
     },
     {
         "commit": "da89d0ad6157487f820632cbc7109c8a91f56cc9",
@@ -12632,7 +12632,7 @@
         "commit": "838ef4eca1a1fa2c791fa4913a3cae803eb4c8a8",
         "date": "2020-03-12 09:34:52 -0400",
         "subject": "Move configure.ac to src/build.",
-        "body": "This file is used to generate src/configure and is not required to make pgbackrest since src/configure is updated before distribution.\n\nMove to src/build so it is out of the way."
+        "body": "This file is used to generate src/configure and is not required to make pgbunker since src/configure is updated before distribution.\n\nMove to src/build so it is out of the way."
     },
     {
         "commit": "79a6798f39124db044f0af5091027ecb255ba033",
@@ -12659,26 +12659,26 @@
     {
         "commit": "4a5bd002c0071960b537e6d1dc35efe626146956",
         "date": "2020-03-10 17:57:02 -0400",
-        "subject": "Move pgBackRest::Version module to pgBackRestDoc::ProjectInfo.",
-        "body": "The primary source for project info is now src/version.h.\n\nThe pgBackRestDoc::ProjectInfo module loads the project info from src/version.h at runtime so there is no need to update it."
+        "subject": "Move pgBunker::Version module to pgBunkerDoc::ProjectInfo.",
+        "body": "The primary source for project info is now src/version.h.\n\nThe pgBunkerDoc::ProjectInfo module loads the project info from src/version.h at runtime so there is no need to update it."
     },
     {
         "commit": "731b862e6faf266c7ddbbd01a85496147d8bf7a6",
         "date": "2020-03-10 15:41:56 -0400",
-        "subject": "Rename BackRestDoc Perl module to pgBackRestDoc.",
-        "body": "This is consistent with the way BackRest and BackRest test were renamed way back in 18fd2523.\n\nMore modules will be moving to pgBackRestDoc soon so renaming now reduces churn later."
+        "subject": "Rename BackRestDoc Perl module to pgBunkerDoc.",
+        "body": "This is consistent with the way BackRest and BackRest test were renamed way back in 18fd2523.\n\nMore modules will be moving to pgBunkerDoc soon so renaming now reduces churn later."
     },
     {
         "commit": "36d4ab9bff668efcbbbf3393d80bd53f0be09a67",
         "date": "2020-03-10 15:12:44 -0400",
         "subject": "Move Perl modules out of lib directory.",
-        "body": "This directory was once the home of the production Perl code but since f0ef73db this is no longer true.\n\nMove the modules to test in most cases, except where the module is expected to be useful for the doc engine beyond the expected lifetime of the Perl test code (about a year if all goes well).\n\nThe exception is pgBackRest::Version which requires more work to migrate since it is used to track pgBackRest versions."
+        "body": "This directory was once the home of the production Perl code but since f0ef73db this is no longer true.\n\nMove the modules to test in most cases, except where the module is expected to be useful for the doc engine beyond the expected lifetime of the Perl test code (about a year if all goes well).\n\nThe exception is pgBunker::Version which requires more work to migrate since it is used to track pgBunker versions."
     },
     {
         "commit": "c279a00279e3c5b956f6dc4496454a9c4ccaa487",
         "date": "2020-03-10 14:45:27 -0400",
         "subject": "Add lz4 compression support.",
-        "body": "LZ4 compresses data faster than gzip but at a lower ratio. This can be a good tradeoff in certain scenarios.\n\nNote that setting compress-type=lz4 will make new backups and archive incompatible (unrestorable) with prior versions of pgBackRest."
+        "body": "LZ4 compresses data faster than gzip but at a lower ratio. This can be a good tradeoff in certain scenarios.\n\nNote that setting compress-type=lz4 will make new backups and archive incompatible (unrestorable) with prior versions of pgBunker."
     },
     {
         "commit": "cc9d7315dbb4e66cd281dc2156faf529e566ddbc",
@@ -12740,8 +12740,8 @@
     {
         "commit": "02aa03d1a266827b7ff5cb739b9598e475777086",
         "date": "2020-03-06 14:10:09 -0500",
-        "subject": "Remove obsolete methods in pgBackRest::Storage::Storage module.",
-        "body": "All the methods in this module will need to be implemented via the command-line in order to get rid of LibC, so the first step is to reduce the code in the module as much as possible.\n\nFirst remove storageDb() and use storageTest() instead. Then create storageTest() using pgBackRestTest::Common::Storage which has no dependencies on LibC. Now the only storage using the LibC interface is storageRepo().\n\nRemove all link functions since those operations cannot be performed on a repo unless it is Posix, in which case the LibC interface is not needed. Same for owner().\n\nRemove pathSync() because syncs are not required in the tests. No test data is reused after a crash.\n\nPath create/exists functions should never be explicitly performed on a repo so remove those. File exists can be implemented by calling info() instead.\n\nRemove encryption detection functions which were only used by Backup/Archive::Info reconstruct() which are now obsolete.\n\nRemove all filters except pgBackRest::Storage::Filter::CipherBlock since they are not being used. That also means there are no filters returning results so remove all the result code.\n\nMove hashSize() and pathAbsolute() into pgBackRest::Storage::Base where they can be shared between pgBackRest::Storage::Storage and pgBackRestTest::Common::Storage."
+        "subject": "Remove obsolete methods in pgBunker::Storage::Storage module.",
+        "body": "All the methods in this module will need to be implemented via the command-line in order to get rid of LibC, so the first step is to reduce the code in the module as much as possible.\n\nFirst remove storageDb() and use storageTest() instead. Then create storageTest() using pgBunkerTest::Common::Storage which has no dependencies on LibC. Now the only storage using the LibC interface is storageRepo().\n\nRemove all link functions since those operations cannot be performed on a repo unless it is Posix, in which case the LibC interface is not needed. Same for owner().\n\nRemove pathSync() because syncs are not required in the tests. No test data is reused after a crash.\n\nPath create/exists functions should never be explicitly performed on a repo so remove those. File exists can be implemented by calling info() instead.\n\nRemove encryption detection functions which were only used by Backup/Archive::Info reconstruct() which are now obsolete.\n\nRemove all filters except pgBunker::Storage::Filter::CipherBlock since they are not being used. That also means there are no filters returning results so remove all the result code.\n\nMove hashSize() and pathAbsolute() into pgBunker::Storage::Base where they can be shared between pgBunker::Storage::Storage and pgBunkerTest::Common::Storage."
     },
     {
         "commit": "00647c7109cab28110d7dabd3da039b391507d50",
@@ -13274,7 +13274,7 @@
         "commit": "8d3710b2fe94c90783374d19a435bded1903fe1b",
         "date": "2020-01-15 12:24:58 -0700",
         "subject": "Fix options being ignored by asynchronous commands.",
-        "body": "The local, remote, archive-get-async, and archive-push-async commands were used to run functionality that was not directly available to the user. Unfortunately that meant they would not pick up options from the command that the user expected, e.g. backup, archive-get, etc.\n\nRemove the internal commands and add roles which allow pgBackRest to determine what functionality is required without implementing special commands. This way the options are loaded from the expected command section.\n\nSince remote is no longer a specific command with its own options, more manipulation is required when calling remote. This might be something we can improve in the config system but it may be worth leaving as is because it is a one-off, for now at least."
+        "body": "The local, remote, archive-get-async, and archive-push-async commands were used to run functionality that was not directly available to the user. Unfortunately that meant they would not pick up options from the command that the user expected, e.g. backup, archive-get, etc.\n\nRemove the internal commands and add roles which allow pgBunker to determine what functionality is required without implementing special commands. This way the options are loaded from the expected command section.\n\nSince remote is no longer a specific command with its own options, more manipulation is required when calling remote. This might be something we can improve in the config system but it may be worth leaving as is because it is a one-off, for now at least."
     },
     {
         "commit": "c43ec9d38c7cd543d7a832f1e362705658ca5c12",
@@ -13428,7 +13428,7 @@
         "commit": "dc1e7ca22dbdae2556513468433b0591d7cf5a44",
         "date": "2019-12-19 11:26:38 -0500",
         "subject": "Add pg-user option.",
-        "body": "Specifies the database user name when connecting to PostgreSQL.\n\nIf not specified pgBackRest will connect with the local OS user or PGUSER, which was the previous behavior."
+        "body": "Specifies the database user name when connecting to PostgreSQL.\n\nIf not specified pgBunker will connect with the local OS user or PGUSER, which was the previous behavior."
     },
     {
         "commit": "9452084dd174925c554273eb2f8b224c89069123",
@@ -13500,7 +13500,7 @@
     {
         "commit": "f0ef73db7009cd6e08740d270a6ee7565efc9f8c",
         "date": "2019-12-13 17:55:41 -0500",
-        "subject": "pgBackRest is now pure C.",
+        "subject": "pgBunker is now pure C.",
         "body": "Remove embedded Perl from the distributed binary. This includes code, configure, Makefile, and packages. The distributed binary is now pure C.\n\nRemove storagePathEnforceSet() from the C Storage object which allowed Perl to write outside of the storage base directory. Update mock/all and real/all integration tests to use storageLocal() where they were violating this rule.\n\nRemove \"c\" option that allowed the remote to tell if it was being called from C or Perl.\n\nCode to convert options to JSON for passing to Perl (perl/config.c) has been moved to LibC since it is still required for Perl integration tests.\n\nUpdate build and installation instructions in the user guide.\n\nRemove all Perl unit tests.\n\nRemove obsolete Perl code. In particular this included all the Perl protocol code which required modifications to the Perl storage, manifest, and db objects that are still required for integration testing but only run locally. Any remaining Perl code is required for testing, documentation, or code generation.\n\nRename perlReq to binReq in define.yaml to indicate that the binary is required for a test. This had been the actual meaning for quite some time but the key was never renamed."
     },
     {
@@ -13569,7 +13569,7 @@
         "commit": "0194a9867182435c7a181be6466ca2b91f05801d",
         "date": "2019-12-11 14:36:39 -0500",
         "subject": "Fix archive-push/archive-get when PGDATA is symlinked.",
-        "body": "Commit 7168e074 tried to use cwd() as PGDATA but this would disagree with the path configured in pgBackRest if PGDATA was symlinked.\n\nIf cwd() does not match the pgBackRest path then chdir() to the path and make sure the next cwd() matches the result from the first call."
+        "body": "Commit 7168e074 tried to use cwd() as PGDATA but this would disagree with the path configured in pgBunker if PGDATA was symlinked.\n\nIf cwd() does not match the pgBunker path then chdir() to the path and make sure the next cwd() matches the result from the first call."
     },
     {
         "commit": "8c840c28a65dae3cca581691e88e51839cd64bca",
@@ -13774,7 +13774,7 @@
     {
         "commit": "0933aeb1ad954f8c7b2ed6d4e160d7e132ada8b7",
         "date": "2019-11-29 10:56:13 -0500",
-        "subject": "Remove unused reference to use pgBackRest::Backup::File."
+        "subject": "Remove unused reference to use pgBunker::Backup::File."
     },
     {
         "commit": "50eb062e0e7a6aac326e411ed28e0c8aa397bf01",
@@ -13797,7 +13797,7 @@
     {
         "commit": "4683557c54d2f2511fd754ae7c0c5e34ac1e5ba4",
         "date": "2019-11-26 17:22:30 -0500",
-        "subject": "Remove unused reference to pgBackRest::Db."
+        "subject": "Remove unused reference to pgBunker::Db."
     },
     {
         "commit": "158e439689c8247ba2e53da4bfe65934e391b690",
@@ -14216,8 +14216,8 @@
     {
         "commit": "11c7c8fabb1e3eb9dadce2231fbb9cb3d76d553f",
         "date": "2019-10-12 09:45:18 -0400",
-        "subject": "Remove pgbackrest test user.",
-        "body": "This user was created before we tested in containers to ensure isolation between the pg and repo hosts which were then just directories. The downside is that this resulted in a lot of sudos to set the pgbackrest user and to remove files which did not belong to the main test user.\n\nContainers provide isolation without needing separate users so we can now safely remove the pgbackrest user. This allows us to remove most sudos, except where they are explicitly needed in tests.\n\nWhile we're at it, remove the code that installed the Perl C library (which also required sudo) and simply add the build path to @INC instead."
+        "subject": "Remove pgbunker test user.",
+        "body": "This user was created before we tested in containers to ensure isolation between the pg and repo hosts which were then just directories. The downside is that this resulted in a lot of sudos to set the pgbunker user and to remove files which did not belong to the main test user.\n\nContainers provide isolation without needing separate users so we can now safely remove the pgbunker user. This allows us to remove most sudos, except where they are explicitly needed in tests.\n\nWhile we're at it, remove the code that installed the Perl C library (which also required sudo) and simply add the build path to @INC instead."
     },
     {
         "commit": "6f0e7f00af3e83d071713a671a6f155cd1fa3b88",
@@ -14367,13 +14367,13 @@
     {
         "commit": "6d8d0eeba71fa7cd00af6e40c0adf74638a371bd",
         "date": "2019-10-08 15:37:08 -0400",
-        "subject": "Add pgBackRest version to Info and Manifest objects.",
+        "subject": "Add pgBunker version to Info and Manifest objects.",
         "body": "This was not being exposed previously because it is primarily informational, but now it is needed to reconstruct the backup.info file."
     },
     {
         "commit": "38b72eded4b0f295ed1f30f849f0a99f69e396d2",
         "date": "2019-10-08 15:27:17 -0400",
-        "subject": "Document how to contribute to pgBackRest.",
+        "subject": "Document how to contribute to pgBunker.",
         "body": "There's a lot more to be done here, but this is a good start."
     },
     {
@@ -14386,7 +14386,7 @@
         "commit": "45881c74aeff4bb25559ec0254fa7fc1960d9cab",
         "date": "2019-10-08 12:06:30 -0400",
         "subject": "Allow most unit tests to run outside of a container.",
-        "body": "Three major changes were required to get this working:\n\n1) Provide the path to pgbackrest in the build directory when running outside a container. Tests in a container will continue to install and run against /usr/bin/pgbackrest.\n\n1) Set a per-test lock path so tests don't conflict on the default /tmp/pgbackrest path. Also set a per-test log-path while we are at it.\n\n2) Use localhost instead of a custom host for TLS test connections. Tests in containers will continue to update /etc/hosts and use the custom host.\n\nAdd infrastructure and update harnessCfgLoad*() to get the correct exe and paths loaded for testing.\n\nSince new tests are required to verify that running outside a container works, also rework the tests in Travis CI to provide coverage within a reasonable amount of time. Mainly, break up to doc tests by VM and run an abbreviated unit test suite on co6 and co7."
+        "body": "Three major changes were required to get this working:\n\n1) Provide the path to pgbunker in the build directory when running outside a container. Tests in a container will continue to install and run against /usr/bin/pgbunker.\n\n1) Set a per-test lock path so tests don't conflict on the default /tmp/pgbunker path. Also set a per-test log-path while we are at it.\n\n2) Use localhost instead of a custom host for TLS test connections. Tests in containers will continue to update /etc/hosts and use the custom host.\n\nAdd infrastructure and update harnessCfgLoad*() to get the correct exe and paths loaded for testing.\n\nSince new tests are required to verify that running outside a container works, also rework the tests in Travis CI to provide coverage within a reasonable amount of time. Mainly, break up to doc tests by VM and run an abbreviated unit test suite on co6 and co7."
     },
     {
         "commit": "77b0c6c993a0e6ff45a6a99f343c3709a016d152",
@@ -14418,7 +14418,7 @@
         "commit": "29e132f5e928298e9be135d76674f2016b122029",
         "date": "2019-10-01 13:20:43 -0400",
         "subject": "PostgreSQL 12 support.",
-        "body": "Recovery settings are now written into postgresql.auto.conf instead of recovery.conf. Existing recovery_target* settings will be commented out to help avoid conflicts.\n\nA comment is added before recovery settings to identify them as written by pgBackRest since it is unclear how, in general, old settings will be removed.\n\nrecovery.signal and standby.signal are automatically created based on the recovery settings."
+        "body": "Recovery settings are now written into postgresql.auto.conf instead of recovery.conf. Existing recovery_target* settings will be commented out to help avoid conflicts.\n\nA comment is added before recovery settings to identify them as written by pgBunker since it is unclear how, in general, old settings will be removed.\n\nrecovery.signal and standby.signal are automatically created based on the recovery settings."
     },
     {
         "commit": "6be7e6fde54f2dc3edbed802efc3f5cb1e050fd2",
@@ -14538,7 +14538,7 @@
         "commit": "451ae397bec3f3bc070c4db674cc5df61bd63498",
         "date": "2019-09-26 07:52:02 -0400",
         "subject": "The restore command is implemented entirely in C.",
-        "body": "For the most part this is a direct migration of the Perl code into C.\n\nThere is one important behavioral change with regard to how file permissions are handled. The Perl code tried to set ownership as it was in the manifest even when running as an unprivileged user. This usually just led to errors and frustration.\n\nThe C code works like this:\n\nIf a restore is run as a non-root user (the typical scenario) then all files restored will belong to the user/group executing pgBackRest. If existing files are not owned by the executing user/group then an error will result if the ownership cannot be updated to the executing user/group. In that case the file ownership will need to be updated by a privileged user before the restore can be retried.\n\nIf a restore is run as the root user then pgBackRest will attempt to recreate the ownership recorded in the manifest when the backup was made. Only user/group names are stored in the manifest so the same names must exist on the restore host for this to work. If the user/group name cannot be found locally then the user/group of the PostgreSQL data directory will be used and finally root if the data directory user/group cannot be mapped to a name."
+        "body": "For the most part this is a direct migration of the Perl code into C.\n\nThere is one important behavioral change with regard to how file permissions are handled. The Perl code tried to set ownership as it was in the manifest even when running as an unprivileged user. This usually just led to errors and frustration.\n\nThe C code works like this:\n\nIf a restore is run as a non-root user (the typical scenario) then all files restored will belong to the user/group executing pgBunker. If existing files are not owned by the executing user/group then an error will result if the ownership cannot be updated to the executing user/group. In that case the file ownership will need to be updated by a privileged user before the restore can be retried.\n\nIf a restore is run as the root user then pgBunker will attempt to recreate the ownership recorded in the manifest when the backup was made. Only user/group names are stored in the manifest so the same names must exist on the restore host for this to work. If the user/group name cannot be found locally then the user/group of the PostgreSQL data directory will be used and finally root if the data directory user/group cannot be mapped to a name."
     },
     {
         "commit": "92e48c856ac87838c479c2a454fe007cf026d4bd",
@@ -14797,7 +14797,7 @@
         "commit": "4d84820021ad2a96922c87263d9200aace42358f",
         "date": "2019-09-06 13:48:28 -0400",
         "subject": "Improve performance of info file load/save.",
-        "body": "Info files required three copies in memory to be loaded (the original string, an ini representation, and the final info object). Not only was this memory inefficient but the Ini object does sequential scans when searching for keys making large files very slow to load.\n\nThis has not been an issue since archive.info and backup.info are very small, but it becomes a big deal when loading manifests with hundreds of thousands of files.\n\nInstead of holding copies of the data in memory, use a callback to deliver the ini data directly to the object when loading. Use a similar method for save to avoid having an intermediate copy. Save is a bit complex because sections/keys must be written in alpha order or older versions of pgBackRest will not calculate the correct checksum.\n\nAlso move the load retry logic to helper functions rather than embedding it in the Info object. This allows for more flexibility in loading and ensures that stack traces will be available when developing unit tests."
+        "body": "Info files required three copies in memory to be loaded (the original string, an ini representation, and the final info object). Not only was this memory inefficient but the Ini object does sequential scans when searching for keys making large files very slow to load.\n\nThis has not been an issue since archive.info and backup.info are very small, but it becomes a big deal when loading manifests with hundreds of thousands of files.\n\nInstead of holding copies of the data in memory, use a callback to deliver the ini data directly to the object when loading. Use a similar method for save to avoid having an intermediate copy. Save is a bit complex because sections/keys must be written in alpha order or older versions of pgBunker will not calculate the correct checksum.\n\nAlso move the load retry logic to helper functions rather than embedding it in the Info object. This allows for more flexibility in loading and ensures that stack traces will be available when developing unit tests."
     },
     {
         "commit": "7334f30c350b5275106b9acf28b60d999287d800",
@@ -14813,8 +14813,8 @@
     {
         "commit": "8df7d68c8dca2c61b665bbbd1f26800c0dca3ae8",
         "date": "2019-09-03 18:28:53 -0400",
-        "subject": "Fix sudo missed in \"Build pgBackRest as an unprivileged user\".",
-        "body": "286a106a updated the documentation to build pgBackRest as an unprivileged user, but the wget command was missed. This command is not actually run, just displayed, because the release is not yet available when the documentation is built.\n\nUpdate the wget command to run as the local user."
+        "subject": "Fix sudo missed in \"Build pgBunker as an unprivileged user\".",
+        "body": "286a106a updated the documentation to build pgBunker as an unprivileged user, but the wget command was missed. This command is not actually run, just displayed, because the release is not yet available when the documentation is built.\n\nUpdate the wget command to run as the local user."
     },
     {
         "commit": "005684bf1f55206f122e1d0fcb4164cc84875ff5",
@@ -14953,8 +14953,8 @@
     {
         "commit": "53f27da3a6d770608de6aa6059c40526b83b31dd",
         "date": "2019-08-21 15:41:52 -0400",
-        "subject": "Add checkDbConfig() to compare pgBackRest/PostgreSQL configs.",
-        "body": "Checking the PostgreSQL-reported path and version against the pgBackRest configuration helps ensure that pgBackRest is operating against the correct cluster.\n\nIn Perl this functionality was in the Db object, but check seems like a better place for it in C."
+        "subject": "Add checkDbConfig() to compare pgBunker/PostgreSQL configs.",
+        "body": "Checking the PostgreSQL-reported path and version against the pgBunker configuration helps ensure that pgBunker is operating against the correct cluster.\n\nIn Perl this functionality was in the Db object, but check seems like a better place for it in C."
     },
     {
         "commit": "8b93fdf3493d96fcbbc127604b502d246928ec8e",
@@ -14999,8 +14999,8 @@
     {
         "commit": "286a106ae4932ae8213d62528de934afa99c246e",
         "date": "2019-08-20 09:46:29 -0400",
-        "subject": "Build pgBackRest as an unprivileged user.",
-        "body": "pgBackRest was being built by root in the documentation which is definitely not best practice.\n\nInstead build as the unprivileged default container user. Sudo privileges are still required to install."
+        "subject": "Build pgBunker as an unprivileged user.",
+        "body": "pgBunker was being built by root in the documentation which is definitely not best practice.\n\nInstead build as the unprivileged default container user. Sudo privileges are still required to install."
     },
     {
         "commit": "6b5366a663f8c408e56bb2f8e5b27821898a91cc",
@@ -15157,7 +15157,7 @@
         "commit": "f9e1f3a79823ee1bd6656e4f7a8fb23e735b8ccf",
         "date": "2019-08-01 14:28:30 -0400",
         "subject": "Retry S3 RequestTimeTooSkewed errors instead of immediately terminating.",
-        "body": "The cause of this error seems to be that a failed request takes so long that a subsequent retry at the http level uses outdated headers.\n\nWe're not sure if pgBackRest it to blame here (in one case a kernel downgrade fixed it, in another case an incorrect network driver was the problem) so add retries to hopefully deal with the issue if it is not too persistent. If SSL_write() has long delays before reporting an error then this will obviously affect backup performance."
+        "body": "The cause of this error seems to be that a failed request takes so long that a subsequent retry at the http level uses outdated headers.\n\nWe're not sure if pgBunker it to blame here (in one case a kernel downgrade fixed it, in another case an incorrect network driver was the problem) so add retries to hopefully deal with the issue if it is not too persistent. If SSL_write() has long delays before reporting an error then this will obviously affect backup performance."
     },
     {
         "commit": "2eb3c9f95f6e57072b65da81cb07a1268ebbf38e",
@@ -15863,7 +15863,7 @@
         "commit": "e3fe3434b4428398ffbee5359f0e0cdec8e55bcb",
         "date": "2019-05-21 10:14:41 -0400",
         "subject": "Rename repo-s3-verify-ssl option to repo-s3-verify-tls.",
-        "body": "The new name is preferred because pgBackRest does not support any SSL protocol versions (they are all considered to be insecure).\n\nThe old name will continue to be accepted."
+        "body": "The new name is preferred because pgBunker does not support any SSL protocol versions (they are all considered to be insecure).\n\nThe old name will continue to be accepted."
     },
     {
         "commit": "1bc84c647490d6cf78975b5dde5b1937016d24c6",
@@ -16408,7 +16408,7 @@
         "commit": "6099729e922893312e001a3394db43d0c2b341ad",
         "date": "2019-04-08 19:38:06 -0400",
         "subject": "Improve error message when an S3 bucket name contains dots.",
-        "body": "The Perl lib we have been using for TLS allows dots in wildcards, but this is forbidden by RFC-2818. The new TLS implementation in C forbids this pattern, just as PostgreSQL and curl do.\n\nHowever, this does present a problem for users who have been using bucket names with dots in older versions of pgBackRest. Since this limitation exists for security reasons there appears to be no option but to take a hard line and do our best to notify the user of the issue as clearly as possible."
+        "body": "The Perl lib we have been using for TLS allows dots in wildcards, but this is forbidden by RFC-2818. The new TLS implementation in C forbids this pattern, just as PostgreSQL and curl do.\n\nHowever, this does present a problem for users who have been using bucket names with dots in older versions of pgBunker. Since this limitation exists for security reasons there appears to be no option but to take a hard line and do our best to notify the user of the issue as clearly as possible."
     },
     {
         "commit": "21c83eea59f5fb4d3c366a1e9782d26356801675",
@@ -16554,7 +16554,7 @@
         "commit": "8820d695747b40b73ead6d32a408e7d2804bd192",
         "date": "2019-03-25 08:12:38 +0400",
         "subject": "Use a single file to handle global errors in async archiving.",
-        "body": "The prior behavior on a global error (i.e. not file specific) was to write an individual error file for each WAL file being processed. On retry each of these error files would be removed, and if the error was persistent, they would then be recreated. In a busy environment this could mean tens or hundreds of thousands of files.\n\nAnother issue was that the error files could not be written until a list of WAL files to process had been generated. This was easy enough for archive-get but archive-push requires more processing and any errors that happened when generating the list would only be reported in the pgBackRest log rather than the PostgreSQL log.\n\nInstead write a global.error file that applies to any WAL file that does not have an explicit ok or error file. This reduces churn and allows more errors to be reported directly to PostgreSQL."
+        "body": "The prior behavior on a global error (i.e. not file specific) was to write an individual error file for each WAL file being processed. On retry each of these error files would be removed, and if the error was persistent, they would then be recreated. In a busy environment this could mean tens or hundreds of thousands of files.\n\nAnother issue was that the error files could not be written until a list of WAL files to process had been generated. This was easy enough for archive-get but archive-push requires more processing and any errors that happened when generating the list would only be reported in the pgBunker log rather than the PostgreSQL log.\n\nInstead write a global.error file that applies to any WAL file that does not have an explicit ok or error file. This reduces churn and allows more errors to be reported directly to PostgreSQL."
     },
     {
         "commit": "1f6f3f673e49a2dff4dff465d183a2f6928138e6",
@@ -16740,13 +16740,13 @@
         "commit": "2ef5ad70a29b36db570f8f50a2ba821fc4ee02ff",
         "date": "2019-03-10 13:27:30 +0200",
         "subject": "Move crypto module to common/crypto.",
-        "body": "It makes sense for the crypto code to be in common since it is not pgBackRest-specific.\n\nAlso combine the crypto tests into a single module."
+        "body": "It makes sense for the crypto code to be in common since it is not pgBunker-specific.\n\nAlso combine the crypto tests into a single module."
     },
     {
         "commit": "95597be81e7450fdbb88a6c17b549e9eb750d5dd",
         "date": "2019-03-10 13:11:20 +0200",
         "subject": "Move compress module to common/compress.",
-        "body": "It makes sense for the compression code to be in common since it is not pgBackRest-specific."
+        "body": "It makes sense for the compression code to be in common since it is not pgBunker-specific."
     },
     {
         "commit": "2f63babe9dfa6f49d5fbc9a6e039e1a1dfa5054d",
@@ -16781,7 +16781,7 @@
         "commit": "60fe5b7365c9eaaa03e954cac7dec14777aa2461",
         "date": "2019-03-09 11:03:47 +0200",
         "subject": "Error when parameters are passed to a command that does not accept parameters.",
-        "body": "This behavior allowed a command like this to run without error:\n\npgbackrest backup --stanza=db full\n\nEven though it actually performed an incremental backup in most circumstances because the `full` parameter was ignored.\n\nInstead, output an error and exit."
+        "body": "This behavior allowed a command like this to run without error:\n\npgbunker backup --stanza=db full\n\nEven though it actually performed an incremental backup in most circumstances because the `full` parameter was ignored.\n\nInstead, output an error and exit."
     },
     {
         "commit": "cad6fedb7ba2877f7ea1b2e23415c42b6bda3483",
@@ -17142,7 +17142,7 @@
         "commit": "dada50ee26e3891ebfca73e12a8f14080cc8ad7e",
         "date": "2019-01-30 13:39:22 +0200",
         "subject": "Fix hard-coded repository path.",
-        "body": "This prevented packages from being passed to the documentation unless they were in the /backrest directory on the host.\n\nAlso make the local path /pgbackrest instead of the deprecated /backrest."
+        "body": "This prevented packages from being passed to the documentation unless they were in the /backrest directory on the host.\n\nAlso make the local path /pgbunker instead of the deprecated /backrest."
     },
     {
         "commit": "8634eb8c43c8666634fe64a49a39c6384caee64d",
@@ -17562,7 +17562,7 @@
         "commit": "2f15a90d18e0cdc0d91e9915b400acfc78ccaf26",
         "date": "2018-12-10 18:45:57 -0500",
         "subject": "Add infoArchiveIdHistoryMatch() to the InfoArchive object.",
-        "body": "Match a PostgreSQL system identifier and version to a pgBackRest archive id."
+        "body": "Match a PostgreSQL system identifier and version to a pgBunker archive id."
     },
     {
         "commit": "f0417ee524d1759b1aa5949abcae4769741ce550",
@@ -17699,7 +17699,7 @@
         "commit": "9e217d02564d30bcdcb865f87323221aa2969169",
         "date": "2018-12-04 13:17:55 -0500",
         "subject": "Documentation may be built with user-specified packages.",
-        "body": "By default the documentation builds pgBackRest from source, but the documentation is also a good way to smoke-test packages.\n\nAllow a package file to be specified by passing --var=package=/path/to/package.ext. This works for Debian and CentOS 6 builds."
+        "body": "By default the documentation builds pgBunker from source, but the documentation is also a good way to smoke-test packages.\n\nAllow a package file to be specified by passing --var=package=/path/to/package.ext. This works for Debian and CentOS 6 builds."
     },
     {
         "commit": "0db030fa63b74fb6e0a8ad58f1417e39cd1eac9e",
@@ -17752,7 +17752,7 @@
         "commit": "74b72df9dbfbfb00d5b729cb83bef35e77fd73c6",
         "date": "2018-11-28 18:41:21 -0500",
         "subject": "Improve error message when info files are missing/corrupt.",
-        "body": "The previous error message only showed the last error. In addition, some errors were missed (such as directory permission errors) that could prevent the copy from being checked.\n\nShow both errors below a generic \"unable to load\" error. Details are now given explaining exactly why the primary and copy failed.\n\nPreviously if one file could not be loaded a warning would be output. This has been removed because it is not clear what the user should do in this case. Should they do a stanza-create --force? Maybe the best idea is to automatically repair the corrupt file, but on the other hand that might just spread corruption if pgBackRest makes the wrong choice."
+        "body": "The previous error message only showed the last error. In addition, some errors were missed (such as directory permission errors) that could prevent the copy from being checked.\n\nShow both errors below a generic \"unable to load\" error. Details are now given explaining exactly why the primary and copy failed.\n\nPreviously if one file could not be loaded a warning would be output. This has been removed because it is not clear what the user should do in this case. Should they do a stanza-create --force? Maybe the best idea is to automatically repair the corrupt file, but on the other hand that might just spread corruption if pgBunker makes the wrong choice."
     },
     {
         "commit": "47687dd13a24a49409f07b99141b508739228791",
@@ -18014,7 +18014,7 @@
     {
         "commit": "bc810e5a87176ee68491e79473325a8a411a34c9",
         "date": "2018-11-12 20:44:56 -0500",
-        "subject": "Remove error suppression for pgBackRest make.",
+        "subject": "Remove error suppression for pgBunker make.",
         "body": "This looks like a copy-pasto because make works just fine without it."
     },
     {
@@ -18262,13 +18262,13 @@
         "commit": "2c272c220b39739ff324305593034487df81b466",
         "date": "2018-10-15 23:23:49 +0100",
         "subject": "PostgreSQL 11 support.",
-        "body": "PostgreSQL 11 RC1 support was tested in 9ae3d8c46 when the u18 container was rebuilt. Nothing substantive changed after RC1 so pgBackRest is ready for PostgreSQL 11 GA."
+        "body": "PostgreSQL 11 RC1 support was tested in 9ae3d8c46 when the u18 container was rebuilt. Nothing substantive changed after RC1 so pgBunker is ready for PostgreSQL 11 GA."
     },
     {
         "commit": "9ae3d8c46ac10273ca53c942410f768e27395230",
         "date": "2018-10-15 23:13:08 +0100",
         "subject": "Install nodejs from deb.nodesource.com.",
-        "body": "The standard npm packages on Ubuntu 18.04 suddenly required libssl1.0 which broke the pgbackrest package builds. Installing nodejs from deb.nodesource.com seems to work fine with standard libssl.\n\nThis package is required by ScalityS3 which is used for local S3 testing."
+        "body": "The standard npm packages on Ubuntu 18.04 suddenly required libssl1.0 which broke the pgbunker package builds. Installing nodejs from deb.nodesource.com seems to work fine with standard libssl.\n\nThis package is required by ScalityS3 which is used for local S3 testing."
     },
     {
         "commit": "98ff8ccc59fa1e344426f3084e0a37498e56ce12",
@@ -18280,7 +18280,7 @@
         "commit": "68110d04b24dc633e5b5b6869924dd36a2307135",
         "date": "2018-10-07 17:50:10 +0100",
         "subject": "Add ioReadLine()/ioWriteLine() to IoRead/IoWrite objects.",
-        "body": "Allow a single linefeed-terminated line to be read or written. This is useful for various protocol implementations, including HTTP and pgBackRest's protocol.\n\nOn read the maximum line size is limited to buffer-size to prevent runaway memory usage in case a linefeed is not found. This seems fine for HTTP but we may need to revisit this decision when implementing the pgBackRest protocol. Another option would be to increase the minimum buffer size (currently 16KB)."
+        "body": "Allow a single linefeed-terminated line to be read or written. This is useful for various protocol implementations, including HTTP and pgBunker's protocol.\n\nOn read the maximum line size is limited to buffer-size to prevent runaway memory usage in case a linefeed is not found. This seems fine for HTTP but we may need to revisit this decision when implementing the pgBunker protocol. Another option would be to increase the minimum buffer size (currently 16KB)."
     },
     {
         "commit": "db8dce7adcf277a021ad8766ab91e86fad913eff",
@@ -18355,7 +18355,7 @@
         "commit": "50266cc26c2c76fd155779e85c82dbed58cc2d84",
         "date": "2018-09-19 16:41:20 -0400",
         "subject": "Use command in authorized_hosts to improve SSH security.",
-        "body": "Unsecured, passwordless SSH can be a scary thing. If an attacker gains access to one system they can easily hop to other systems.\n\nAdd documentation on how to use the command parameter in authorized_keys to limit ssh to running a single command, pgbackrest. There is more that could be done for security but this likely addresses most needs.\n\nAlso change references to \"trusted ssh\" to \"passwordless ssh\" since this seems more correct."
+        "body": "Unsecured, passwordless SSH can be a scary thing. If an attacker gains access to one system they can easily hop to other systems.\n\nAdd documentation on how to use the command parameter in authorized_keys to limit ssh to running a single command, pgbunker. There is more that could be done for security but this likely addresses most needs.\n\nAlso change references to \"trusted ssh\" to \"passwordless ssh\" since this seems more correct."
     },
     {
         "commit": "880fbb5e578c387e52f83c8eca1040b42f4e21a8",
@@ -18366,7 +18366,7 @@
     {
         "commit": "bf0691576a56df0d662488cee19d21e924a3cecb",
         "date": "2018-09-18 13:29:05 -0400",
-        "subject": "Allow delta option to be specified in the pgBackRest configuration file.",
+        "subject": "Allow delta option to be specified in the pgBunker configuration file.",
         "body": "This option was previously allowed on the command-line only for no particular reason that we could determine.\n\nBeing able to specify it in the config file seems like a good idea and won't change current usage."
     },
     {
@@ -18873,7 +18873,7 @@
         "commit": "1359e2908c777ef7b8cb128f7d7ede3b53bc2018",
         "date": "2018-07-20 08:11:34 -0400",
         "subject": "Fix issue where errors raised in C were not logged when called from Perl.",
-        "body": "pgBackRest properly terminated with the correct error code but lacked an error message to aid in debugging."
+        "body": "pgBunker properly terminated with the correct error code but lacked an error message to aid in debugging."
     },
     {
         "commit": "d3cfeebdf91a559a0af80bba5fc424f4d091b944",
@@ -19000,7 +19000,7 @@
     {
         "commit": "6084e9be04dd958f8ab8906c1af8e3ed1fca4994",
         "date": "2018-06-16 13:07:01 -0400",
-        "subject": "Fix default location of pgbackrest.conf in option reference."
+        "subject": "Fix default location of pgbunker.conf in option reference."
     },
     {
         "commit": "1a0d56860059e7f9998e1faf5d384017ca1511ee",
@@ -19022,7 +19022,7 @@
     {
         "commit": "fbd1da05230bb4790f143443dd515453fada0bba",
         "date": "2018-06-13 13:43:17 -0400",
-        "subject": "Create a new section to describe building pgBackRest and build on a separate host."
+        "subject": "Create a new section to describe building pgBunker and build on a separate host."
     },
     {
         "commit": "d55e609959547750116be2954f956e7e918013b5",
@@ -19048,7 +19048,7 @@
     {
         "commit": "5c0099781d170409a0121355fb8b4917ca06ac0a",
         "date": "2018-06-06 22:19:01 -0400",
-        "subject": "Update Debian package to add debug symbols to pgBackRest executable."
+        "subject": "Update Debian package to add debug symbols to pgBunker executable."
     },
     {
         "commit": "a385cb520b02c8e216bde78de51e57c216534778",
@@ -19100,7 +19100,7 @@
     {
         "commit": "4c7408ea52af7f8faec5244c65a55440643616eb",
         "date": "2018-05-22 12:53:08 -0400",
-        "subject": "Embed exported C functions and Perl modules directly into the pgBackRest executable."
+        "subject": "Embed exported C functions and Perl modules directly into the pgBunker executable."
     },
     {
         "commit": "ada5c5c0d96e63f9f13009b6b0818457b49c6591",
@@ -19200,7 +19200,7 @@
         "commit": "6a40c916d4307c2de79de250ed444237d47e6b7a",
         "date": "2018-05-02 14:06:40 -0400",
         "subject": "Add repo-s3-token option to allow temporary credentials tokens to be configured.",
-        "body": "pgBackRest currently has no way to request new credentials so the entire command (e.g. backup, restore) must complete before the credentials expire."
+        "body": "pgBunker currently has no way to request new credentials so the entire command (e.g. backup, restore) must complete before the credentials expire."
     },
     {
         "commit": "5e090ba30501b76717dcb034420aba06847955f2",
@@ -19327,7 +19327,7 @@
     {
         "commit": "27aa5f756e32e8e1713588695b86451fde2e5b02",
         "date": "2018-04-19 11:09:39 -0400",
-        "subject": "Add support for additional pgBackRest configuration files.",
+        "subject": "Add support for additional pgBunker configuration files.",
         "body": "Configuration files are loaded from the directory specified by the --config-include-path option.\n\nAdd --config-path option for overriding the default base path of the --config and --config-include-path option."
     },
     {
@@ -19463,7 +19463,7 @@
         "commit": "b9f636cab470165ff0d69baa54efa5f8b2a79d43",
         "date": "2018-04-05 22:38:11 -0400",
         "subject": "Cleanup C types.",
-        "body": "* Remove pgBackRest defined types included with the C types.\n* Remove redefinition of standard C types."
+        "body": "* Remove pgBunker defined types included with the C types.\n* Remove redefinition of standard C types."
     },
     {
         "commit": "bd25248df02d4a21315e73c1a4dc28fe8458fe97",
@@ -19629,7 +19629,7 @@
         "commit": "8a1ce42c30e7e9ac79b1f7b66aa870d84c7419de",
         "date": "2018-03-15 12:02:09 -0400",
         "subject": "Immediately error when a secure option (e.g. repo1-s3-key) is passed on the command line.",
-        "body": "Since pgBackRest would not pass secure options on to sub-processes an obscure error was thrown. The new error is much clearer and provides hints about how to fix the problem.\n\nUpdate command documentation to omit secure options that cannot be specified on the command-line."
+        "body": "Since pgBunker would not pass secure options on to sub-processes an obscure error was thrown. The new error is much clearer and provides hints about how to fix the problem.\n\nUpdate command documentation to omit secure options that cannot be specified on the command-line."
     },
     {
         "commit": "dd3ce7081070aca3a5c915af2a7e642c3ebece4b",
@@ -20300,7 +20300,7 @@
         "commit": "99a072163192e7546632119df89511a173d9048e",
         "date": "2017-12-05 15:23:32 -0500",
         "subject": "Allow any non-boolean, non-command-line option to be negated.",
-        "body": "This allows specific options in pgbackrest.conf to be ignored (and set to default) which reduces the need to write new configuration files for specific needs.\n\nNote that boolean, non-command-line options are already negatable."
+        "body": "This allows specific options in pgbunker.conf to be ignored (and set to default) which reduces the need to write new configuration files for specific needs.\n\nNote that boolean, non-command-line options are already negatable."
     },
     {
         "commit": "c5fc88d34097ba03cd4fce3fbfce1f4c337b83e6",
@@ -20365,7 +20365,7 @@
     {
         "commit": "74d6398ad2a893b1413c8202814c6284846087da",
         "date": "2017-11-26 18:43:51 -0500",
-        "subject": "The pgbackrest executable is now a C binary instead of Perl.",
+        "subject": "The pgbunker executable is now a C binary instead of Perl.",
         "body": "This allows certain time-critical commands (like async archive-push) to run more quickly."
     },
     {
@@ -20728,7 +20728,7 @@
         "commit": "40a85e34f1b12620b5520f620779396b7ead525a",
         "date": "2017-09-20 19:57:05 -0400",
         "subject": "Improve C library smart build.",
-        "body": "Ignore changes outside of /lib/pgBackRest/Config."
+        "body": "Ignore changes outside of /lib/pgBunker/Config."
     },
     {
         "commit": "4d6c56b4d76572f5a45a45ca8f55ddc269d2d6d1",
@@ -20941,7 +20941,7 @@
     {
         "commit": "49449feab3d13fa6aedd5271d60e55f3720e8f08",
         "date": "2017-07-24 21:14:42 -0400",
-        "subject": "Add creation of /etc/pgbackrest.conf to manual installation instructions."
+        "subject": "Add creation of /etc/pgbunker.conf to manual installation instructions."
     },
     {
         "commit": "cbb749e12a6c752d9172d7038f3f683c84d50d03",
@@ -21330,7 +21330,7 @@
     {
         "commit": "af7e4f4b4b6070e566865872e5240b824a14983f",
         "date": "2017-03-22 19:03:28 -0400",
-        "subject": "Added validation of pgbackrest.conf to display warnings if options are not valid or are not in the correct section.",
+        "subject": "Added validation of pgbunker.conf to display warnings if options are not valid or are not in the correct section.",
         "body": "Contributed by Cynthia Shang."
     },
     {
@@ -21761,7 +21761,7 @@
         "commit": "36a5349b1c6b6bcd513464029733b62fe4200759",
         "date": "2016-12-12 18:54:07 -0500",
         "subject": "Added the --checksum-page option.",
-        "body": "This option allows pgBackRest to validate page checksums in data files when checksums are enabled on PostgreSQL >= 9.3. Note that this functionality requires a C library which may not initially be available in OS packages. The option will automatically be enabled when the library is present and checksums are enabled on the cluster."
+        "body": "This option allows pgBunker to validate page checksums in data files when checksums are enabled on PostgreSQL >= 9.3. Note that this functionality requires a C library which may not initially be available in OS packages. The option will automatically be enabled when the library is present and checksums are enabled on the cluster."
     },
     {
         "commit": "6dd0829033fb600e0aa5d9c60d3315e65a6bb289",
@@ -21843,7 +21843,7 @@
         "commit": "005fc08795c0bd299f999eff665b4eb4e789b2d2",
         "date": "2016-12-03 10:23:26 -0500",
         "subject": "Added the --repo-link option.",
-        "body": "Allow internal symlinks to be suppressed when the repository is located on a filesystem that does not support symlinks. This does not affect any pgBackRest functionality, but the convenience link latest will not be created and neither will internal tablespace symlinks, which will affect the ability to bring up clusters in-place manually using filesystem snapshots."
+        "body": "Allow internal symlinks to be suppressed when the repository is located on a filesystem that does not support symlinks. This does not affect any pgBunker functionality, but the convenience link latest will not be created and neither will internal tablespace symlinks, which will affect the ability to bring up clusters in-place manually using filesystem snapshots."
     },
     {
         "commit": "6ae4d7de81cfdb8982f3bde0e920fb2a76250208",
@@ -21975,13 +21975,13 @@
     {
         "commit": "16d0e767ef40f22d83166c88bc7177ff01e7fb3c",
         "date": "2016-10-05 21:15:10 -0400",
-        "subject": "Set application_name to \"pgBackRest [command]\" for database connections.",
+        "subject": "Set application_name to \"pgBunker [command]\" for database connections.",
         "body": "Suggested by Jens Wilke."
     },
     {
         "commit": "0a4099fff87458265a5a14006967c48c3cf912bf",
         "date": "2016-10-05 21:13:29 -0400",
-        "subject": "Clarified error message when unable to acquire pgBackRest advisory lock to make it clear that it is not a PostgreSQL backup lock.",
+        "subject": "Clarified error message when unable to acquire pgBunker advisory lock to make it clear that it is not a PostgreSQL backup lock.",
         "body": "Suggested by Jens Wilke."
     },
     {
@@ -22057,7 +22057,7 @@
         "commit": "25f40f9b15f987989b8286da47c631d6e6246abf",
         "date": "2016-09-17 11:53:28 -0400",
         "subject": "Log improvements:",
-        "body": "* pgBackRest version number included in command start INFO log output.\n* Process ID logged for local process start/stop INFO log output.\n* Fixed missing expect output for help module."
+        "body": "* pgBunker version number included in command start INFO log output.\n* Process ID logged for local process start/stop INFO log output.\n* Fixed missing expect output for help module."
     },
     {
         "commit": "d98df8c8cff41970a5549328722d90cbc7f8f19d",
@@ -22136,7 +22136,7 @@
     {
         "commit": "56ee666e69302b291ec5cc7d04caa25c651d7bfb",
         "date": "2016-09-04 09:27:56 -0400",
-        "subject": "Suppress TOC for unsupported versions of pgBackRest.",
+        "subject": "Suppress TOC for unsupported versions of pgBunker.",
         "body": "The intent is to tidy the releases page and nobody should care much about the old, unsupported releases,"
     },
     {
@@ -22148,7 +22148,7 @@
         "commit": "f986e6ae33a5c87da7a8a5f5e5a11b8d4637a172",
         "date": "2016-09-04 09:22:53 -0400",
         "subject": "File module improvements.",
-        "body": "* Remove obsolete thread index variable from File() module.\n* Changed temporary file names to consistently use .pgbackrest.tmp."
+        "body": "* Remove obsolete thread index variable from File() module.\n* Changed temporary file names to consistently use .pgbunker.tmp."
     },
     {
         "commit": "bcdb5cdac80372536539c46e12b3d1a5d244f5a9",
@@ -22202,7 +22202,7 @@
         "commit": "d0b6f78b20cb7c74b43717a97242fce7160d2604",
         "date": "2016-08-24 12:39:27 -0400",
         "subject": "More flexible configuration for databases",
-        "body": "Master and standby can both be configured on the backup server and pgBackRest will automatically determine which is the master. This means no configuration changes for backup are required after failing over from a master to standby when a separate backup server is used."
+        "body": "Master and standby can both be configured on the backup server and pgBunker will automatically determine which is the master. This means no configuration changes for backup are required after failing over from a master to standby when a separate backup server is used."
     },
     {
         "commit": "cd6278e5af22119cb0c4e3714dc2a66d3cd219c0",
@@ -22229,7 +22229,7 @@
         "commit": "b25f10949a016cc4dc6d2e3ca1c8a63f764059c9",
         "date": "2016-08-15 20:15:17 -0400",
         "subject": "Fixed #229: Check fails on target db host.",
-        "body": "Options that should not allow multiple values could be specified multiple times in pgbackrest.conf without an error being raised."
+        "body": "Options that should not allow multiple values could be specified multiple times in pgbunker.conf without an error being raised."
     },
     {
         "commit": "88d9bd3d37475c907a4fffdbf907deafc0b44bc3",
@@ -22289,7 +22289,7 @@
     {
         "commit": "f0c97289215174cb95d3b4df89cbf9e13ca03243",
         "date": "2016-08-02 11:38:12 -0400",
-        "subject": "Moved the backlog from the pgBackRest website to the GitHub repository wiki.",
+        "subject": "Moved the backlog from the pgBunker website to the GitHub repository wiki.",
         "body": "Contributed by Cynthia Shang."
     },
     {
@@ -22400,7 +22400,7 @@
         "commit": "d96b1a0dbc86fab538bf1be53825675774e9cbc9",
         "date": "2016-07-26 16:12:38 -0400",
         "subject": "All remote types now take locks.",
-        "body": "The exceptions date to when the test harness and pgBackRest were running in the same VM and no longer apply."
+        "body": "The exceptions date to when the test harness and pgBunker were running in the same VM and no longer apply."
     },
     {
         "commit": "095351f145003c62b24770e8a5ef96ec6125e624",
@@ -22511,7 +22511,7 @@
     {
         "commit": "4cff5bb0e69f03f047f8e8fe96a9ea336d7b4f31",
         "date": "2016-06-18 10:59:45 -0400",
-        "subject": "Fixed pgBackRest config sections being blank in the output when not loaded from cache."
+        "subject": "Fixed pgBunker config sections being blank in the output when not loaded from cache."
     },
     {
         "commit": "012405a33b01a3f215a0ee610a2648c5f5afb0f6",
@@ -22535,7 +22535,7 @@
         "commit": "7e45ed8366f8933a0e8f52b5777f6618d57766a2",
         "date": "2016-06-12 09:13:46 -0400",
         "subject": "Added check command.",
-        "body": "The check command validates that pgBackRest is configured correctly for archiving and backups."
+        "body": "The check command validates that pgBunker is configured correctly for archiving and backups."
     },
     {
         "commit": "7c9eaf7210181ca806c1e8b477bc8a0df8d4af3a",
@@ -22572,7 +22572,7 @@
     {
         "commit": "1ddfb1e453aef26590b649c77330d5206978917d",
         "date": "2016-06-04 11:40:33 -0400",
-        "subject": "Fixed pgBackRest-specific xml that was loaded for non-pgBackRest projects."
+        "subject": "Fixed pgBunker-specific xml that was loaded for non-pgBunker projects."
     },
     {
         "commit": "8ddfab0cbc646bfd11fcee1b4a47d3a3b617ae7a",
@@ -22590,7 +22590,7 @@
         "commit": "36cf0b18f5c7db870f8b0338ee43e84c32ad4661",
         "date": "2016-06-03 18:59:12 -0400",
         "subject": "Update installation documentation.",
-        "body": "* Recommended install location for pgBackRest modules is now /usr/share/perl5 since /usr/lib/perl5 has been removed from the search path in newer versions of Perl.\n\n* Added instructions for removing prior versions of pgBackRest."
+        "body": "* Recommended install location for pgBunker modules is now /usr/share/perl5 since /usr/lib/perl5 has been removed from the search path in newer versions of Perl.\n\n* Added instructions for removing prior versions of pgBunker."
     },
     {
         "commit": "bfaee7380d6aa0a4a4573df2a6a28581537d169b",
@@ -22873,7 +22873,7 @@
         "commit": "18fd25233b1db7b3197f5d8dc537d239dcfc7aba",
         "date": "2016-04-14 09:30:54 -0400",
         "subject": "New simpler configuration and consistent project/exe/path naming.",
-        "body": "* The repo-path option now always refers to the repository where backups and archive are stored, whether local or remote, so the repo-remote-path option has been removed. The new spool-path option can be used to define a location for queueing WAL segments when archiving asynchronously. Otherwise, a local repository is no longer required.\n\n* Implemented a new config format which should be far simpler to use. See the User Guide and Configuration Reference for details but for a simple configuration all options can now be placed in the stanza section. Options that are shared between stanzas can be placed in the [global] section. More complex configurations can still make use of command sections though this should be a rare use case.\n\n* The default configuration filename is now pgbackrest.conf instead of pg_backrest.conf. This was done for consistency with other naming changes but also to prevent old config files from being loaded accidentally.\n\n* The default repository name was changed from /var/lib/backup to /var/lib/pgbackrest.\n\n* Lock files are now stored in /tmp/pgbackrest by default. These days /run/pgbackrest would be the preferred location but that would require init scripts which are not part of this release. The lock-path option can be used to configure the lock directory.\n\n* Log files are now stored in /var/log/pgbackrest by default and no longer have the date appended so they can be managed with logrotate. The log-path option can be used to configure the lock directory.\n\n* Executable filename changed from pg_backrest to pgbackrest."
+        "body": "* The repo-path option now always refers to the repository where backups and archive are stored, whether local or remote, so the repo-remote-path option has been removed. The new spool-path option can be used to define a location for queueing WAL segments when archiving asynchronously. Otherwise, a local repository is no longer required.\n\n* Implemented a new config format which should be far simpler to use. See the User Guide and Configuration Reference for details but for a simple configuration all options can now be placed in the stanza section. Options that are shared between stanzas can be placed in the [global] section. More complex configurations can still make use of command sections though this should be a rare use case.\n\n* The default configuration filename is now pgbunker.conf instead of pg_backrest.conf. This was done for consistency with other naming changes but also to prevent old config files from being loaded accidentally.\n\n* The default repository name was changed from /var/lib/backup to /var/lib/pgbunker.\n\n* Lock files are now stored in /tmp/pgbunker by default. These days /run/pgbunker would be the preferred location but that would require init scripts which are not part of this release. The lock-path option can be used to configure the lock directory.\n\n* Log files are now stored in /var/log/pgbunker by default and no longer have the date appended so they can be managed with logrotate. The log-path option can be used to configure the lock directory.\n\n* Executable filename changed from pg_backrest to pgbunker."
     },
     {
         "commit": "885797e4b58a675487a3531ba16908c1d1e9f970",
@@ -23017,13 +23017,13 @@
         "commit": "f8b47997a314ed6502b915a0514b20ac23598dab",
         "date": "2016-02-05 23:03:29 -0500",
         "subject": "Closed #127: More sanity checking for --delta restores",
-        "body": "Added checks for `--delta` and `--force` restore options to ensure that the destination is a valid $PGDATA directory. pgBackRest will check for the presence of `PG_VERSION` or `backup.manifest` (left over from an aborted restore). If neither is found then `--delta` and `--force` will be disabled but the restore will proceed unless there are files in the $PGDATA directory (or any tablespace directories) in which case the operation will be aborted."
+        "body": "Added checks for `--delta` and `--force` restore options to ensure that the destination is a valid $PGDATA directory. pgBunker will check for the presence of `PG_VERSION` or `backup.manifest` (left over from an aborted restore). If neither is found then `--delta` and `--force` will be disabled but the restore will proceed unless there are files in the $PGDATA directory (or any tablespace directories) in which case the operation will be aborted."
     },
     {
         "commit": "5c815e4fc0e2c8a9ea162963f32d5679d54fc852",
         "date": "2016-02-02 14:33:15 -0500",
         "subject": "Closed #58: Get catalog number for better tablespace copying",
-        "body": "When backing up and restoring tablespaces pgBackRest only operates on the subdirectory created for the version of PostgreSQL being run against. Since multiple versions can live in a tablespace (especially during a binary upgrade) this prevents too many files from being copied during a backup and other versions possibly being wiped out during a `--delta` restore. This only applies to PostgreSQL >= 9.0 -- before that only one PostgreSQL version could use a tablespace."
+        "body": "When backing up and restoring tablespaces pgBunker only operates on the subdirectory created for the version of PostgreSQL being run against. Since multiple versions can live in a tablespace (especially during a binary upgrade) this prevents too many files from being copied during a backup and other versions possibly being wiped out during a `--delta` restore. This only applies to PostgreSQL >= 9.0 -- before that only one PostgreSQL version could use a tablespace."
     },
     {
         "commit": "24a1ad31d0dfcd8c72a71c589902446a9da75e11",
@@ -23222,7 +23222,7 @@
     {
         "commit": "fa05715dec955a30f271df9c1c059c9c876e3f4d",
         "date": "2015-11-22 16:44:01 -0500",
-        "subject": "Added documentation in the user guide for delta restores, expiration, dedicated backup hosts, starting and stopping pgBackRest, and replication."
+        "subject": "Added documentation in the user guide for delta restores, expiration, dedicated backup hosts, starting and stopping pgBunker, and replication."
     },
     {
         "commit": "8ddfdcdd3bc2ee5e76487d903696840655357f87",
@@ -23350,7 +23350,7 @@
     {
         "commit": "b17bf31fb6dbe67b6efdcd634a4d29ede1cf9d76",
         "date": "2015-09-08 16:58:00 -0400",
-        "subject": "Implement issue #130: Info files should be updated with new version when pgBackRest is upgraded."
+        "subject": "Implement issue #130: Info files should be updated with new version when pgBunker is upgraded."
     },
     {
         "commit": "59b2261a8ee15d061367ffefe598c05cb93fcb3e",
@@ -23596,7 +23596,7 @@
     {
         "commit": "38f48be3cf7be6a24ee513f48fd4a55eb54a1ee5",
         "date": "2015-07-02 10:05:13 -0400",
-        "subject": "Improvements to help to make it more dynamic depending on environment. Changed PgBackRest to pgBackRest."
+        "subject": "Improvements to help to make it more dynamic depending on environment. Changed PgBackRest to pgBunker."
     },
     {
         "commit": "12932dc54cf24a43b7db7c7e829ad04cbc8816d6",

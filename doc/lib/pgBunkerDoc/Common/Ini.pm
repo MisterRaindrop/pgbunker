@@ -1,7 +1,7 @@
 ####################################################################################################################################
 # COMMON INI MODULE
 ####################################################################################################################################
-package pgBackRestDoc::Common::Ini;
+package pgBunkerDoc::Common::Ini;
 
 use strict;
 use warnings FATAL => qw(all);
@@ -12,9 +12,9 @@ use Exporter qw(import);
     our @EXPORT = qw();
 use JSON::PP;
 
-use pgBackRestDoc::Common::Exception;
-use pgBackRestDoc::Common::Log;
-use pgBackRestDoc::Common::String;
+use pgBunkerDoc::Common::Exception;
+use pgBunkerDoc::Common::Log;
+use pgBunkerDoc::Common::String;
 
 ####################################################################################################################################
 # iniRender() - render hash to standard INI format.

@@ -1,6 +1,6 @@
 -- Get last successful backup for each stanza
 --
--- Requires the monitor.pgbackrest_info function.
+-- Requires the monitor.pgbunker_info function.
 with stanza as
 (
     select data->'name' as name,
@@ -8,7 +8,7 @@ with stanza as
                jsonb_array_length(data->'backup') - 1) as last_backup,
            data->'archive'->(
                jsonb_array_length(data->'archive') - 1) as current_archive
-      from jsonb_array_elements(monitor.pgbackrest_info()) as data
+      from jsonb_array_elements(monitor.pgbunker_info()) as data
 )
 select name,
        to_timestamp(

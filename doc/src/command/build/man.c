@@ -29,7 +29,7 @@ referenceManReplace(String *const string)
     String *const result = strCat(strNew(), string);
 
     strReplace(result, STRDEF("{[postgres]}"), STRDEF("PostgreSQL"));
-    strReplace(result, STRDEF("{[project]}"), STRDEF("pgBackRest"));
+    strReplace(result, STRDEF("{[project]}"), STRDEF("pgBunker"));
 
     if (strstr(strZ(result), "{[") != NULL)
         THROW_FMT(AssertError, "unreplaced variable(s) in: %s", strZ(string));
@@ -257,10 +257,10 @@ referenceManRender(const XmlNode *const indexRoot, const BldCfg *const bldCfg, c
             result,
             "\nFILES\n"
             "  " CFGOPTDEF_CONFIG_PATH "/" PROJECT_CONFIG_FILE "\n"
-            "  /var/lib/pgbackrest\n"
-            "  /var/log/pgbackrest\n"
-            "  /var/spool/pgbackrest\n"
-            "  /tmp/pgbackrest\n");
+            "  /var/lib/pgbunker\n"
+            "  /var/log/pgbunker\n"
+            "  /var/spool/pgbunker\n"
+            "  /tmp/pgbunker\n");
 
         // Output examples
         // -------------------------------------------------------------------------------------------------------------------------
@@ -269,28 +269,28 @@ referenceManRender(const XmlNode *const indexRoot, const BldCfg *const bldCfg, c
             "\nEXAMPLES\n"
             "  * Create a backup of the PostgreSQL `main` cluster:\n"
             "\n"
-            "    $ pgbackrest --stanza=main backup\n"
+            "    $ pgbunker --stanza=main backup\n"
             "\n"
             "    The `main` cluster should be configured in `" CFGOPTDEF_CONFIG_PATH "/" PROJECT_CONFIG_FILE "`\n"
             "\n"
             "  * Show all available backups:\n"
             "\n"
-            "    $ pgbackrest info\n"
+            "    $ pgbunker info\n"
             "\n"
             "  * Show all available backups for a specific cluster:\n"
             "\n"
-            "    $ pgbackrest --stanza=main info\n"
+            "    $ pgbunker --stanza=main info\n"
             "\n"
             "  * Show backup specific options:\n"
             "\n"
-            "    $ pgbackrest help backup\n");
+            "    $ pgbunker help backup\n");
 
         // Output see also
         // -------------------------------------------------------------------------------------------------------------------------
         strCatZ(
             result,
             "\nSEE ALSO\n"
-            "  /usr/share/doc/pgbackrest-doc/html/index.html\n"
+            "  /usr/share/doc/pgbunker-doc/html/index.html\n"
             "  http://www.pgbackrest.org\n");
     }
     MEM_CONTEXT_TEMP_END();

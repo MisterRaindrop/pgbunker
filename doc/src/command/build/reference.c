@@ -53,7 +53,7 @@ referenceOptionRender(
         {
             ASSERT(strEqZ(defaultValue->value, "bin"));
 
-            strLstAddZ(blockList, "default: [path of executed pgbackrest binary]");
+            strLstAddZ(blockList, "default: [path of executed pgbunker binary]");
         }
         else if (defaultValue != NULL)
         {

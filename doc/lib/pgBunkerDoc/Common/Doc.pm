@@ -1,7 +1,7 @@
 ####################################################################################################################################
 # DOC MODULE
 ####################################################################################################################################
-package pgBackRestDoc::Common::Doc;
+package pgBunkerDoc::Common::Doc;
 
 use strict;
 use warnings FATAL => qw(all);
@@ -13,8 +13,8 @@ use File::Basename qw(dirname);
 use Scalar::Util qw(blessed);
 use XML::Checker::Parser;
 
-use pgBackRestDoc::Common::Log;
-use pgBackRestDoc::Common::String;
+use pgBunkerDoc::Common::Log;
+use pgBunkerDoc::Common::String;
 
 ####################################################################################################################################
 # CONSTRUCTOR
@@ -788,7 +788,7 @@ sub textSet
     my $self = shift;
     my $oText = shift;
 
-    if (blessed($oText) && $oText->isa('pgBackRestDoc::Common::Doc'))
+    if (blessed($oText) && $oText->isa('pgBunkerDoc::Common::Doc'))
     {
         $oText = $oText->{oDoc};
     }

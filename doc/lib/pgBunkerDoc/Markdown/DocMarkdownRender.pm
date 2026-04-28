@@ -1,8 +1,8 @@
 ####################################################################################################################################
 # DOC MARKDOWN RENDER MODULE
 ####################################################################################################################################
-package pgBackRestDoc::Markdown::DocMarkdownRender;
-use parent 'pgBackRestDoc::Common::DocExecute';
+package pgBunkerDoc::Markdown::DocMarkdownRender;
+use parent 'pgBunkerDoc::Common::DocExecute';
 
 use strict;
 use warnings FATAL => qw(all);
@@ -15,9 +15,9 @@ use File::Basename qw(dirname);
 use File::Copy;
 use Storable qw(dclone);
 
-use pgBackRestDoc::Common::DocManifest;
-use pgBackRestDoc::Common::Log;
-use pgBackRestDoc::Common::String;
+use pgBunkerDoc::Common::DocManifest;
+use pgBunkerDoc::Common::Log;
+use pgBunkerDoc::Common::String;
 
 ####################################################################################################################################
 # CONSTRUCTOR

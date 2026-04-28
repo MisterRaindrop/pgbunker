@@ -2,7 +2,7 @@
 
 ## Update CI container builds
 
-If there have been PostgreSQL minor releases since the last pgBackRest release then update the CI containers to include the latest releases. This should be committed before the release.
+If there have been PostgreSQL minor releases since the last pgBunker release then update the CI containers to include the latest releases. This should be committed before the release.
 
 ## Create a branch to test the release
 
@@ -32,7 +32,7 @@ to:
 
 ## Update code counts
 ```
-pgbackrest/test/test.pl --code-count
+pgbunker/test/test.pl --code-count
 ```
 
 ## Update sponsors
@@ -41,7 +41,7 @@ Add new sponsors and move to past sponsors when sponsorship has lapsed.
 
 ## Build release documentation
 ```
-pgbackrest/doc/release.pl --build
+pgbunker/doc/release.pl --build
 ```
 
 ## Commit release branch and push to CI for testing
@@ -63,46 +63,46 @@ export COVERITY_VERSION=?
 
 - Clean directories and run Coverity:
 ```
-rm -rf .cache/ccache && rm -rf build && rm -rf pgbackrest.tgz && rm -rf cov-int
-meson setup -Dwerror=true -Dfatal-errors=true -Dbuildtype=debug build pgbackrest
+rm -rf .cache/ccache && rm -rf build && rm -rf pgbunker.tgz && rm -rf cov-int
+meson setup -Dwerror=true -Dfatal-errors=true -Dbuildtype=debug build pgbunker
 coverity/bin/cov-build --dir cov-int ninja -C build
-tar czvf pgbackrest.tgz cov-int
+tar czvf pgbunker.tgz cov-int
 ```
 
 - Upload results:
 ```
-curl --form token=${COVERITY_TOKEN?} --form email="${COVERITY_EMAIL?}" --form file=@pgbackrest.tgz \
+curl --form token=${COVERITY_TOKEN?} --form email="${COVERITY_EMAIL?}" --form file=@pgbunker.tgz \
     --form version="${COVERITY_VERSION?}" --form description="dev build" \
-    "https://scan.coverity.com/builds?project=pgbackrest%2Fpgbackrest"
+    "https://scan.coverity.com/builds?project=pgbunker%2Fpgbunker"
 ```
 
-Check issues at https://scan.coverity.com/projects/pgbackrest-pgbackrest then fix and repeat Coverity runs as needed.
+Check issues at https://scan.coverity.com/projects/pgbunker-pgbunker then fix and repeat Coverity runs as needed.
 
 ## Perform stress testing on release
 
 - Build the documentation with stress testing enabled:
 ```
-pgbackrest/doc/doc.pl --out=html --include=user-guide --require=/stress --var=stress=y --var=stress-scale-table=100 --var=stress-scale-data=1000 --pre --no-cache
+pgbunker/doc/doc.pl --out=html --include=user-guide --require=/stress --var=stress=y --var=stress-scale-table=100 --var=stress-scale-data=1000 --pre --no-cache
 ```
 
 During data load the archive-push and archive-get processes can be monitored with:
 ```
-docker exec -it doc-pg-primary tail -f /var/log/pgbackrest/demo-archive-push-async.log
-docker exec -it doc-pg-standby tail -f /var/log/pgbackrest/demo-archive-get-async.log
+docker exec -it doc-pg-primary tail -f /var/log/pgbunker/demo-archive-push-async.log
+docker exec -it doc-pg-standby tail -f /var/log/pgbunker/demo-archive-get-async.log
 ```
 
 During backup/restore the processes can be monitored with:
 ```
-docker exec -it doc-repository tail -f /var/log/pgbackrest/demo-backup.log
-docker exec -it doc-pg-standby tail -f /var/log/pgbackrest/demo-restore.log
+docker exec -it doc-repository tail -f /var/log/pgbunker/demo-backup.log
+docker exec -it doc-pg-standby tail -f /var/log/pgbunker/demo-restore.log
 ```
 
-Processes can generally be monitored using 'top'. Once `top` is running, press `o` then enter `COMMAND=pgbackrest`. This will filter output to pgbackrest processes.
+Processes can generally be monitored using 'top'. Once `top` is running, press `o` then enter `COMMAND=pgbunker`. This will filter output to pgbunker processes.
 
 - Check for many log entries in the `archive-push`/`archive-get` logs to ensure async archiving was enabled:
 ```
-docker exec -it doc-pg-primary vi /var/log/pgbackrest/demo-archive-push-async.log
-docker exec -it doc-pg-standby vi /var/log/pgbackrest/demo-archive-get-async.log
+docker exec -it doc-pg-primary vi /var/log/pgbunker/demo-archive-push-async.log
+docker exec -it doc-pg-standby vi /var/log/pgbunker/demo-archive-get-async.log
 ```
 
 - Check the backup log to ensure the correct tables/data were created and backed up. It should look something like:
@@ -114,13 +114,13 @@ INFO: full backup size = 14.9GB, file total = 101004
 
 ## Clone web documentation into `doc/site`
 ```
-cd pgbackrest/doc
-git clone git@github.com:pgbackrest/website.git site
+cd pgbunker/doc
+git clone git@github.com:pgbunker/website.git site
 ```
 
 ## Deploy web documentation to `doc/site`
 ```
-pgbackrest/doc/release.pl --deploy
+pgbunker/doc/release.pl --deploy
 ```
 
 ## Final commit of release to integration
@@ -173,7 +173,7 @@ The first line will be the release title and the rest will be the body. The tag 
 
 ## Push web documentation to main and deploy
 ```
-cd pgbackrest/doc/site
+cd pgbunker/doc/site
 git commit -m "v2.14.0 documentation."
 git push origin main
 ```
@@ -192,7 +192,7 @@ Start from NEWS.md and update with the new date, version, and interesting featur
 
 ## Update PostgreSQL ecosystem wiki
 
-Update version, date, and minimum supported version (when changed): https://wiki.postgresql.org/wiki/Ecosystem:Backup#pgBackRest
+Update version, date, and minimum supported version (when changed): https://wiki.postgresql.org/wiki/Ecosystem:Backup#pgBunker
 
 ## Prepare for the next release
 
@@ -218,12 +218,12 @@ to:
 
 Run deploy to generate git history (ctrl-c as soon as the file is generated):
 ```
-pgbackrest/doc/release.pl --build
+pgbunker/doc/release.pl --build
 ```
 
 Run code count to add new release file:
 ```
-pgbackrest/test/test.pl --code-count
+pgbunker/test/test.pl --code-count
 ```
 
 Commit and push to integration:

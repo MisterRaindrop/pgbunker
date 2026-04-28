@@ -1,8 +1,8 @@
 ####################################################################################################################################
 # DOC HTML PAGE MODULE
 ####################################################################################################################################
-package pgBackRestDoc::Html::DocHtmlPage;
-use parent 'pgBackRestDoc::Common::DocExecute';
+package pgBunkerDoc::Html::DocHtmlPage;
+use parent 'pgBunkerDoc::Common::DocExecute';
 
 use strict;
 use warnings FATAL => qw(all);
@@ -12,12 +12,12 @@ use Data::Dumper;
 use Exporter qw(import);
     our @EXPORT = qw();
 
-use pgBackRestDoc::Common::DocManifest;
-use pgBackRestDoc::Common::DocRender;
-use pgBackRestDoc::Html::DocHtmlBuilder;
-use pgBackRestDoc::Html::DocHtmlElement;
-use pgBackRestDoc::Common::Log;
-use pgBackRestDoc::Common::String;
+use pgBunkerDoc::Common::DocManifest;
+use pgBunkerDoc::Common::DocRender;
+use pgBunkerDoc::Html::DocHtmlBuilder;
+use pgBunkerDoc::Html::DocHtmlElement;
+use pgBunkerDoc::Common::Log;
+use pgBunkerDoc::Common::String;
 
 ####################################################################################################################################
 # CONSTRUCTOR
@@ -87,7 +87,7 @@ sub process
     my $strTitle = $oPage->paramGet('title');
     my $strSubTitle = $oPage->paramGet('subtitle', false);
 
-    my $oHtmlBuilder = new pgBackRestDoc::Html::DocHtmlBuilder(
+    my $oHtmlBuilder = new pgBunkerDoc::Html::DocHtmlBuilder(
         $self->{oManifest}->variableReplace('{[project]}' . (defined($self->{oManifest}->variableGet('project-tagline')) ?
             ' - ' . $self->{oManifest}->variableGet('project-tagline') : '')),
         $self->{oManifest}->variableReplace($strTitle . (defined($strSubTitle) ? " - ${strSubTitle}" : '')),
@@ -235,10 +235,10 @@ sub sectionProcess
         $oSection->paramGet('id');
 
     # Create the section toc element
-    my $oSectionTocElement = new pgBackRestDoc::Html::DocHtmlElement(HTML_DIV, "section${iDepth}-toc");
+    my $oSectionTocElement = new pgBunkerDoc::Html::DocHtmlElement(HTML_DIV, "section${iDepth}-toc");
 
     # Create the section element
-    my $oSectionElement = new pgBackRestDoc::Html::DocHtmlElement(HTML_DIV, "section${iDepth}");
+    my $oSectionElement = new pgBunkerDoc::Html::DocHtmlElement(HTML_DIV, "section${iDepth}");
 
     # Add the section anchor
     $oSectionElement->addNew(HTML_A, undef, {strId => $strAnchor});
@@ -599,7 +599,7 @@ sub backrestConfigProcess
         my $strHostName = $self->{oManifest}->variableReplace($oConfig->paramGet('host'));
 
         # Render the config
-        $oConfigElement = new pgBackRestDoc::Html::DocHtmlElement(HTML_DIV, "config");
+        $oConfigElement = new pgBunkerDoc::Html::DocHtmlElement(HTML_DIV, "config");
 
         $oConfigElement->
             addNew(HTML_DIV, "config-title",
@@ -659,7 +659,7 @@ sub postgresConfigProcess
     {
         # Render the config
         my $strHostName = $self->{oManifest}->variableReplace($oConfig->paramGet('host'));
-        $oConfigElement = new pgBackRestDoc::Html::DocHtmlElement(HTML_DIV, "config");
+        $oConfigElement = new pgBunkerDoc::Html::DocHtmlElement(HTML_DIV, "config");
 
         $oConfigElement->
             addNew(HTML_DIV, "config-title",

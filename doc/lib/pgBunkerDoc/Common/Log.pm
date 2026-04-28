@@ -1,7 +1,7 @@
 ####################################################################################################################################
 # COMMON LOG MODULE
 ####################################################################################################################################
-package pgBackRestDoc::Common::Log;
+package pgBunkerDoc::Common::Log;
 
 use strict;
 use warnings FATAL => qw(all);
@@ -15,8 +15,8 @@ use File::Basename qw(dirname);
 use Scalar::Util qw(blessed reftype);
 use Time::HiRes qw(gettimeofday usleep);
 
-use pgBackRestDoc::Common::Exception;
-use pgBackRestDoc::Common::String;
+use pgBunkerDoc::Common::Exception;
+use pgBunkerDoc::Common::String;
 
 ####################################################################################################################################
 # Boolean constants
@@ -264,8 +264,8 @@ sub logDebugProcess
     my $oParam = shift;
     my $bOptionalBlock = false;
 
-    # Strip the package name off strFunction if it's pgBackRest
-    $strFunction =~ s/^pgBackRest[^\:]*\:\://;
+    # Strip the package name off strFunction if it's pgBunker
+    $strFunction =~ s/^pgBunker[^\:]*\:\://;
 
     while (defined($oParam))
     {
@@ -672,7 +672,7 @@ sub log
     # Return a typed exception if code is defined
     if (defined($iCode))
     {
-        return new pgBackRestDoc::Common::Exception($strLevel, $iCode, $strMessage, longmess(), $rExtra);
+        return new pgBunkerDoc::Common::Exception($strLevel, $iCode, $strMessage, longmess(), $rExtra);
     }
 
     # Return the message so it can be used in a confess

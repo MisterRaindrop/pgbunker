@@ -1,7 +1,7 @@
 ####################################################################################################################################
 # DOC RELEASE MODULE
 ####################################################################################################################################
-package pgBackRestDoc::Custom::DocCustomRelease;
+package pgBunkerDoc::Custom::DocCustomRelease;
 
 use strict;
 use warnings FATAL => qw(all);
@@ -12,10 +12,10 @@ use Exporter qw(import);
     our @EXPORT = qw();
 use File::Basename qw(dirname);
 
-use pgBackRestDoc::Common::DocRender;
-use pgBackRestDoc::Common::Log;
-use pgBackRestDoc::Common::String;
-use pgBackRestDoc::ProjectInfo;
+use pgBunkerDoc::Common::DocRender;
+use pgBunkerDoc::Common::Log;
+use pgBunkerDoc::Common::String;
+use pgBunkerDoc::ProjectInfo;
 
 ####################################################################################################################################
 # XML node constants
@@ -333,16 +333,16 @@ sub docGet
     my $strOperation = logDebugParam(__PACKAGE__ . '->docGet');
 
     # Load the git history
-    my $oStorageDoc = new pgBackRestTest::Common::Storage(
-        dirname(abs_path($0)), new pgBackRestTest::Common::StoragePosix({bFileSync => false, bPathSync => false}));
+    my $oStorageDoc = new pgBunkerTest::Common::Storage(
+        dirname(abs_path($0)), new pgBunkerTest::Common::StoragePosix({bFileSync => false, bPathSync => false}));
     my @hyGitLog = @{(JSON::PP->new()->allow_nonref())->decode(${$oStorageDoc->get("resource/git-history.cache")})};
 
     # Get renderer
-    my $oRender = new pgBackRestDoc::Common::DocRender('text');
+    my $oRender = new pgBunkerDoc::Common::DocRender('text');
     $oRender->tagSet('backrest', PROJECT_NAME);
 
     # Create the doc
-    my $oDoc = new pgBackRestDoc::Common::Doc();
+    my $oDoc = new pgBunkerDoc::Common::Doc();
     $oDoc->paramSet('title', $self->{oDoc}->paramGet('title'));
     $oDoc->paramSet('toc-number', $self->{oDoc}->paramGet('toc-number'));
 

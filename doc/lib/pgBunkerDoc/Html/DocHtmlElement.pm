@@ -1,7 +1,7 @@
 ####################################################################################################################################
 # DOC HTML ELEMENT MODULE
 ####################################################################################################################################
-package pgBackRestDoc::Html::DocHtmlElement;
+package pgBunkerDoc::Html::DocHtmlElement;
 
 use strict;
 use warnings FATAL => qw(all);
@@ -11,7 +11,7 @@ use Exporter qw(import);
     our @EXPORT = qw();
 use Scalar::Util qw(blessed);
 
-use pgBackRestDoc::Common::Log;
+use pgBunkerDoc::Common::Log;
 
 ####################################################################################################################################
 # Html Element Types
@@ -108,7 +108,7 @@ sub addNew
             {name => 'oParam', required => false, trace => true}
         );
 
-    my $oElement = new pgBackRestDoc::Html::DocHtmlElement($strType, $strClass, $oParam);
+    my $oElement = new pgBunkerDoc::Html::DocHtmlElement($strType, $strClass, $oParam);
 
     $self->add($oElement);
 
@@ -140,7 +140,7 @@ sub add
             {name => 'oElement', trace => true}
         );
 
-    if (!(blessed($oElement) && $oElement->isa('pgBackRestDoc::Html::DocHtmlElement')))
+    if (!(blessed($oElement) && $oElement->isa('pgBunkerDoc::Html::DocHtmlElement')))
     {
         confess &log(ASSERT, 'oElement must be a valid element object');
     }

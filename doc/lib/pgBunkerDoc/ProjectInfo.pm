@@ -3,7 +3,7 @@
 #
 # Contains project name, version and format.
 ####################################################################################################################################
-package pgBackRestDoc::ProjectInfo;
+package pgBunkerDoc::ProjectInfo;
 
 use strict;
 use warnings FATAL => qw(all);
@@ -38,11 +38,11 @@ push @EXPORT, qw(PROJECT_VERSION);
 ####################################################################################################################################
 # Load project info from src/version.h
 ####################################################################################################################################
-require pgBackRestTest::Common::Storage;
-require pgBackRestTest::Common::StoragePosix;
+require pgBunkerTest::Common::Storage;
+require pgBunkerTest::Common::StoragePosix;
 
-my $strProjectInfo = ${new pgBackRestTest::Common::Storage(
-    dirname(dirname(abs_path($0))), new pgBackRestTest::Common::StoragePosix())->get('src/version.h')};
+my $strProjectInfo = ${new pgBunkerTest::Common::Storage(
+    dirname(dirname(abs_path($0))), new pgBunkerTest::Common::StoragePosix())->get('src/version.h')};
 
 foreach my $strLine (split("\n", $strProjectInfo))
 {

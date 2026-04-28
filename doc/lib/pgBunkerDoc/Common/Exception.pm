@@ -1,7 +1,7 @@
 ####################################################################################################################################
 # COMMON EXCEPTION MODULE
 ####################################################################################################################################
-package pgBackRestDoc::Common::Exception;
+package pgBunkerDoc::Common::Exception;
 
 use strict;
 use warnings FATAL => qw(all);
@@ -156,7 +156,7 @@ sub isException
         # If a standard Exception
         if (blessed($$roException))
         {
-            return $$roException->isa('pgBackRestDoc::Common::Exception') ? 1 : 0;
+            return $$roException->isa('pgBunkerDoc::Common::Exception') ? 1 : 0;
         }
         # Else if a specially formatted string from the C library
         elsif ($$roException =~ /^PGBRCLIB\:[0-9]+\:/)
@@ -171,7 +171,7 @@ sub isException
             my $strMessage = join(':', @stryException);
 
             # Create exception
-            $$roException = new pgBackRestDoc::Common::Exception("ERROR", $iCode, $strMessage, $strTrace, undef, 1);
+            $$roException = new pgBunkerDoc::Common::Exception("ERROR", $iCode, $strMessage, $strTrace, undef, 1);
 
             return 1;
         }

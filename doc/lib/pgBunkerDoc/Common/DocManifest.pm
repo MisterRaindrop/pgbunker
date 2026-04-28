@@ -1,7 +1,7 @@
 ####################################################################################################################################
 # DOC MANIFEST MODULE
 ####################################################################################################################################
-package pgBackRestDoc::Common::DocManifest;
+package pgBunkerDoc::Common::DocManifest;
 
 use strict;
 use warnings FATAL => qw(all);
@@ -13,8 +13,8 @@ use Exporter qw(import);
 use File::Basename qw(dirname);
 use JSON::PP;
 
-use pgBackRestDoc::Common::Log;
-use pgBackRestDoc::Common::String;
+use pgBunkerDoc::Common::Log;
+use pgBunkerDoc::Common::String;
 
 ####################################################################################################################################
 # File constants
@@ -92,7 +92,7 @@ sub new
     $self->{strExeCacheDeploy} = $self->{strDocPath} . "/resource/exe.cache";
 
     # Load the manifest
-    $self->{oManifestXml} = new pgBackRestDoc::Common::Doc("$self->{strDocPath}/manifest.xml");
+    $self->{oManifestXml} = new pgBunkerDoc::Common::Doc("$self->{strDocPath}/manifest.xml");
 
     # Iterate the sources
     $self->{oManifest} = {};
@@ -121,12 +121,12 @@ sub new
         # If file is defined
         if (defined($strFile))
         {
-            $oSourceHash->{doc} = new pgBackRestDoc::Common::Doc($self->{strDocPath} . "/${strFile}");
+            $oSourceHash->{doc} = new pgBunkerDoc::Common::Doc($self->{strDocPath} . "/${strFile}");
         }
         # Else should be in doc/xml
         else
         {
-            $$oSourceHash{doc} = new pgBackRestDoc::Common::Doc("$self->{strDocPath}/xml/${strKey}.xml");
+            $$oSourceHash{doc} = new pgBunkerDoc::Common::Doc("$self->{strDocPath}/xml/${strKey}.xml");
         }
 
         # Read variables from source
@@ -253,7 +253,7 @@ sub isBackRest
 {
     my $self = shift;
 
-    return($self->variableTest('project-exe', 'pgbackrest'));
+    return($self->variableTest('project-exe', 'pgbunker'));
 }
 
 ####################################################################################################################################

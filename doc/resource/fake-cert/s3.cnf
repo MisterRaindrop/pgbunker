@@ -9,7 +9,7 @@ distinguished_name = dn
 C=US
 ST=All
 L=All
-O=pgBackRest
+O=pgBunker
 OU=Unit Testing Domain
 CN = s3.us-east-1.amazonaws.com
 

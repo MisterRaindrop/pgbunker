@@ -56,7 +56,7 @@ src_doc = [
 ]
 
 executable(
-    'doc-pgbackrest',
+    'doc-pgbunker',
     src_common,
     src_doc,
     doc_help_auto_c_inc,

@@ -24,18 +24,18 @@ use lib dirname(dirname(abs_path($0))) . '/lib';
 use lib dirname(dirname(abs_path($0))) . '/build/lib';
 use lib dirname(dirname(abs_path($0))) . '/test/lib';
 
-use pgBackRestTest::Common::ExecuteTest;
-use pgBackRestTest::Common::Storage;
-use pgBackRestTest::Common::StoragePosix;
+use pgBunkerTest::Common::ExecuteTest;
+use pgBunkerTest::Common::Storage;
+use pgBunkerTest::Common::StoragePosix;
 
-use pgBackRestDoc::Common::Doc;
-use pgBackRestDoc::Common::DocManifest;
-use pgBackRestDoc::Common::Exception;
-use pgBackRestDoc::Common::Log;
-use pgBackRestDoc::Common::String;
-use pgBackRestDoc::Html::DocHtmlSite;
-use pgBackRestDoc::Markdown::DocMarkdown;
-use pgBackRestDoc::ProjectInfo;
+use pgBunkerDoc::Common::Doc;
+use pgBunkerDoc::Common::DocManifest;
+use pgBunkerDoc::Common::Exception;
+use pgBunkerDoc::Common::Log;
+use pgBunkerDoc::Common::String;
+use pgBunkerDoc::Html::DocHtmlSite;
+use pgBunkerDoc::Markdown::DocMarkdown;
+use pgBunkerDoc::ProjectInfo;
 
 ####################################################################################################################################
 # Usage
@@ -43,7 +43,7 @@ use pgBackRestDoc::ProjectInfo;
 
 =head1 NAME
 
-doc.pl - Generate pgBackRest documentation
+doc.pl - Generate pgBunker documentation
 
 =head1 SYNOPSIS
 
@@ -51,7 +51,7 @@ doc.pl [options]
 
  General Options:
    --help           Display usage and exit
-   --version        Display pgBackRest version
+   --version        Display pgBunker version
    --quiet          Sets log level to ERROR
    --log-level      Log level for execution (e.g. ERROR, WARN, INFO, DEBUG)
    --deploy         Write exe.cache into resource for persistence
@@ -189,8 +189,8 @@ eval
     # Get the base path
     my $strBasePath = abs_path(dirname($0));
 
-    my $oStorageDoc = new pgBackRestTest::Common::Storage(
-        $strBasePath, new pgBackRestTest::Common::StoragePosix({bFileSync => false, bPathSync => false}));
+    my $oStorageDoc = new pgBunkerTest::Common::Storage(
+        $strBasePath, new pgBunkerTest::Common::StoragePosix({bFileSync => false, bPathSync => false}));
 
     if (!defined($strDocPath))
     {
@@ -237,14 +237,14 @@ eval
 
     $strBuildVar .= " --var=debug=" . ($bDebug ? 'y' : 'n');
 
-    executeTest("ninja -C ${strBuildPath} doc/src/doc-pgbackrest");
+    executeTest("ninja -C ${strBuildPath} doc/src/doc-pgbunker");
     executeTest(
-        "${strBuildPath}/doc/src/doc-pgbackrest --repo-path=${strRepoPath}${strBuildVar}" .
+        "${strBuildPath}/doc/src/doc-pgbunker --repo-path=${strRepoPath}${strBuildVar}" .
             ($strLogLevel ne 'info' ? " --log-level=${strLogLevel}" : ''),
         {bShowOutputAsync => true});
 
     # Load the manifest
-    my $oManifest = new pgBackRestDoc::Common::DocManifest(
+    my $oManifest = new pgBunkerDoc::Common::DocManifest(
         $oStorageDoc, \@stryRequire, \@stryInclude, \@stryExclude, $rhKeyVariableOverride, $rhVariableOverride,
         $strDocPath, $bDeploy, $bCacheOnly, $bPre);
 
@@ -324,7 +324,7 @@ eval
         if ($strOutput eq 'markdown')
         {
             my $oMarkdown =
-                new pgBackRestDoc::Markdown::DocMarkdown
+                new pgBunkerDoc::Markdown::DocMarkdown
                 (
                     $oManifest,
                     "${strBasePath}/xml",
@@ -337,7 +337,7 @@ eval
         elsif ($strOutput eq 'html')
         {
             my $oHtmlSite =
-                new pgBackRestDoc::Html::DocHtmlSite
+                new pgBunkerDoc::Html::DocHtmlSite
                 (
                     $oManifest,
                     "${strBasePath}/xml",

@@ -1,7 +1,7 @@
 ####################################################################################################################################
 # DOC MARKDOWN MODULE
 ####################################################################################################################################
-package pgBackRestDoc::Markdown::DocMarkdown;
+package pgBunkerDoc::Markdown::DocMarkdown;
 
 use strict;
 use warnings FATAL => qw(all);
@@ -15,13 +15,13 @@ use File::Copy;
 use POSIX qw(strftime);
 use Storable qw(dclone);
 
-use pgBackRestTest::Common::ExecuteTest;
+use pgBunkerTest::Common::ExecuteTest;
 
-use pgBackRestDoc::Common::DocManifest;
-use pgBackRestDoc::Common::Log;
-use pgBackRestDoc::Common::String;
-use pgBackRestDoc::Markdown::DocMarkdownRender;
-use pgBackRestDoc::ProjectInfo;
+use pgBunkerDoc::Common::DocManifest;
+use pgBunkerDoc::Common::Log;
+use pgBunkerDoc::Common::String;
+use pgBunkerDoc::Markdown::DocMarkdownRender;
+use pgBunkerDoc::ProjectInfo;
 
 ####################################################################################################################################
 # CONSTRUCTOR
@@ -82,7 +82,7 @@ sub process
 
         # Save the html page
         $self->{oManifest}->storage()->put(
-            $strFile, $self->{oManifest}->variableReplace((new pgBackRestDoc::Markdown::DocMarkdownRender($self->{oManifest},
+            $strFile, $self->{oManifest}->variableReplace((new pgBunkerDoc::Markdown::DocMarkdownRender($self->{oManifest},
             $strRenderOutId, $self->{bExe}))->process()));
     }
 

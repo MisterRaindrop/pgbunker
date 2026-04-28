@@ -1,7 +1,7 @@
 ####################################################################################################################################
 # HostGroupTest.pm - Encapsulate a group of docker containers
 ####################################################################################################################################
-package pgBackRestDoc::Common::HostGroup;
+package pgBunkerDoc::Common::HostGroup;
 
 ####################################################################################################################################
 # Perl includes
@@ -14,10 +14,10 @@ use Cwd qw(abs_path);
 use Exporter qw(import);
     our @EXPORT = qw();
 
-use pgBackRestDoc::Common::Log;
-use pgBackRestDoc::Common::String;
+use pgBunkerDoc::Common::Log;
+use pgBunkerDoc::Common::String;
 
-use pgBackRestTest::Common::ExecuteTest;
+use pgBunkerTest::Common::ExecuteTest;
 
 ####################################################################################################################################
 # Global host group variable
@@ -177,7 +177,7 @@ sub hostGroupGet
 {
     if (!defined($oHostGroup))
     {
-        $oHostGroup = new pgBackRestDoc::Common::HostGroup();
+        $oHostGroup = new pgBunkerDoc::Common::HostGroup();
     }
 
     return $oHostGroup;

@@ -1,8 +1,8 @@
-# pgBackRest <br/> Building Documentation
+# pgBunker <br/> Building Documentation
 
 ## General Builds
 
-The pgBackRest documentation can output a variety of formats and target several platforms and PostgreSQL versions.
+The pgBunker documentation can output a variety of formats and target several platforms and PostgreSQL versions.
 
 This will build all documentation with defaults:
 ```bash
@@ -45,21 +45,21 @@ sudo usermod -aG docker testdoc
 
 ## Building with Packages
 
-A user-specified package can be used when building the documentation. Since the documentation exercises most pgBackRest functionality this is a great way to smoke-test packages.
+A user-specified package can be used when building the documentation. Since the documentation exercises most pgBunker functionality this is a great way to smoke-test packages.
 
-The package must be located within the pgBackRest repo and the specified path should be relative to the repository base. `test/package` is a good default path to use.
+The package must be located within the pgBunker repo and the specified path should be relative to the repository base. `test/package` is a good default path to use.
 
 Ubuntu 16.04:
 ```bash
-./doc.pl --out=html --include=user-guide --no-cache --var=os-type=debian --var=os-image=ubuntu:16.04 --var=package=test/package/pgbackrest_2.08-0_amd64.deb
+./doc.pl --out=html --include=user-guide --no-cache --var=os-type=debian --var=os-image=ubuntu:16.04 --var=package=test/package/pgbunker_2.08-0_amd64.deb
 ```
 RHEL 7:
 ```bash
-./doc.pl --out=html --include=user-guide --no-cache --var=os-type=rhel --var=os-image=centos:7 --var=package=test/package/pgbackrest-2.08-1.el7.x86_64.rpm
+./doc.pl --out=html --include=user-guide --no-cache --var=os-type=rhel --var=os-image=centos:7 --var=package=test/package/pgbunker-2.08-1.el7.x86_64.rpm
 ```
 RHEL 8:
 ```bash
-./doc.pl --out=html --include=user-guide --no-cache --var=os-type=rhel --var=os-image=centos:8 --var=package=test/package/pgbackrest-2.08-1.el8.x86_64.rpm
+./doc.pl --out=html --include=user-guide --no-cache --var=os-type=rhel --var=os-image=centos:8 --var=package=test/package/pgbunker-2.08-1.el8.x86_64.rpm
 ```
 Packages can be built with `test.pl` using the following configuration on top of the configuration given for building the documentation.
 ```bash
@@ -79,8 +79,8 @@ sudo adduser -gtest -n test
 sudo usermod -aG docker test
 sudo chmod 750 /home/test
 
-sudo echo 'test ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/pgbackrest
+sudo echo 'test ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/pgbunker
 
-# Add pgbackrest user required by tests
-sudo adduser -gtest -n pgbackrest
+# Add pgbunker user required by tests
+sudo adduser -gtest -n pgbunker
 ```

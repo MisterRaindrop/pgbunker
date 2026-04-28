@@ -1,8 +1,8 @@
 ####################################################################################################################################
 # DOC EXECUTE MODULE
 ####################################################################################################################################
-package pgBackRestDoc::Common::DocExecute;
-use parent 'pgBackRestDoc::Common::DocRender';
+package pgBunkerDoc::Common::DocExecute;
+use parent 'pgBunkerDoc::Common::DocRender';
 
 use strict;
 use warnings FATAL => qw(all);
@@ -15,16 +15,16 @@ use Exporter qw(import);
 use File::Basename qw(dirname);
 use Storable qw(dclone);
 
-use pgBackRestTest::Common::ExecuteTest;
+use pgBunkerTest::Common::ExecuteTest;
 
-use pgBackRestDoc::Common::DocManifest;
-use pgBackRestDoc::Common::Exception;
-use pgBackRestDoc::Common::Host;
-use pgBackRestDoc::Common::HostGroup;
-use pgBackRestDoc::Common::Ini;
-use pgBackRestDoc::Common::Log;
-use pgBackRestDoc::Common::String;
-use pgBackRestDoc::ProjectInfo;
+use pgBunkerDoc::Common::DocManifest;
+use pgBunkerDoc::Common::Exception;
+use pgBunkerDoc::Common::Host;
+use pgBunkerDoc::Common::HostGroup;
+use pgBunkerDoc::Common::Ini;
+use pgBunkerDoc::Common::Log;
+use pgBunkerDoc::Common::String;
+use pgBunkerDoc::ProjectInfo;
 
 ####################################################################################################################################
 # User that's building the docs
@@ -562,7 +562,7 @@ sub backrestConfig
                 }
             }
 
-            my $strLocalFile = abs_path(dirname($0)) . '/output/pgbackrest.conf';
+            my $strLocalFile = abs_path(dirname($0)) . '/output/pgbunker.conf';
 
             # Save the ini file
             $self->{oManifest}->storage()->put($strLocalFile, iniRender($self->{config}{$strHostName}{$$hCacheKey{file}}));
@@ -717,7 +717,7 @@ sub postgresConfig
             if ($self->{bExe})
             {
                 $self->{oManifest}->storage()->put($strLocalFile, $$oConfigHash{base} .
-                                (defined($strConfig) ? "\n# pgBackRest Configuration\n${strConfig}\n" : ''));
+                                (defined($strConfig) ? "\n# pgBunker Configuration\n${strConfig}\n" : ''));
 
                 $oHost->copyTo($strLocalFile, $$hCacheKey{file}, 'postgres:postgres', '640');
             }
@@ -1055,7 +1055,7 @@ sub sectionChildProcess
                     $strOption =~ s/\{\[host\-repo\-path\]\}/${strHostRepoPath}/g;
                 }
 
-                my $oHost = new pgBackRestDoc::Common::Host(
+                my $oHost = new pgBunkerDoc::Common::Host(
                     $$hCacheKey{name}, "doc-$$hCacheKey{name}", $strImage, $strHostUser,
                     defined($strMount) ? [$strMount] : undef, $strOption, $$hCacheKey{param}, $$hCacheKey{'update-hosts'});
 

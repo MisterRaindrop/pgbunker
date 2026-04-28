@@ -72,7 +72,7 @@ option:
 
   repo-path:
     type: string
-    default: pgbackrest
+    default: pgbunker
     command:
       build: {}
 

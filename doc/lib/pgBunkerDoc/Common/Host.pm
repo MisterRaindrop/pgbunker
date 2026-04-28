@@ -1,7 +1,7 @@
 ####################################################################################################################################
 # HostTest.pm - Encapsulate a docker host
 ####################################################################################################################################
-package pgBackRestDoc::Common::Host;
+package pgBunkerDoc::Common::Host;
 
 ####################################################################################################################################
 # Perl includes
@@ -14,10 +14,10 @@ use Cwd qw(abs_path);
 use Exporter qw(import);
     our @EXPORT = qw();
 
-use pgBackRestDoc::Common::Log;
-use pgBackRestDoc::Common::String;
+use pgBunkerDoc::Common::Log;
+use pgBunkerDoc::Common::String;
 
-use pgBackRestTest::Common::ExecuteTest;
+use pgBunkerTest::Common::ExecuteTest;
 
 ####################################################################################################################################
 # new
@@ -137,7 +137,7 @@ sub execute
 
     $strCommand =~ s/'/'\\''/g;
 
-    my $oExec = new pgBackRestTest::Common::ExecuteTest(
+    my $oExec = new pgBunkerTest::Common::ExecuteTest(
         "docker exec -u ${strUser} $self->{strContainer}" .
         ($bBashWrap ? " bash" . ($bLoadEnv ? ' -l' : '') . " -c '${strCommand}'" : " ${strCommand}"), $oParam);
 

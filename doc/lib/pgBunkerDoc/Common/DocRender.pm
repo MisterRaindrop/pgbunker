@@ -1,7 +1,7 @@
 ####################################################################################################################################
 # DOC RENDER MODULE
 ####################################################################################################################################
-package pgBackRestDoc::Common::DocRender;
+package pgBunkerDoc::Common::DocRender;
 
 use strict;
 use warnings FATAL => qw(all);
@@ -12,9 +12,9 @@ use Exporter qw(import);
 use JSON::PP;
 use Storable qw(dclone);
 
-use pgBackRestDoc::Common::DocManifest;
-use pgBackRestDoc::Common::Log;
-use pgBackRestDoc::Common::String;
+use pgBunkerDoc::Common::DocManifest;
+use pgBunkerDoc::Common::Log;
+use pgBunkerDoc::Common::String;
 
 ####################################################################################################################################
 # XML tag/param constants
@@ -161,11 +161,11 @@ sub new
 
         if (defined($$oRenderOut{source}) && $$oRenderOut{source} eq 'release' && $self->{oManifest}->isBackRest())
         {
-            require pgBackRestDoc::Custom::DocCustomRelease;
-            pgBackRestDoc::Custom::DocCustomRelease->import();
+            require pgBunkerDoc::Custom::DocCustomRelease;
+            pgBunkerDoc::Custom::DocCustomRelease->import();
 
             $self->{oDoc} =
-                (new pgBackRestDoc::Custom::DocCustomRelease(
+                (new pgBunkerDoc::Custom::DocCustomRelease(
                     ${$self->{oManifest}->sourceGet('release')}{doc},
                     defined($self->{oManifest}->variableGet('dev')) && $self->{oManifest}->variableGet('dev') eq 'y'))->docGet();
         }

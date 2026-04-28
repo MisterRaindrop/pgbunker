@@ -24,20 +24,20 @@ use lib dirname(dirname($0)) . '/build/lib';
 use lib dirname(dirname($0)) . '/lib';
 use lib dirname(dirname($0)) . '/test/lib';
 
-use pgBackRestTest::Common::ExecuteTest;
-use pgBackRestTest::Common::Storage;
-use pgBackRestTest::Common::StoragePosix;
-use pgBackRestTest::Common::VmTest;
+use pgBunkerTest::Common::ExecuteTest;
+use pgBunkerTest::Common::Storage;
+use pgBunkerTest::Common::StoragePosix;
+use pgBunkerTest::Common::VmTest;
 
-use pgBackRestDoc::Common::Doc;
-use pgBackRestDoc::Common::DocManifest;
-use pgBackRestDoc::Common::Exception;
-use pgBackRestDoc::Common::Log;
-use pgBackRestDoc::Common::String;
-use pgBackRestDoc::Custom::DocCustomRelease;
-use pgBackRestDoc::Html::DocHtmlSite;
-use pgBackRestDoc::Markdown::DocMarkdown;
-use pgBackRestDoc::ProjectInfo;
+use pgBunkerDoc::Common::Doc;
+use pgBunkerDoc::Common::DocManifest;
+use pgBunkerDoc::Common::Exception;
+use pgBunkerDoc::Common::Log;
+use pgBunkerDoc::Common::String;
+use pgBunkerDoc::Custom::DocCustomRelease;
+use pgBunkerDoc::Html::DocHtmlSite;
+use pgBunkerDoc::Markdown::DocMarkdown;
+use pgBunkerDoc::ProjectInfo;
 
 ####################################################################################################################################
 # Usage
@@ -45,7 +45,7 @@ use pgBackRestDoc::ProjectInfo;
 
 =head1 NAME
 
-release.pl - pgBackRest Release Manager
+release.pl - pgBunker Release Manager
 
 =head1 SYNOPSIS
 
@@ -53,7 +53,7 @@ release.pl [options]
 
  General Options:
    --help           Display usage and exit
-   --version        Display pgBackRest version
+   --version        Display pgBunker version
    --quiet          Sets log level to ERROR
    --log-level      Log level for execution (e.g. ERROR, WARN, INFO, DEBUG)
 
@@ -125,8 +125,8 @@ eval
     my $strDocExe = "${strDocPath}/doc.pl";
     my $strTestExe = dirname($strDocPath) . "/test/test.pl";
 
-    my $oStorageDoc = new pgBackRestTest::Common::Storage(
-        $strDocPath, new pgBackRestTest::Common::StoragePosix({bFileSync => false, bPathSync => false}));
+    my $oStorageDoc = new pgBunkerTest::Common::Storage(
+        $strDocPath, new pgBunkerTest::Common::StoragePosix({bFileSync => false, bPathSync => false}));
 
     # Determine if this is a dev release
     my $bDev = PROJECT_VERSION =~ /dev$/;
@@ -136,7 +136,7 @@ eval
     &log(INFO, "check version info");
 
     my $strReleaseFile = dirname(dirname(abs_path($0))) . '/doc/xml/release.xml';
-    my $oRelease = (new pgBackRestDoc::Custom::DocCustomRelease(new pgBackRestDoc::Common::Doc($strReleaseFile)))->releaseLast();
+    my $oRelease = (new pgBunkerDoc::Custom::DocCustomRelease(new pgBunkerDoc::Common::Doc($strReleaseFile)))->releaseLast();
 
     if ($oRelease->paramGet('version') ne PROJECT_VERSION)
     {
