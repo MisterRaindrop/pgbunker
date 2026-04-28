@@ -16,10 +16,10 @@ static const StringPubConst parseRuleValueStr[] =
     PARSE_RULE_STRPUB("-20"),                                                                                             // val/str
     PARSE_RULE_STRPUB("-5"),                                                                                              // val/str
     PARSE_RULE_STRPUB("-7"),                                                                                              // val/str
-    PARSE_RULE_STRPUB("/tmp/pgbunker"),                                                                                 // val/str
-    PARSE_RULE_STRPUB("/var/lib/pgbunker"),                                                                             // val/str
-    PARSE_RULE_STRPUB("/var/log/pgbunker"),                                                                             // val/str
-    PARSE_RULE_STRPUB("/var/spool/pgbunker"),                                                                           // val/str
+    PARSE_RULE_STRPUB("/tmp/pgbunker"),                                                                                   // val/str
+    PARSE_RULE_STRPUB("/var/lib/pgbunker"),                                                                               // val/str
+    PARSE_RULE_STRPUB("/var/log/pgbunker"),                                                                               // val/str
+    PARSE_RULE_STRPUB("/var/spool/pgbunker"),                                                                             // val/str
     PARSE_RULE_STRPUB("0"),                                                                                               // val/str
     PARSE_RULE_STRPUB("0B"),                                                                                              // val/str
     PARSE_RULE_STRPUB("0s"),                                                                                              // val/str
@@ -109,7 +109,7 @@ static const StringPubConst parseRuleValueStr[] =
     PARSE_RULE_STRPUB("path"),                                                                                            // val/str
     PARSE_RULE_STRPUB("pause"),                                                                                           // val/str
     PARSE_RULE_STRPUB("pg"),                                                                                              // val/str
-    PARSE_RULE_STRPUB("pgbunker"),                                                                                      // val/str
+    PARSE_RULE_STRPUB("pgbunker"),                                                                                        // val/str
     PARSE_RULE_STRPUB("pod-id"),                                                                                          // val/str
     PARSE_RULE_STRPUB("posix"),                                                                                           // val/str
     PARSE_RULE_STRPUB("postgres"),                                                                                        // val/str
@@ -151,10 +151,10 @@ typedef enum
     parseRuleValStrQT_DS_20_QT,                                                                                      // val/str/enum
     parseRuleValStrQT_DS_5_QT,                                                                                       // val/str/enum
     parseRuleValStrQT_DS_7_QT,                                                                                       // val/str/enum
-    parseRuleValStrQT_FS_tmp_FS_pgbunker_QT,                                                                       // val/str/enum
-    parseRuleValStrQT_FS_var_FS_lib_FS_pgbunker_QT,                                                                // val/str/enum
-    parseRuleValStrQT_FS_var_FS_log_FS_pgbunker_QT,                                                                // val/str/enum
-    parseRuleValStrQT_FS_var_FS_spool_FS_pgbunker_QT,                                                              // val/str/enum
+    parseRuleValStrQT_FS_tmp_FS_pgbunker_QT,                                                                         // val/str/enum
+    parseRuleValStrQT_FS_var_FS_lib_FS_pgbunker_QT,                                                                  // val/str/enum
+    parseRuleValStrQT_FS_var_FS_log_FS_pgbunker_QT,                                                                  // val/str/enum
+    parseRuleValStrQT_FS_var_FS_spool_FS_pgbunker_QT,                                                                // val/str/enum
     parseRuleValStrQT_0_QT,                                                                                          // val/str/enum
     parseRuleValStrQT_0B_QT,                                                                                         // val/str/enum
     parseRuleValStrQT_0s_QT,                                                                                         // val/str/enum
@@ -244,7 +244,7 @@ typedef enum
     parseRuleValStrQT_path_QT,                                                                                       // val/str/enum
     parseRuleValStrQT_pause_QT,                                                                                      // val/str/enum
     parseRuleValStrQT_pg_QT,                                                                                         // val/str/enum
-    parseRuleValStrQT_pgbunker_QT,                                                                                 // val/str/enum
+    parseRuleValStrQT_pgbunker_QT,                                                                                   // val/str/enum
     parseRuleValStrQT_pod_DS_id_QT,                                                                                  // val/str/enum
     parseRuleValStrQT_posix_QT,                                                                                      // val/str/enum
     parseRuleValStrQT_postgres_QT,                                                                                   // val/str/enum
@@ -2779,7 +2779,7 @@ static const ParseRuleOption parseRuleOption[CFG_OPTION_TOTAL] =
             (                                                                                                       // opt/lock-path
                 PARSE_RULE_OPTIONAL_DEFAULT                                                                         // opt/lock-path
                 (                                                                                                   // opt/lock-path
-                    PARSE_RULE_VAL_STR(QT_FS_tmp_FS_pgbunker_QT),                                                 // opt/lock-path
+                    PARSE_RULE_VAL_STR(QT_FS_tmp_FS_pgbunker_QT),                                                   // opt/lock-path
                 ),                                                                                                  // opt/lock-path
             ),                                                                                                      // opt/lock-path
         ),                                                                                                          // opt/lock-path
@@ -3141,7 +3141,7 @@ static const ParseRuleOption parseRuleOption[CFG_OPTION_TOTAL] =
             (                                                                                                        // opt/log-path
                 PARSE_RULE_OPTIONAL_DEFAULT                                                                          // opt/log-path
                 (                                                                                                    // opt/log-path
-                    PARSE_RULE_VAL_STR(QT_FS_var_FS_log_FS_pgbunker_QT),                                           // opt/log-path
+                    PARSE_RULE_VAL_STR(QT_FS_var_FS_log_FS_pgbunker_QT),                                             // opt/log-path
                 ),                                                                                                   // opt/log-path
             ),                                                                                                       // opt/log-path
         ),                                                                                                           // opt/log-path
@@ -7122,7 +7122,7 @@ static const ParseRuleOption parseRuleOption[CFG_OPTION_TOTAL] =
                                                                                                                // opt/repo-host-user
                 PARSE_RULE_OPTIONAL_DEFAULT                                                                    // opt/repo-host-user
                 (                                                                                              // opt/repo-host-user
-                    PARSE_RULE_VAL_STR(QT_pgbunker_QT),                                                      // opt/repo-host-user
+                    PARSE_RULE_VAL_STR(QT_pgbunker_QT),                                                        // opt/repo-host-user
                 ),                                                                                             // opt/repo-host-user
             ),                                                                                                 // opt/repo-host-user
         ),                                                                                                     // opt/repo-host-user
@@ -7260,7 +7260,7 @@ static const ParseRuleOption parseRuleOption[CFG_OPTION_TOTAL] =
             (                                                                                                       // opt/repo-path
                 PARSE_RULE_OPTIONAL_DEFAULT                                                                         // opt/repo-path
                 (                                                                                                   // opt/repo-path
-                    PARSE_RULE_VAL_STR(QT_FS_var_FS_lib_FS_pgbunker_QT),                                          // opt/repo-path
+                    PARSE_RULE_VAL_STR(QT_FS_var_FS_lib_FS_pgbunker_QT),                                            // opt/repo-path
                 ),                                                                                                  // opt/repo-path
             ),                                                                                                      // opt/repo-path
         ),                                                                                                          // opt/repo-path
@@ -10387,7 +10387,7 @@ static const ParseRuleOption parseRuleOption[CFG_OPTION_TOTAL] =
                                                                                                                    // opt/spool-path
                 PARSE_RULE_OPTIONAL_DEFAULT                                                                        // opt/spool-path
                 (                                                                                                  // opt/spool-path
-                    PARSE_RULE_VAL_STR(QT_FS_var_FS_spool_FS_pgbunker_QT),                                       // opt/spool-path
+                    PARSE_RULE_VAL_STR(QT_FS_var_FS_spool_FS_pgbunker_QT),                                         // opt/spool-path
                 ),                                                                                                 // opt/spool-path
             ),                                                                                                     // opt/spool-path
                                                                                                                    // opt/spool-path
@@ -10395,7 +10395,7 @@ static const ParseRuleOption parseRuleOption[CFG_OPTION_TOTAL] =
             (                                                                                                      // opt/spool-path
                 PARSE_RULE_OPTIONAL_DEFAULT                                                                        // opt/spool-path
                 (                                                                                                  // opt/spool-path
-                    PARSE_RULE_VAL_STR(QT_FS_var_FS_spool_FS_pgbunker_QT),                                       // opt/spool-path
+                    PARSE_RULE_VAL_STR(QT_FS_var_FS_spool_FS_pgbunker_QT),                                         // opt/spool-path
                 ),                                                                                                 // opt/spool-path
             ),                                                                                                     // opt/spool-path
         ),                                                                                                         // opt/spool-path
