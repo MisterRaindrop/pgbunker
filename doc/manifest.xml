@@ -3,7 +3,7 @@
 <doc>
     <!-- System-wide variables -->
     <variable-list>
-        <variable key="project">pgBackRest</variable>
+        <variable key="project">pgBunker</variable>
         <variable key="project-tagline">Reliable PostgreSQL Backup &amp; Restore</variable>
         <variable key="version" eval="y">use pgBackRestDoc::ProjectInfo; PROJECT_VERSION</variable>
         <variable key="version-stable" eval="y">
@@ -12,7 +12,7 @@
             (new pgBackRestDoc::Custom::DocCustomRelease(
                 new pgBackRestDoc::Common::Doc("{[doc-path]}/xml/release.xml")))->currentStableVersion();
         </variable>
-        <variable key="project-exe">pgbackrest</variable>
+        <variable key="project-exe">pgbunker</variable>
         <variable key="project-url-root">/</variable>
         <variable key="postgres">PostgreSQL</variable>
         <variable key="dash">-</variable>

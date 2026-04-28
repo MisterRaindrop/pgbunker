@@ -5,7 +5,7 @@
         <description>The {[project]} Configuration Reference details all configuration options.</description>
 
         <text>
-            <p><backrest/> can be used entirely with command-line parameters but a configuration file is more practical for installations that are complex or set a lot of options. The default location for the configuration file is <file>/etc/pgbackrest/pgbackrest.conf</file>. If no file exists in that location then the old default of <file>/etc/pgbackrest.conf</file> will be checked.</p>
+            <p><backrest/> can be used entirely with command-line parameters but a configuration file is more practical for installations that are complex or set a lot of options. The default location for the configuration file is <file>/etc/pgbunker/pgbunker.conf</file>. If no file exists there, the legacy upstream <proper>pgBackRest</proper> default of <file>/etc/pgbackrest/pgbackrest.conf</file> will be checked so existing <proper>pgBackRest</proper> deployments can be upgraded without copying the config file.</p>
 
             <p>The following option types are used:</p>
 
@@ -15,7 +15,7 @@
 
             <p><b>Path</b>: Used to uniquely identify a location in a directory structure. Paths must begin with /, double // is not allowed, and no ending / is expected.</p>
 
-            <p>Command line example: <br-setting>--repo1-path=/var/lib/pgbackrest</br-setting><br/>Configuration file example: <br-setting>repo1-path=/var/lib/pgbackrest</br-setting></p>
+            <p>Command line example: <br-setting>--repo1-path=/var/lib/pgbunker</br-setting><br/>Configuration file example: <br-setting>repo1-path=/var/lib/pgbunker</br-setting></p>
 
             <p><b>Boolean</b>: Enables or disables the option. Only y/n are valid argument values.</p>
 
@@ -182,7 +182,7 @@
                             <admonition type="caution">Wrapping the <backrest/> command may cause unpredictable behavior and is not recommended.</admonition>
                         </text>
 
-                        <example>/var/lib/pgsql/bin/pgbackrest_wrapper.sh</example>
+                        <example>/var/lib/pgsql/bin/pgbunker_wrapper.sh</example>
                     </config-key>
 
                     <config-key id="cmd-ssh" name="SSH Client Command">
@@ -728,7 +728,7 @@
                             <p>A token or service key file depending on the <br-option>repo-gcs-key-type</br-option> option.</p>
                         </text>
 
-                        <example>/etc/pgbackrest/gcs-key.json</example>
+                        <example>/etc/pgbunker/gcs-key.json</example>
                     </config-key>
 
                     <config-key id="repo-gcs-key-type" name="GCS Repository Key Type">
@@ -831,7 +831,7 @@
                             <p>Required only if the path to the <backrest/> command is different on the local and repository hosts. If not defined, the repository host command will be set the same as the local command.</p>
                         </text>
 
-                        <example>/usr/lib/backrest/bin/pgbackrest</example>
+                        <example>/usr/lib/backrest/bin/pgbunker</example>
                     </config-key>
 
                     <config-key id="repo-host-config" name="Repository Host Configuration">
@@ -841,7 +841,7 @@
                             <p>Sets the location of the configuration file on the repository host. This is only required if the repository host configuration file is in a different location than the local configuration file.</p>
                         </text>
 
-                        <example>/conf/pgbackrest/pgbackrest.conf</example>
+                        <example>/conf/pgbunker/pgbunker.conf</example>
                     </config-key>
 
                     <config-key id="repo-host-config-include-path" name="Repository Host Configuration Include Path">
@@ -851,7 +851,7 @@
                             <p>Sets the location of the configuration include path on the repository host. This is only required if the repository host configuration include path is in a different location than the local configuration include path.</p>
                         </text>
 
-                        <example>/conf/pgbackrest/conf.d</example>
+                        <example>/conf/pgbunker/conf.d</example>
                     </config-key>
 
                     <config-key id="repo-host-config-path" name="Repository Host Configuration Path">
@@ -861,14 +861,14 @@
                             <p>Sets the location of the configuration path on the repository host. This is only required if the repository host configuration path is in a different location than the local configuration path.</p>
                         </text>
 
-                        <example>/conf/pgbackrest</example>
+                        <example>/conf/pgbunker</example>
                     </config-key>
 
                     <config-key id="repo-host-user" name="Repository Host User">
                         <summary>Repository host user when <setting>repo-host</setting> is set.</summary>
 
                         <text>
-                            <p>Defines the user that will be used for operations on the repository host. Preferably this is not the <id>postgres</id> user but rather some other user like <id>pgbackrest</id>. If <postgres/> runs on the repository host the <id>postgres</id> user can be placed in the <id>pgbackrest</id> group so it has read permissions on the repository without being able to damage the contents accidentally.</p>
+                            <p>Defines the user that will be used for operations on the repository host. Preferably this is not the <id>postgres</id> user but rather some other user like <id>pgbunker</id>. If <postgres/> runs on the repository host the <id>postgres</id> user can be placed in the <id>pgbunker</id> group so it has read permissions on the repository without being able to damage the contents accidentally.</p>
                         </text>
 
                         <example>repo-user</example>
@@ -1836,7 +1836,7 @@
                             <p>Required only if the path to the <backrest/> command is different on the local and <postgres/> hosts. If not defined, the <postgres/> host command will be set the same as the local command.</p>
                         </text>
 
-                        <example>/usr/lib/backrest/bin/pgbackrest</example>
+                        <example>/usr/lib/backrest/bin/pgbunker</example>
                     </config-key>
 
                     <config-key id="pg-host-config" name="PostgreSQL Host Configuration">
@@ -1846,7 +1846,7 @@
                             <p>Sets the location of the configuration file on the <postgres/> host. This is only required if the <postgres/> host configuration file is in a different location than the local configuration file.</p>
                         </text>
 
-                        <example>/conf/pgbackrest/pgbackrest.conf</example>
+                        <example>/conf/pgbunker/pgbunker.conf</example>
                     </config-key>
 
                     <config-key id="pg-host-config-include-path" name="PostgreSQL Host Configuration Include Path">
@@ -1856,7 +1856,7 @@
                             <p>Sets the location of the configuration include path on the <postgres/> host. This is only required if the <postgres/> host configuration include path is in a different location than the local configuration include path.</p>
                         </text>
 
-                        <example>/conf/pgbackrest/conf.d</example>
+                        <example>/conf/pgbunker/conf.d</example>
                     </config-key>
 
                     <config-key id="pg-host-config-path" name="PostgreSQL Host Configuration Path">
@@ -1866,7 +1866,7 @@
                             <p>Sets the location of the configuration path on the <postgres/> host. This is only required if the <postgres/> host configuration path is in a different location than the local configuration path.</p>
                         </text>
 
-                        <example>/conf/pgbackrest</example>
+                        <example>/conf/pgbunker</example>
                     </config-key>
 
                     <config-key id="pg-host" name="PostgreSQL Host">
@@ -2028,9 +2028,9 @@
         <description>The {[project]} Command Reference details all commands and options.</description>
 
         <text>
-            <p>Commands are used to execute the various <backrest/> functions. Here the command options are listed exhaustively, that is, each option applicable to a command is listed with that command even if it applies to one or more other commands. This includes all the options that may also be configured in <file>pgbackrest.conf</file>.</p>
+            <p>Commands are used to execute the various <backrest/> functions. Here the command options are listed exhaustively, that is, each option applicable to a command is listed with that command even if it applies to one or more other commands. This includes all the options that may also be configured in <file>pgbunker.conf</file>.</p>
 
-            <p>Non-boolean options configured in <file>pgbackrest.conf</file> can be reset to default on the command-line by using the <id>reset-</id> prefix. This feature may be used to restore a backup directly on a repository host. Normally, <backrest/> will error because it can see that the database host is remote and restores cannot be done remotely. By adding <br-option>--reset-pg1-host</br-option> on the command-line, <backrest/> will ignore the remote database host and restore locally. It may be necessary to pass a new <br-option>--pg1-path</br-option> to force the restore to happen in a specific path, i.e. not the path used on the database host.</p>
+            <p>Non-boolean options configured in <file>pgbunker.conf</file> can be reset to default on the command-line by using the <id>reset-</id> prefix. This feature may be used to restore a backup directly on a repository host. Normally, <backrest/> will error because it can see that the database host is remote and restores cannot be done remotely. By adding <br-option>--reset-pg1-host</br-option> on the command-line, <backrest/> will ignore the remote database host and restore locally. It may be necessary to pass a new <br-option>--pg1-path</br-option> to force the restore to happen in a specific path, i.e. not the path used on the database host.</p>
 
             <p>The <id>no-</id> prefix may be used to set a boolean option to false on the command-line.</p>
 
@@ -2060,7 +2060,7 @@
                         <p>Use this option to specify a different configuration file than the default.</p>
                     </text>
 
-                    <example>/conf/pgbackrest/pgbackrest.conf</example>
+                    <example>/conf/pgbunker/pgbunker.conf</example>
                 </option>
 
                 <option id="config-include-path" name="Config Include Path">
@@ -2070,7 +2070,7 @@
                         <p>Configuration files existing in the specified location with extension <file>.conf</file> will be concatenated with the <backrest/> configuration file, resulting in one configuration file.</p>
                     </text>
 
-                    <example>/conf/pgbackrest/conf.d</example>
+                    <example>/conf/pgbunker/conf.d</example>
                 </option>
 
                 <option id="config-path" name="Config Path">
@@ -2079,10 +2079,10 @@
                     <text>
                         <p>This setting is used to override the default base path setting for the <br-option>--config</br-option> and <br-option>--config-include-path</br-option> options unless they are explicitly set on the command-line.</p>
 
-                        <p>For example, passing only <code>--config-path=/conf/pgbackrest</code> results in the <br-option>--config</br-option> default being set to <code>/conf/pgbackrest/pgbackrest.conf</code> and the <br-option>--config-include-path</br-option> default being set to <code>/conf/pgbackrest/conf.d</code>.</p>
+                        <p>For example, passing only <code>--config-path=/conf/pgbunker</code> results in the <br-option>--config</br-option> default being set to <code>/conf/pgbunker/pgbunker.conf</code> and the <br-option>--config-include-path</br-option> default being set to <code>/conf/pgbunker/conf.d</code>.</p>
                     </text>
 
-                    <example>/conf/pgbackrest</example>
+                    <example>/conf/pgbunker</example>
                 </option>
 
                 <option id="dry-run" name="Dry Run">
@@ -2506,7 +2506,7 @@
                 <summary>Restore a database cluster.</summary>
 
                 <text>
-                    <p>The restore command automatically defaults to selecting the latest backup from the first repository where backups exist (see <link page="user-guide" section="/quickstart/perform-restore">Quick Start - Restore a Backup</link>). The order in which the repositories are checked is dictated by the <file>pgbackrest.conf</file> (e.g. repo1 will be checked before repo2). To select from a specific repository, the <br-option>{[dash]}-repo</br-option> option can be passed (e.g. <br-option>{[dash]}-repo=1</br-option>). The <br-option>{[dash]}-set</br-option> option can be passed if a backup other than the latest is desired.</p>
+                    <p>The restore command automatically defaults to selecting the latest backup from the first repository where backups exist (see <link page="user-guide" section="/quickstart/perform-restore">Quick Start - Restore a Backup</link>). The order in which the repositories are checked is dictated by the <file>pgbunker.conf</file> (e.g. repo1 will be checked before repo2). To select from a specific repository, the <br-option>{[dash]}-repo</br-option> option can be passed (e.g. <br-option>{[dash]}-repo=1</br-option>). The <br-option>{[dash]}-set</br-option> option can be passed if a backup other than the latest is desired.</p>
 
                     <p>When PITR of <br-option>{[dash]}-type=time</br-option> or <br-option>{[dash]}-type=lsn</br-option> is specified, then the target time or target lsn must be specified with the <br-option>{[dash]}-target</br-option> option. If a backup is not specified via the <br-option>{[dash]}-set</br-option> option, then the configured repositories will be checked, in order, for a backup that contains the requested time or lsn. If no matching backup is found, the latest backup from the first repository containing backups will be used for <br-option>{[dash]}-type=time</br-option> while no backup will be selected for <br-option>{[dash]}-type=lsn</br-option>. For other types of PITR, e.g. <id>xid</id>, the <br-option>{[dash]}-set</br-option> option must be provided if the target is prior to the latest backup. See <link page="user-guide" section="/pitr">Point-in-Time Recovery</link> for more details and examples.</p>
 
@@ -2704,7 +2704,7 @@
                 <summary>Get help.</summary>
 
                 <text>
-                    <p>Three levels of help are provided. If no command is specified then general help will be displayed. If a command is specified (e.g. <cmd>pgbackrest help backup</cmd>) then a full description of the command will be displayed along with a list of valid options. If an option is specified in addition to a command (e.g. <cmd>pgbackrest help backup type</cmd>) then a full description of the option as it applies to the command will be displayed.</p>
+                    <p>Three levels of help are provided. If no command is specified then general help will be displayed. If a command is specified (e.g. <cmd>pgbunker help backup</cmd>) then a full description of the command will be displayed along with a list of valid options. If an option is specified in addition to a command (e.g. <cmd>pgbunker help backup type</cmd>) then a full description of the option as it applies to the command will be displayed.</p>
                 </text>
 
                 <option-list>
@@ -2850,7 +2850,7 @@
                 <summary>Create the required stanza data.</summary>
 
                 <text>
-                    <p>The <cmd>stanza-create</cmd> command must be run after the stanza has been configured in <file>pgbackrest.conf</file>. If there is more than one repository configured, the stanza will be created on each. Stanzas that have already been created will be skipped so it is always safe to run <cmd>stanza-create</cmd>, even when a new repository has been configured.</p>
+                    <p>The <cmd>stanza-create</cmd> command must be run after the stanza has been configured in <file>pgbunker.conf</file>. If there is more than one repository configured, the stanza will be created on each. Stanzas that have already been created will be skipped so it is always safe to run <cmd>stanza-create</cmd>, even when a new repository has been configured.</p>
 
                     <p>See <link page="user-guide" section="/quickstart/create-stanza">Create the Stanza</link> for more information and an example.</p>
                 </text>
