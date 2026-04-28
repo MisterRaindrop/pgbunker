@@ -12,6 +12,7 @@ Stanza Delete Command
 #include "info/infoArchive.h"
 #include "info/infoBackup.h"
 #include "postgres/interface.h"
+#include "version.h"
 #include "postgres/version.h"
 #include "protocol/helper.h"
 #include "storage/helper.h"
@@ -42,7 +43,7 @@ cmdStanzaDelete(void)
                 {
                     THROW_FMT(
                         FileMissingError, "stop file does not exist for stanza '%s'\n"
-                        "HINT: has the pgbackrest stop command been run on this server for this stanza?",
+                        "HINT: has the " PROJECT_BIN " stop command been run on this server for this stanza?",
                         strZ(cfgOptionDisplay(cfgOptStanza)));
                 }
 

@@ -272,7 +272,7 @@ src_pgbackrest = [
 ]
 
 executable(
-    'pgbackrest',
+    'pgbunker',
     src_common,
     src_pgbackrest,
     help_auto_c_inc,

@@ -45,9 +45,12 @@ typedef enum
 } ConfigDefaultType;
 
 /***********************************************************************************************************************************
-Standard config file name and old default path and name
+Backward-compat fallback config file path. When the pgBunker default config (e.g., /etc/pgbunker/pgbunker.conf) is not found, the
+code below also looks at the upstream pgBackRest install location so existing pgBackRest deployments keep working after upgrading
+the binary to pgBunker without having to copy the config file. Format: /etc/pgbackrest/pgbackrest.conf.
 ***********************************************************************************************************************************/
-#define PGBACKREST_CONFIG_ORIG_PATH_FILE                            "/etc/" PROJECT_CONFIG_FILE
+#define PGBACKREST_CONFIG_ORIG_PATH_FILE                            \
+    "/etc/" LEGACY_PROJECT_BIN "/" LEGACY_PROJECT_CONFIG_FILE
 STRING_STATIC(PGBACKREST_CONFIG_ORIG_PATH_FILE_STR,                 PGBACKREST_CONFIG_ORIG_PATH_FILE);
 
 /***********************************************************************************************************************************
@@ -1446,7 +1449,7 @@ Rules:
 - config-include-path only is specified. *.conf files in the config-include-path will be loaded and the path is required to exist.
   The default config will be be loaded if it exists.
 - config-include-path and config-path are specified. The *.conf files in the config-include-path will be loaded and the directory
-  passed must exist. The overridden default of the config file path (<config-path>/pgbackrest.conf) will be loaded if exists but is
+  passed must exist. The overridden default of the config file path (<config-path>/pgbunker.conf) will be loaded if exists but is
   not required.
 - If the config and config-include-path are specified. The config file will be loaded and is expected to exist and *.conf files in
   the config-include-path will be appended and at least one is expected to exist.
@@ -1499,7 +1502,7 @@ cfgFileLoad(
     // NOTE: Passing defaults to enable more complete test coverage
     const String *optConfigDefault,                                 // Current default for --config option
     const String *optConfigIncludePathDefault,                      // Current default for --config-include-path option
-    const String *const origConfigDefault)                          // Original --config option default (/etc/pgbackrest.conf)
+    const String *const origConfigDefault)                          // pgBackRest legacy fallback (/etc/pgbackrest/pgbackrest.conf)
 {
     FUNCTION_LOG_BEGIN(logLevelTrace);
         FUNCTION_LOG_PARAM(STORAGE, storage);

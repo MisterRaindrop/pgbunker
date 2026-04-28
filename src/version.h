@@ -7,12 +7,19 @@ Version Numbers and Names
 /***********************************************************************************************************************************
 Official name of the project
 ***********************************************************************************************************************************/
-#define PROJECT_NAME                                                "pgBackRest"
+#define PROJECT_NAME                                                "pgBunker"
 
 /***********************************************************************************************************************************
 Standard binary name
 ***********************************************************************************************************************************/
-#define PROJECT_BIN                                                 "pgbackrest"
+#define PROJECT_BIN                                                 "pgbunker"
+
+/***********************************************************************************************************************************
+Legacy binary/config name from upstream pgBackRest. Used for backward-compat fallbacks (e.g., reading /etc/pgbackrest/pgbackrest.conf
+when the pgBunker config is absent) so existing pgBackRest installations can be upgraded with minimal config churn.
+***********************************************************************************************************************************/
+#define LEGACY_PROJECT_BIN                                          "pgbackrest"
+#define LEGACY_PROJECT_CONFIG_FILE                                  LEGACY_PROJECT_BIN ".conf"
 
 /***********************************************************************************************************************************
 Config file name. The path will vary based on configuration.
