@@ -94,7 +94,6 @@ storageReadPosixOpen(THIS_VOID)
         posix_fadvise(this->fd, 0, 0, POSIX_FADV_DONTNEED);
 #endif
 
-
         // Seek to offset
         if (this->interface.offset != 0)
         {
