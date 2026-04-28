@@ -12,10 +12,10 @@ Stanza Delete Command
 #include "info/infoArchive.h"
 #include "info/infoBackup.h"
 #include "postgres/interface.h"
-#include "version.h"
 #include "postgres/version.h"
 #include "protocol/helper.h"
 #include "storage/helper.h"
+#include "version.h"
 
 /**********************************************************************************************************************************/
 FN_EXTERN void
