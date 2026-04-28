@@ -58,7 +58,7 @@ testRun(void)
                             "\n"
                             "<p>last para</p>"
                             "</doc>")))),
-            "pgBackRest PostgreSQL - info\n"
+            "pgBunker PostgreSQL - info\n"
             "\n"
             "NOTE: think \"about\" it\n"
             "\n"
@@ -355,14 +355,14 @@ testRun(void)
             "["
                 // backup command
                 "2:str:Backup cluster."
-                ", 3:str:pgBackRest backup."
+                ", 3:str:pgBunker backup."
                 // check command
                 ", 5:str:Check cluster."
-                ", 6:str:pgBackRest check."
+                ", 6:str:pgBunker check."
                 // restore command
                 ", 7:bool:true"
                 ", 8:str:Restore cluster."
-                ", 9:str:pgBackRest restore."
+                ", 9:str:pgBunker restore."
             "]"
             ", 2:array:"
             "["
@@ -372,7 +372,7 @@ testRun(void)
                 ", 4:str:Buffer."
                 // config option
                 ", 8:str:stanza"
-                ", 9:str:pgBackRest configuration file."
+                ", 9:str:pgBunker configuration file."
                 ", 10:str:Use this option to specify a different configuration file than the default."
                 ", 12:array:"
                 "["
