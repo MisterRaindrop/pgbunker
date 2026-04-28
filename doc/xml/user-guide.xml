@@ -45,7 +45,7 @@
         <variable key="user-guide-os" if="{[os-type-is-debian]}">Debian/Ubuntu</variable>
         <variable key="user-guide-os" if="{[os-type-is-rhel]}">RHEL</variable>
 
-        <variable key="pgbackrest-repo-path">/pgbackrest</variable>
+        <variable key="pgbunker-repo-path">/pgbunker</variable>
 
         <!-- Path where CA certificates are installed -->
         <variable key="ca-cert-path" if="{[os-type-is-debian]}">/usr/local/share/ca-certificates</variable>
@@ -61,8 +61,8 @@
 
         <!-- Path where builds are performed -->
         <variable key="build-path">/build</variable>
-        <variable key="build-br-path">{[build-path]}/pgbackrest-release-{[version]}</variable>
-        <variable key="build-meson-path">{[build-path]}/pgbackrest</variable>
+        <variable key="build-br-path">{[build-path]}/pgbunker-release-{[version]}</variable>
+        <variable key="build-meson-path">{[build-path]}/pgbunker</variable>
 
         <!-- PostreSQL versions to run documentation for and min/max versions represented -->
         <variable key="pg-version" if="{[os-type-is-debian]}">{[os-debian-pg-version]}</variable>
@@ -82,11 +82,11 @@
 
         <variable key="pg-group">postgres</variable>
 
-        <variable key="backrest-repo-path">/var/lib/pgbackrest</variable>
+        <variable key="backrest-repo-path">/var/lib/pgbunker</variable>
         <variable key="backrest-repo-cipher-type">aes-256-cbc</variable>
         <variable key="backrest-repo-cipher-pass">zWaf6XtpjIVZC5444yXB+cgFDFl7MxGlgkZSaoPvTGirhPygu4jOKOXf9LO4vjfO</variable>
-        <variable key="br-bin">/usr/bin/pgbackrest</variable>
-        <variable key="br-user">pgbackrest</variable>
+        <variable key="br-bin">/usr/bin/pgbunker</variable>
+        <variable key="br-user">pgbunker</variable>
         <variable key="br-group">{[br-user]}</variable>
         <variable key="br-home-path">/home/{[br-user]}</variable>
 
@@ -105,7 +105,7 @@
         <variable key="pg-path-upgrade" if="{[os-type-is-debian]}">/var/lib/postgresql/{[pg-version-upgrade]}/{[postgres-cluster-demo]}</variable>
         <variable key="pg-path-upgrade" if="{[os-type-is-rhel]}">/var/lib/pgsql/{[pg-version-upgrade]}/data</variable>
 
-        <variable key="spool-path">/var/spool/pgbackrest</variable>
+        <variable key="spool-path">/var/spool/pgbunker</variable>
 
         <variable key="postgres-config-demo" if="{[os-type-is-debian]}">/etc/postgresql/{[pg-version]}/{[postgres-cluster-demo]}/postgresql.conf</variable>
         <variable key="postgres-config-demo" if="{[os-type-is-rhel]}">{[pg-path]}/postgresql.conf</variable>
@@ -133,7 +133,7 @@
         <variable key="azure-image">mcr.microsoft.com/azure-storage/azurite</variable>  <!-- Azurite docker image -->
         <variable key="azure-all">n</variable>                      <!-- Build all the documentation with Azure? -->
         <variable key="azure-local">y</variable>
-        <variable key="azure-account">pgbackrest</variable>
+        <variable key="azure-account">pgbunker</variable>
         <variable key="azure-container">demo-container</variable>
         <variable key="azure-repo">demo-repo</variable>
         <variable key="azure-key-type">shared</variable>
@@ -144,7 +144,7 @@
         <variable key="gcs-bucket">demo-bucket</variable>
         <variable key="gcs-repo">demo-repo</variable>
         <variable key="gcs-key-type">service</variable>
-        <variable key="gcs-key">/etc/pgbackrest/gcs-key.json</variable>
+        <variable key="gcs-key">/etc/pgbunker/gcs-key.json</variable>
 
         <!-- S3 Settings -->
         <variable key="s3-image">minio/minio</variable>             <!-- Minio docker image -->
@@ -165,7 +165,7 @@
         <variable key="object-any-all">('{[azure-all]}' eq 'y' || '{[gcs-all]}' eq 'y' || '{[s3-all]}' eq 'y' || '{[sftp-all]}' eq 'y')</variable>
 
         <!-- Hosts -->
-        <variable key="host-image">pgbackrest/doc:{[os-type]}</variable>
+        <variable key="host-image">pgbunker/doc:{[os-type]}</variable>
 
         <!-- Limit host memory to check for memory leaks. Some environments do not allow memory to be set so allow disabling. -->
         <variable key="host-mem-limit">y</variable>
@@ -173,8 +173,8 @@
         <variable key="host-mem" if="'{[host-mem-limit]}' eq 'n'"></variable>
 
         <variable key="host-user" eval="y">use English; getpwuid($UID) eq 'root' ? 'vagrant' : getpwuid($UID) . ''</variable>
-        <variable key="host-mount">{[host-repo-path]}:{[pgbackrest-repo-path]}</variable>
-        <variable key="image-repo">pgbackrest/test</variable>
+        <variable key="host-mount">{[host-repo-path]}:{[pgbunker-repo-path]}</variable>
+        <variable key="image-repo">pgbunker/test</variable>
 
         <variable key="host-azure-id">azure</variable>
         <variable key="host-azure">azure-server</variable>
@@ -219,7 +219,7 @@
         <variable key="host-repo1-mount">{[host-mount]}</variable>
 
         <!-- Commands for various operations -->
-        <variable key="cmd-backup-last">pgbackrest repo-ls backup/demo --filter="(F|D|I)$" --sort=desc | head -1</variable>
+        <variable key="cmd-backup-last">pgbunker repo-ls backup/demo --filter="(F|D|I)$" --sort=desc | head -1</variable>
 
         <!-- Data used to demonstrate backup/restore operations -->
         <variable key="test-table-data">Important Data</variable>
@@ -296,7 +296,7 @@
             echo 'autovacuum = off' >> /root/postgresql.common.conf
         </variable>
 
-        <variable key="copy-ca-cert">COPY {[fake-cert-path-relative]}/ca.crt {[ca-cert-path]}/pgbackrest-ca.crt</variable>
+        <variable key="copy-ca-cert">COPY {[fake-cert-path-relative]}/ca.crt {[ca-cert-path]}/pgbunker-ca.crt</variable>
 
         <!-- Don't allow sudo to disable core dump (suppresses errors, see https://github.com/sudo-project/sudo/issues/42) -->
         <variable key="sudo-disable-core-dump">RUN echo "Set disable_coredump false" >> /etc/sudo.conf</variable>
@@ -427,67 +427,67 @@
 
     <block-define id="setup-tls">
         <execute-list host="{[setup-tls-host]}">
-            <title>Setup pgBackRest Server</title>
+            <title>Setup pgBunker Server</title>
 
             <execute user="root" user-force="y" show="n">
                 <exe-cmd>
-                    mkdir -p -m 770 /etc/pgbackrest/cert &amp;&amp;
-                    cp {[pgbackrest-repo-path]}/doc/{[fake-cert-path-relative]}/ca.crt
-                        /etc/pgbackrest/cert/ca.crt &amp;&amp;
+                    mkdir -p -m 770 /etc/pgbunker/cert &amp;&amp;
+                    cp {[pgbunker-repo-path]}/doc/{[fake-cert-path-relative]}/ca.crt
+                        /etc/pgbunker/cert/ca.crt &amp;&amp;
 
-                    openssl genrsa -out /etc/pgbackrest/cert/server.key 2048 2>&amp;1 &amp;&amp;
-                    chmod 600 /etc/pgbackrest/cert/server.key &amp;&amp;
-                    openssl req -new -sha256 -nodes -out /etc/pgbackrest/cert/server.csr
-                        -key /etc/pgbackrest/cert/server.key -subj "/CN={[setup-tls-host]}" 2>&amp;1 &amp;&amp;
-                    openssl x509 -req -in /etc/pgbackrest/cert/server.csr
-                        -CA /etc/pgbackrest/cert/ca.crt
-                        -CAkey {[pgbackrest-repo-path]}/doc/{[fake-cert-path-relative]}/ca.key -CAcreateserial
-                        -out /etc/pgbackrest/cert/server.crt -days 9 2>&amp;1 &amp;&amp;
+                    openssl genrsa -out /etc/pgbunker/cert/server.key 2048 2>&amp;1 &amp;&amp;
+                    chmod 600 /etc/pgbunker/cert/server.key &amp;&amp;
+                    openssl req -new -sha256 -nodes -out /etc/pgbunker/cert/server.csr
+                        -key /etc/pgbunker/cert/server.key -subj "/CN={[setup-tls-host]}" 2>&amp;1 &amp;&amp;
+                    openssl x509 -req -in /etc/pgbunker/cert/server.csr
+                        -CA /etc/pgbunker/cert/ca.crt
+                        -CAkey {[pgbunker-repo-path]}/doc/{[fake-cert-path-relative]}/ca.key -CAcreateserial
+                        -out /etc/pgbunker/cert/server.crt -days 9 2>&amp;1 &amp;&amp;
 
-                    openssl genrsa -out /etc/pgbackrest/cert/client.key 2048 2>&amp;1 &amp;&amp;
-                    chmod 600 /etc/pgbackrest/cert/client.key &amp;&amp;
-                    openssl req -new -sha256 -nodes -out /etc/pgbackrest/cert/client.csr
-                        -key /etc/pgbackrest/cert/client.key -subj "/CN=pgbackrest-client" 2>&amp;1 &amp;&amp;
-                    openssl x509 -req -in /etc/pgbackrest/cert/client.csr
-                        -CA /etc/pgbackrest/cert/ca.crt
-                        -CAkey {[pgbackrest-repo-path]}/doc/{[fake-cert-path-relative]}/ca.key -CAcreateserial
-                        -out /etc/pgbackrest/cert/client.crt -days 9 2>&amp;1 &amp;&amp;
+                    openssl genrsa -out /etc/pgbunker/cert/client.key 2048 2>&amp;1 &amp;&amp;
+                    chmod 600 /etc/pgbunker/cert/client.key &amp;&amp;
+                    openssl req -new -sha256 -nodes -out /etc/pgbunker/cert/client.csr
+                        -key /etc/pgbunker/cert/client.key -subj "/CN=pgbunker-client" 2>&amp;1 &amp;&amp;
+                    openssl x509 -req -in /etc/pgbunker/cert/client.csr
+                        -CA /etc/pgbunker/cert/ca.crt
+                        -CAkey {[pgbunker-repo-path]}/doc/{[fake-cert-path-relative]}/ca.key -CAcreateserial
+                        -out /etc/pgbunker/cert/client.crt -days 9 2>&amp;1 &amp;&amp;
 
-                    chown -R {[setup-tls-user]} /etc/pgbackrest/cert
+                    chown -R {[setup-tls-user]} /etc/pgbunker/cert
                 </exe-cmd>
             </execute>
 
             <execute user="root" user-force="y" show="n">
                 <exe-cmd>
-                    echo '[Unit]' | tee /etc/systemd/system/pgbackrest.service &amp;&amp;
-                    echo 'Description=pgBackRest Server' | tee -a /etc/systemd/system/pgbackrest.service &amp;&amp;
-                    echo 'After=network.target' | tee -a /etc/systemd/system/pgbackrest.service &amp;&amp;
-                    echo 'StartLimitIntervalSec=0' | tee -a /etc/systemd/system/pgbackrest.service &amp;&amp;
-                    echo '' | tee -a /etc/systemd/system/pgbackrest.service &amp;&amp;
-                    echo '[Service]' | tee -a /etc/systemd/system/pgbackrest.service &amp;&amp;
-                    echo 'Type=simple' | tee -a /etc/systemd/system/pgbackrest.service &amp;&amp;
-                    echo 'Restart=always' | tee -a /etc/systemd/system/pgbackrest.service &amp;&amp;
-                    echo 'RestartSec=1' | tee -a /etc/systemd/system/pgbackrest.service &amp;&amp;
-                    echo 'User={[setup-tls-user]}' | tee -a /etc/systemd/system/pgbackrest.service &amp;&amp;
-                    echo 'ExecStart=/usr/bin/pgbackrest server' | tee -a /etc/systemd/system/pgbackrest.service &amp;&amp;
-                    echo 'ExecStartPost=/bin/sleep 3' | tee -a /etc/systemd/system/pgbackrest.service &amp;&amp;
-                    echo 'ExecStartPost=/bin/bash -c "[ ! -z $MAINPID ]"' | tee -a /etc/systemd/system/pgbackrest.service &amp;&amp;
-                    echo 'ExecReload=/bin/kill -HUP $MAINPID' | tee -a /etc/systemd/system/pgbackrest.service &amp;&amp;
-                    echo '' | tee -a /etc/systemd/system/pgbackrest.service &amp;&amp;
-                    echo '[Install]' | tee -a /etc/systemd/system/pgbackrest.service &amp;&amp;
-                    echo 'WantedBy=multi-user.target' | tee -a /etc/systemd/system/pgbackrest.service
+                    echo '[Unit]' | tee /etc/systemd/system/pgbunker.service &amp;&amp;
+                    echo 'Description=pgBunker Server' | tee -a /etc/systemd/system/pgbunker.service &amp;&amp;
+                    echo 'After=network.target' | tee -a /etc/systemd/system/pgbunker.service &amp;&amp;
+                    echo 'StartLimitIntervalSec=0' | tee -a /etc/systemd/system/pgbunker.service &amp;&amp;
+                    echo '' | tee -a /etc/systemd/system/pgbunker.service &amp;&amp;
+                    echo '[Service]' | tee -a /etc/systemd/system/pgbunker.service &amp;&amp;
+                    echo 'Type=simple' | tee -a /etc/systemd/system/pgbunker.service &amp;&amp;
+                    echo 'Restart=always' | tee -a /etc/systemd/system/pgbunker.service &amp;&amp;
+                    echo 'RestartSec=1' | tee -a /etc/systemd/system/pgbunker.service &amp;&amp;
+                    echo 'User={[setup-tls-user]}' | tee -a /etc/systemd/system/pgbunker.service &amp;&amp;
+                    echo 'ExecStart=/usr/bin/pgbunker server' | tee -a /etc/systemd/system/pgbunker.service &amp;&amp;
+                    echo 'ExecStartPost=/bin/sleep 3' | tee -a /etc/systemd/system/pgbunker.service &amp;&amp;
+                    echo 'ExecStartPost=/bin/bash -c "[ ! -z $MAINPID ]"' | tee -a /etc/systemd/system/pgbunker.service &amp;&amp;
+                    echo 'ExecReload=/bin/kill -HUP $MAINPID' | tee -a /etc/systemd/system/pgbunker.service &amp;&amp;
+                    echo '' | tee -a /etc/systemd/system/pgbunker.service &amp;&amp;
+                    echo '[Install]' | tee -a /etc/systemd/system/pgbunker.service &amp;&amp;
+                    echo 'WantedBy=multi-user.target' | tee -a /etc/systemd/system/pgbunker.service
                 </exe-cmd>
             </execute>
             <execute user="root" output="y">
-                <exe-cmd>cat /etc/systemd/system/pgbackrest.service</exe-cmd>
+                <exe-cmd>cat /etc/systemd/system/pgbunker.service</exe-cmd>
             </execute>
 
             <execute user="root">
-                <exe-cmd>systemctl enable pgbackrest</exe-cmd>
+                <exe-cmd>systemctl enable pgbunker</exe-cmd>
                 <exe-cmd-extra>2>&amp;1</exe-cmd-extra>
             </execute>
             <execute user="root">
-                <exe-cmd>systemctl start pgbackrest</exe-cmd>
+                <exe-cmd>systemctl start pgbunker</exe-cmd>
             </execute>
         </execute-list>
     </block-define>
@@ -515,7 +515,7 @@
                     (echo -n 'no-agent-forwarding,no-X11-forwarding,no-port-forwarding,' &amp;&amp;
                     echo -n 'command="{[br-bin]} ${SSH_ORIGINAL_COMMAND#* }" ' &amp;&amp;
                     sudo ssh root@{[setup-ssh-host]} cat {[setup-ssh-user-home-path]}/.ssh/id_rsa.pub) |
-                    sudo -u pgbackrest tee -a {[br-home-path]}/.ssh/authorized_keys
+                    sudo -u pgbunker tee -a {[br-home-path]}/.ssh/authorized_keys
                 </exe-cmd>
             </execute>
         </execute-list>
@@ -548,7 +548,7 @@
             <title>Test connection from <host>{[setup-ssh-host]}</host> to <host>{[host-repo1]}</host></title>
 
             <execute user="{[setup-ssh-user]}" err-suppress="y">
-                <exe-cmd>ssh pgbackrest@{[host-repo1]}</exe-cmd>
+                <exe-cmd>ssh pgbunker@{[host-repo1]}</exe-cmd>
                 <exe-cmd-extra>-o StrictHostKeyChecking=no</exe-cmd-extra>
             </execute>
         </execute-list>
@@ -585,12 +585,12 @@
             <title>Copy <backrest/> binary from build host</title>
 
             <execute user="root">
-                <exe-cmd>scp {[host-build]}:{[build-meson-path]}/src/pgbackrest /usr/bin</exe-cmd>
+                <exe-cmd>scp {[host-build]}:{[build-meson-path]}/src/pgbunker /usr/bin</exe-cmd>
                 <exe-cmd-extra>2>&amp;1</exe-cmd-extra>
             </execute>
 
             <execute user="root">
-                <exe-cmd>chmod 755 /usr/bin/pgbackrest</exe-cmd>
+                <exe-cmd>chmod 755 /usr/bin/pgbunker</exe-cmd>
             </execute>
         </execute-list>
 
@@ -600,10 +600,10 @@
             <title>Create <backrest/> configuration file and directories</title>
 
             <execute user="root">
-                <exe-cmd>mkdir -p -m 770 /var/log/pgbackrest</exe-cmd>
+                <exe-cmd>mkdir -p -m 770 /var/log/pgbunker</exe-cmd>
             </execute>
             <execute user="root">
-                <exe-cmd>chown {[br-install-user]}:{[br-install-group]} /var/log/pgbackrest</exe-cmd>
+                <exe-cmd>chown {[br-install-user]}:{[br-install-group]} /var/log/pgbunker</exe-cmd>
             </execute>
             <execute user="root">
                 <exe-cmd>mkdir -p {[backrest-config-path]}</exe-cmd>
@@ -628,7 +628,7 @@
             <title>Install <backrest/> from package</title>
 
             <execute if="{[os-type-is-debian]} &amp;&amp; '{[package]}' ne 'apt'" user="root" err-suppress="y" show="n">
-                <exe-cmd>dpkg -i {[pgbackrest-repo-path]}/{[package]}</exe-cmd>
+                <exe-cmd>dpkg -i {[pgbunker-repo-path]}/{[package]}</exe-cmd>
                 <exe-cmd-extra> 2>&amp;1</exe-cmd-extra>
             </execute>
 
@@ -638,7 +638,7 @@
             </execute>
 
             <execute if="{[os-type-is-debian]} &amp;&amp; '{[package]}' ne 'apt'" user="root" skip="y">
-                <exe-cmd>apt-get install pgbackrest</exe-cmd>
+                <exe-cmd>apt-get install pgbunker</exe-cmd>
             </execute>
 
             <execute if="{[os-type-is-debian]} &amp;&amp; '{[package]}' eq 'apt'" user="root" show="n">
@@ -646,21 +646,21 @@
             </execute>
 
             <execute if="{[os-type-is-debian]} &amp;&amp; '{[package]}' eq 'apt'" user="root" show="y">
-                <exe-cmd>apt-get install pgbackrest</exe-cmd>
+                <exe-cmd>apt-get install pgbunker</exe-cmd>
                 <exe-cmd-extra>-y 2>&amp;1</exe-cmd-extra>
             </execute>
 
             <execute if="{[os-type-is-rhel]} &amp;&amp; '{[package]}' ne 'yum'" user="root" show="n">
-                <exe-cmd>yum -y install {[pgbackrest-repo-path]}/{[package]}</exe-cmd>
+                <exe-cmd>yum -y install {[pgbunker-repo-path]}/{[package]}</exe-cmd>
                 <exe-cmd-extra>-y 2>&amp;1</exe-cmd-extra>
             </execute>
 
             <execute if="{[os-type-is-rhel]} &amp;&amp; '{[package]}' ne 'yum'" user="root" skip="y">
-                <exe-cmd>yum install pgbackrest</exe-cmd>
+                <exe-cmd>yum install pgbunker</exe-cmd>
             </execute>
 
             <execute if="{[os-type-is-rhel]} &amp;&amp; '{[package]}' eq 'yum'" user="root">
-                <exe-cmd>yum install pgbackrest</exe-cmd>
+                <exe-cmd>yum install pgbunker</exe-cmd>
                 <exe-cmd-extra>-y 2>&amp;1</exe-cmd-extra>
             </execute>
         </execute-list>
@@ -669,7 +669,7 @@
             <title>Update permissions on configuration file and directories</title>
 
             <execute user="root">
-                <exe-cmd>chown {[br-install-user]}:{[br-install-group]} /var/log/pgbackrest</exe-cmd>
+                <exe-cmd>chown {[br-install-user]}:{[br-install-group]} /var/log/pgbunker</exe-cmd>
             </execute>
             <execute user="root">
                 <exe-cmd>chown {[br-install-user]}:{[br-install-group]} {[backrest-config-demo]}</exe-cmd>
@@ -724,7 +724,7 @@
 
             <!-- Set host entries to redirect to local azure server -->
             <execute user="root" user-force="y" show="n">
-                <exe-cmd>echo "{[host-azure-ip]} pgbackrest.blob.core.windows.net" | tee -a /etc/hosts</exe-cmd>
+                <exe-cmd>echo "{[host-azure-ip]} pgbunker.blob.core.windows.net" | tee -a /etc/hosts</exe-cmd>
             </execute>
 
             <execute user="{[azure-setup-user]}" if="'{[azure-setup-create-container]}' eq 'y'" show='n'>
@@ -870,7 +870,7 @@
 
             <execute user="{[br-user]}" output="n">
                 <exe-cmd>
-                    pgbackrest --stanza=demo --type=incr --repo1-bundle
+                    pgbunker --stanza=demo --type=incr --repo1-bundle
                     --repo1-block --log-level-console=info backup
                 </exe-cmd>
                 <exe-cmd-extra>2>&amp;1</exe-cmd-extra>
@@ -993,7 +993,7 @@
                 <exe-cmd>mkdir -p {[build-br-path]}</exe-cmd>
             </execute>
             <execute user="root" show="n">
-                <exe-cmd>cp -r {[pgbackrest-repo-path]}/* {[build-br-path]}</exe-cmd>
+                <exe-cmd>cp -r {[pgbunker-repo-path]}/* {[build-br-path]}</exe-cmd>
             </execute>
             <execute user="root" show="n">
                 <exe-cmd>chown -R {[host-build-user]} {[build-path]}</exe-cmd>
@@ -1454,12 +1454,12 @@
 
             <p>Backups can be scheduled with utilities such as cron.</p>
 
-            <p>In the following example, two cron jobs are configured to run; full backups are scheduled for 6:30 AM every Sunday with differential backups scheduled for 6:30 AM Monday through Saturday. If this crontab is installed for the first time mid-week, then pgBackRest will run a full backup the first time the differential job is executed, followed the next day by a differential backup.</p>
+            <p>In the following example, two cron jobs are configured to run; full backups are scheduled for 6:30 AM every Sunday with differential backups scheduled for 6:30 AM Monday through Saturday. If this crontab is installed for the first time mid-week, then pgBunker will run a full backup the first time the differential job is executed, followed the next day by a differential backup.</p>
 
             <code-block title="crontab">
                 #m h   dom mon dow   command
-                30 06  *   *   0     pgbackrest --type=full --stanza=demo backup
-                30 06  *   *   1-6   pgbackrest --type=diff --stanza=demo backup
+                30 06  *   *   0     pgbunker --type=full --stanza=demo backup
+                30 06  *   *   1-6   pgbunker --type=diff --stanza=demo backup
             </code-block>
 
             <p>Once backups are scheduled it's important to configure retention so backups are expired on a regular schedule, see <link section="/retention">Retention</link>.</p>
@@ -1571,38 +1571,38 @@
                 <title>Load <backrest/> info function for <postgres/></title>
 
                 <execute user="postgres" show="n">
-                    <exe-cmd>mkdir -p {[pg-home-path]}/pgbackrest/doc/example</exe-cmd>
+                    <exe-cmd>mkdir -p {[pg-home-path]}/pgbunker/doc/example</exe-cmd>
                 </execute>
 
                 <execute user="postgres" show="n">
-                    <exe-cmd>cp -r {[pgbackrest-repo-path]}/doc/example/*
-                        {[pg-home-path]}/pgbackrest/doc/example</exe-cmd>
+                    <exe-cmd>cp -r {[pgbunker-repo-path]}/doc/example/*
+                        {[pg-home-path]}/pgbunker/doc/example</exe-cmd>
                 </execute>
 
                 <execute user="postgres" output="y">
                     <exe-cmd>cat
-                        {[pg-home-path]}/pgbackrest/doc/example/pgsql-pgbackrest-info.sql</exe-cmd>
+                        {[pg-home-path]}/pgbunker/doc/example/pgsql-pgbunker-info.sql</exe-cmd>
                 </execute>
 
                 <execute user="postgres">
                     <exe-cmd>psql -f
-                        {[pg-home-path]}/pgbackrest/doc/example/pgsql-pgbackrest-info.sql</exe-cmd>
+                        {[pg-home-path]}/pgbunker/doc/example/pgsql-pgbunker-info.sql</exe-cmd>
                 </execute>
             </execute-list>
 
-            <p>Now the <code>monitor.pgbackrest_info()</code> function can be used to determine the last successful backup time and archived WAL for a stanza.</p>
+            <p>Now the <code>monitor.pgbunker_info()</code> function can be used to determine the last successful backup time and archived WAL for a stanza.</p>
 
             <execute-list host="{[host-pg1]}">
                 <title>Query last successful backup time and archived WAL</title>
 
                 <execute user="postgres" output="y">
                     <exe-cmd>cat
-                        {[pg-home-path]}/pgbackrest/doc/example/pgsql-pgbackrest-query.sql</exe-cmd>
+                        {[pg-home-path]}/pgbunker/doc/example/pgsql-pgbunker-query.sql</exe-cmd>
                 </execute>
 
                 <execute user="postgres" output="y">
                     <exe-cmd>psql -f
-                        {[pg-home-path]}/pgbackrest/doc/example/pgsql-pgbackrest-query.sql</exe-cmd>
+                        {[pg-home-path]}/pgbunker/doc/example/pgsql-pgbunker-query.sql</exe-cmd>
                 </execute>
             </execute-list>
         </section>
@@ -1629,7 +1629,7 @@
 
                 <execute user="postgres" output="y">
                     <exe-cmd>
-                      pgbackrest --output=json --stanza=demo info |
+                      pgbunker --output=json --stanza=demo info |
                           jq '.[0] | .backup[-1] | .timestamp.stop'
                     </exe-cmd>
                 </execute>
@@ -1642,7 +1642,7 @@
 
                 <execute user="postgres" output="y">
                     <exe-cmd>
-                      pgbackrest --output=json --stanza=demo info |
+                      pgbunker --output=json --stanza=demo info |
                           jq '.[0] | .archive[-1] | .max'
                     </exe-cmd>
                 </execute>
@@ -2667,7 +2667,7 @@
 
         <p>The configuration described in <link section="/quickstart">Quickstart</link> is suitable for simple installations but for enterprise configurations it is more typical to have a dedicated <host>repository</host> host where the backups and WAL archive files are stored. This separates the backups and WAL archive from the database server so <host>database</host> host failures have less impact. It is still a good idea to employ traditional backup software to backup the <host>repository</host> host.</p>
 
-        <p>On <postgres/> hosts, <br-option>pg1-path</br-option> is required to be the path of the local PostgreSQL cluster and no <br-option>pg1-host</br-option> should be configured. When configuring a repository host, the pgbackrest configuration file must have the <br-option>pg-host</br-option> option configured to connect to the primary and standby (if any) hosts. The repository host has the only pgbackrest configuration that should be aware of more than one <postgres/> host. Order does not matter, e.g. pg1-path/pg1-host, pg2-path/pg2-host can be primary or standby.</p>
+        <p>On <postgres/> hosts, <br-option>pg1-path</br-option> is required to be the path of the local PostgreSQL cluster and no <br-option>pg1-host</br-option> should be configured. When configuring a repository host, the pgbunker configuration file must have the <br-option>pg-host</br-option> option configured to connect to the primary and standby (if any) hosts. The repository host has the only pgbunker configuration that should be aware of more than one <postgres/> host. Order does not matter, e.g. pg1-path/pg1-host, pg2-path/pg2-host can be primary or standby.</p>
 
         <!-- =================================================================================================================== -->
         <section id="install">
@@ -2739,7 +2739,7 @@
 
             <!-- <block if="{[pg-version]} >= 11" id="setup-ssh">
                 <block-variable-replace key="setup-ssh-host">{[host-pg1]}</block-variable-replace>
-                <block-variable-replace key="setup-ssh-user">pgbackrest</block-variable-replace>
+                <block-variable-replace key="setup-ssh-user">pgbunker</block-variable-replace>
                 <block-variable-replace key="setup-ssh-user-home-path">{[br-home-path]}</block-variable-replace>
             </block> -->
         </section>
@@ -2768,15 +2768,15 @@
                 <!-- <backrest-config-option if="{[pg-version]} >= 11" section="demo" key="pg1-host-user">{[br-user]}</backrest-config-option> -->
 
                 <backrest-config-option if="{[protocol-tls]}" section="demo" key="pg1-host-type">tls</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="demo" key="pg1-host-ca-file">/etc/pgbackrest/cert/ca.crt</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="demo" key="pg1-host-cert-file">/etc/pgbackrest/cert/client.crt</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="demo" key="pg1-host-key-file">/etc/pgbackrest/cert/client.key</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="demo" key="pg1-host-ca-file">/etc/pgbunker/cert/ca.crt</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="demo" key="pg1-host-cert-file">/etc/pgbunker/cert/client.crt</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="demo" key="pg1-host-key-file">/etc/pgbunker/cert/client.key</backrest-config-option>
 
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-auth">pgbackrest-client=*</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-auth">pgbunker-client=*</backrest-config-option>
                 <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-address">*</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-ca-file">/etc/pgbackrest/cert/ca.crt</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-cert-file">/etc/pgbackrest/cert/server.crt</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-key-file">/etc/pgbackrest/cert/server.key</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-ca-file">/etc/pgbunker/cert/ca.crt</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-cert-file">/etc/pgbunker/cert/server.crt</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-key-file">/etc/pgbunker/cert/server.key</backrest-config-option>
 
                 <backrest-config-option section="global" key="start-fast">y</backrest-config-option>
                 <backrest-config-option section="global" key="repo1-retention-full">2</backrest-config-option>
@@ -2784,7 +2784,7 @@
                 <backrest-config-option section="global" key="log-timestamp">n</backrest-config-option>
             </backrest-config>
 
-            <p>The database host must be configured with the repository host/user. The default for the <br-option>repo1-host-user</br-option> option is <id>pgbackrest</id>. If the <id>postgres</id> user does restores on the repository host it is best not to also allow the <id>postgres</id> user to perform backups. However, the <id>postgres</id> user can read the repository directly if it is in the same group as the <id>pgbackrest</id> user.</p>
+            <p>The database host must be configured with the repository host/user. The default for the <br-option>repo1-host-user</br-option> option is <id>pgbunker</id>. If the <id>postgres</id> user does restores on the repository host it is best not to also allow the <id>postgres</id> user to perform backups. However, the <id>postgres</id> user can read the repository directly if it is in the same group as the <id>pgbunker</id> user.</p>
 
             <backrest-config host="{[host-pg1]}" file="{[backrest-config-demo]}" reset="y">
                 <title>Configure <br-option>repo1-host</br-option>/<br-option>repo1-host-user</br-option></title>
@@ -2794,15 +2794,15 @@
                 <backrest-config-option section="global" key="repo1-host">{[host-repo1]}</backrest-config-option>
 
                 <backrest-config-option if="{[protocol-tls]}" section="global" key="repo1-host-type">tls</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="repo1-host-ca-file">/etc/pgbackrest/cert/ca.crt</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="repo1-host-cert-file">/etc/pgbackrest/cert/client.crt</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="repo1-host-key-file">/etc/pgbackrest/cert/client.key</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="repo1-host-ca-file">/etc/pgbunker/cert/ca.crt</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="repo1-host-cert-file">/etc/pgbunker/cert/client.crt</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="repo1-host-key-file">/etc/pgbunker/cert/client.key</backrest-config-option>
 
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-auth">pgbackrest-client=demo</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-auth">pgbunker-client=demo</backrest-config-option>
                 <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-address">*</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-ca-file">/etc/pgbackrest/cert/ca.crt</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-cert-file">/etc/pgbackrest/cert/server.crt</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-key-file">/etc/pgbackrest/cert/server.key</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-ca-file">/etc/pgbunker/cert/ca.crt</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-cert-file">/etc/pgbunker/cert/server.crt</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-key-file">/etc/pgbunker/cert/server.key</backrest-config-option>
 
                 <backrest-config-option section="global" key="log-level-file">detail</backrest-config-option>
                 <backrest-config-option section="global" key="log-timestamp">n</backrest-config-option>
@@ -2818,12 +2818,12 @@
                 <execute user="postgres">
                     <exe-cmd>
                         psql -c "
-                            create user pgbackrest;
-                            grant pg_read_all_settings to pgbackrest;
-                            grant execute on function pg_start_backup(text, boolean, boolean) to pgbackrest;
-                            grant execute on function pg_stop_backup(boolean, boolean) to pgbackrest;
-                            grant execute on function pg_switch_wal() to pgbackrest;
-                            grant execute on function pg_create_restore_point(text) to pgbackrest;"
+                            create user pgbunker;
+                            grant pg_read_all_settings to pgbunker;
+                            grant execute on function pg_start_backup(text, boolean, boolean) to pgbunker;
+                            grant execute on function pg_stop_backup(boolean, boolean) to pgbunker;
+                            grant execute on function pg_switch_wal() to pgbunker;
+                            grant execute on function pg_create_restore_point(text) to pgbunker;"
                     </exe-cmd>
                 </execute>
             </execute-list> -->
@@ -3159,15 +3159,15 @@
                 <backrest-config-option section="global" key="repo1-host">{[host-repo1]}</backrest-config-option>
 
                 <backrest-config-option if="{[protocol-tls]}" section="global" key="repo1-host-type">tls</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="repo1-host-ca-file">/etc/pgbackrest/cert/ca.crt</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="repo1-host-cert-file">/etc/pgbackrest/cert/client.crt</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="repo1-host-key-file">/etc/pgbackrest/cert/client.key</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="repo1-host-ca-file">/etc/pgbunker/cert/ca.crt</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="repo1-host-cert-file">/etc/pgbunker/cert/client.crt</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="repo1-host-key-file">/etc/pgbunker/cert/client.key</backrest-config-option>
 
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-auth">pgbackrest-client=demo</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-auth">pgbunker-client=demo</backrest-config-option>
                 <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-address">*</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-ca-file">/etc/pgbackrest/cert/ca.crt</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-cert-file">/etc/pgbackrest/cert/server.crt</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-key-file">/etc/pgbackrest/cert/server.key</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-ca-file">/etc/pgbunker/cert/ca.crt</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-cert-file">/etc/pgbunker/cert/server.crt</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-key-file">/etc/pgbunker/cert/server.key</backrest-config-option>
 
                 <backrest-config-option section="global" key="log-level-file">detail</backrest-config-option>
                 <backrest-config-option section="global" key="log-timestamp">n</backrest-config-option>
@@ -3529,15 +3529,15 @@
                 <backrest-config-option section="global" key="repo1-host">{[host-repo1]}</backrest-config-option>
 
                 <backrest-config-option if="{[protocol-tls]}" section="global" key="repo1-host-type">tls</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="repo1-host-ca-file">/etc/pgbackrest/cert/ca.crt</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="repo1-host-cert-file">/etc/pgbackrest/cert/client.crt</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="repo1-host-key-file">/etc/pgbackrest/cert/client.key</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="repo1-host-ca-file">/etc/pgbunker/cert/ca.crt</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="repo1-host-cert-file">/etc/pgbunker/cert/client.crt</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="repo1-host-key-file">/etc/pgbunker/cert/client.key</backrest-config-option>
 
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-auth">pgbackrest-client=demo-alt</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-auth">pgbunker-client=demo-alt</backrest-config-option>
                 <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-address">*</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-ca-file">/etc/pgbackrest/cert/ca.crt</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-cert-file">/etc/pgbackrest/cert/server.crt</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-key-file">/etc/pgbackrest/cert/server.key</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-ca-file">/etc/pgbunker/cert/ca.crt</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-cert-file">/etc/pgbunker/cert/server.crt</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="global" key="tls-server-key-file">/etc/pgbunker/cert/server.key</backrest-config-option>
 
                 <backrest-config-option section="global" key="log-level-file">detail</backrest-config-option>
                 <backrest-config-option section="global" key="log-timestamp">n</backrest-config-option>
@@ -3550,9 +3550,9 @@
                 <backrest-config-option section="demo-alt" key="pg1-host">{[host-pgalt]}</backrest-config-option>
 
                 <backrest-config-option if="{[protocol-tls]}" section="demo-alt" key="pg1-host-type">tls</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="demo-alt" key="pg1-host-ca-file">/etc/pgbackrest/cert/ca.crt</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="demo-alt" key="pg1-host-cert-file">/etc/pgbackrest/cert/client.crt</backrest-config-option>
-                <backrest-config-option if="{[protocol-tls]}" section="demo-alt" key="pg1-host-key-file">/etc/pgbackrest/cert/client.key</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="demo-alt" key="pg1-host-ca-file">/etc/pgbunker/cert/ca.crt</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="demo-alt" key="pg1-host-cert-file">/etc/pgbunker/cert/client.crt</backrest-config-option>
+                <backrest-config-option if="{[protocol-tls]}" section="demo-alt" key="pg1-host-key-file">/etc/pgbunker/cert/client.key</backrest-config-option>
             </backrest-config>
 
             <block if="{[protocol-tls]}" id="setup-tls">
@@ -3727,7 +3727,7 @@
                 <title>Test parallel asynchronous archiving</title>
 
                 <execute user="postgres" output="n" show="n">
-                    <exe-cmd>rm -f /var/log/pgbackrest/demo-archive-push-async.log</exe-cmd>
+                    <exe-cmd>rm -f /var/log/pgbunker/demo-archive-push-async.log</exe-cmd>
                 </execute>
 
                 <execute user="postgres" output="n">
@@ -3753,7 +3753,7 @@
                 <title>Check results in the log</title>
 
                 <execute user="postgres" output="y">
-                    <exe-cmd>cat /var/log/pgbackrest/demo-archive-push-async.log</exe-cmd>
+                    <exe-cmd>cat /var/log/pgbunker/demo-archive-push-async.log</exe-cmd>
                     <exe-highlight> WAL file\(s\) to archive|pushed WAL file \'0000000</exe-highlight>
                 </execute>
             </execute-list>
@@ -3776,7 +3776,7 @@
                     <exe-cmd>sleep 5</exe-cmd>
                 </execute>
                 <execute user="postgres" output="y">
-                    <exe-cmd>cat /var/log/pgbackrest/demo-archive-get-async.log</exe-cmd>
+                    <exe-cmd>cat /var/log/pgbunker/demo-archive-get-async.log</exe-cmd>
                     <exe-highlight>found [0-F]{24} in the .* archive</exe-highlight>
                 </execute>
             </execute-list>
@@ -3805,9 +3805,9 @@
             <backrest-config-option section="demo" key="pg2-path">{[pg-path]}</backrest-config-option>
             <backrest-config-option if="{[protocol-tls]}" section="demo" key="pg2-host-type">tls</backrest-config-option>
             <backrest-config-option section="demo" key="pg2-host">{[host-pg2]}</backrest-config-option>
-            <backrest-config-option if="{[protocol-tls]}" section="demo" key="pg2-host-ca-file">/etc/pgbackrest/cert/ca.crt</backrest-config-option>
-            <backrest-config-option if="{[protocol-tls]}" section="demo" key="pg2-host-cert-file">/etc/pgbackrest/cert/client.crt</backrest-config-option>
-            <backrest-config-option if="{[protocol-tls]}" section="demo" key="pg2-host-key-file">/etc/pgbackrest/cert/client.key</backrest-config-option>
+            <backrest-config-option if="{[protocol-tls]}" section="demo" key="pg2-host-ca-file">/etc/pgbunker/cert/ca.crt</backrest-config-option>
+            <backrest-config-option if="{[protocol-tls]}" section="demo" key="pg2-host-cert-file">/etc/pgbunker/cert/client.crt</backrest-config-option>
+            <backrest-config-option if="{[protocol-tls]}" section="demo" key="pg2-host-key-file">/etc/pgbunker/cert/client.key</backrest-config-option>
 
             <!-- <backrest-config-option if="{[pg-version]} >= 11" section="demo"
                 key="pg2-host-user">{[br-user]}</backrest-config-option> -->
@@ -3837,10 +3837,10 @@
     Once the stress test has been run, it is common to perform some additional tests with a custom/debug build.
 
     To initialize the build, run the following. This only needs to be done once per doc build or branch change, though running it more that once only costs additional time:
-        docker exec -it doc-build bash -c 'rm -rf /build/dev && meson setup -Dbuildtype=debug /build/dev /pgbackrest'
+        docker exec -it doc-build bash -c 'rm -rf /build/dev && meson setup -Dbuildtype=debug /build/dev /pgbunker'
 
-    One each host where a new build is required, run the following. This will build pgbackrest, copy it to the host, and display the build time for sanity:
-        docker exec -it <container> bash -c 'ssh build ninja -C /build/dev && scp build:/build/dev/src/pgbackrest /usr/bin && ls -lah /usr/bin/pgbackrest'
+    One each host where a new build is required, run the following. This will build pgbunker, copy it to the host, and display the build time for sanity:
+        docker exec -it <container> bash -c 'ssh build ninja -C /build/dev && scp build:/build/dev/src/pgbunker /usr/bin && ls -lah /usr/bin/pgbunker'
     ============================================================================================================================ -->
     <section id="stress" if="'{[stress]}' eq 'y'">
         <title>Stress Testing</title>
@@ -3999,7 +3999,7 @@
 
                     <execute user="{[br-user]}" output="y" filter="n">
                         <exe-cmd>
-                            pgbackrest --stanza=demo --type=full
+                            pgbunker --stanza=demo --type=full
                             --log-level-console=info --log-level-file=detail backup
                         </exe-cmd>
                         <exe-cmd-extra>2>&amp;1</exe-cmd-extra>
@@ -4025,7 +4025,7 @@
 
                     <execute user="{[br-user]}" output="y" filter="n">
                         <exe-cmd>
-                            pgbackrest --stanza=demo --type=diff --delta --repo1-bundle
+                            pgbunker --stanza=demo --type=diff --delta --repo1-bundle
                             --repo1-block --log-level-console=info --log-level-file=detail backup
                         </exe-cmd>
                         <exe-cmd-extra>2>&amp;1</exe-cmd-extra>
@@ -4095,7 +4095,7 @@
 
                     <execute user="postgres" output="y" filter="n">
                         <exe-cmd>
-                            pgbackrest --stanza=demo --type=standby --delta
+                            pgbunker --stanza=demo --type=standby --delta
                             --log-level-console=info --log-level-file=detail restore
                         </exe-cmd>
                         <exe-cmd-extra>2>&amp;1</exe-cmd-extra>
@@ -4122,7 +4122,7 @@
 
                     <execute user="postgres" output="y" filter="n">
                         <exe-cmd>
-                            pgbackrest --stanza=demo --type=standby
+                            pgbunker --stanza=demo --type=standby
                             --log-level-console=info --log-level-file=detail restore
                         </exe-cmd>
                         <exe-cmd-extra>2>&amp;1</exe-cmd-extra>

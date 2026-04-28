@@ -154,9 +154,9 @@ process-max=1
 
     <!-- ======================================================================================================================= -->
     <!-- <section id="minio">
-        <title>Setting up Minio for pgBackRest</title>
+        <title>Setting up Minio for pgBunker</title>
 
-        <p>Setting up Minio for pgBackRest https://github.com/pgbackrest/pgbackrest/issues/645/</p>
+        <p>Setting up Minio for pgBunker https://github.com/pgbackrest/pgbackrest/issues/645/</p>
     </section> -->
 
     <!-- ======================================================================================================================= -->
