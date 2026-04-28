@@ -2444,8 +2444,11 @@ testRun(void)
 #ifdef TEST_CONTAINER_REQUIRED
         TEST_TITLE("version and help (without command) do not load config or read env");
         {
+            // Need 'mkdir -p' for the parent dir because PGBACKREST_CONFIG_ORIG_PATH_FILE is now /etc/pgbackrest/pgbackrest.conf
+            // (two levels) instead of the upstream /etc/pgbackrest.conf (one level), and /etc/pgbackrest may not exist.
             HRN_SYSTEM(
-                "echo '[global' | sudo tee " PGBACKREST_CONFIG_ORIG_PATH_FILE
+                "sudo mkdir -p /etc/pgbackrest"
+                " && echo '[global' | sudo tee " PGBACKREST_CONFIG_ORIG_PATH_FILE
                 " && sudo chmod 600 " PGBACKREST_CONFIG_ORIG_PATH_FILE);
 
             argList = strLstNew();
