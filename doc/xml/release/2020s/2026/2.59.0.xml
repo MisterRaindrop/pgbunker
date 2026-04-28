@@ -2,67 +2,21 @@
     <release-core-list>
         <release-improvement-list>
             <release-item>
-                <github-issue id="2736"/>
-                <github-pull-request id="2740"/>
+                <commit subject="Fork as pgBunker."/>
+                <commit subject="Rename binary and config paths to pgbunker."/>
+                <commit subject="Update display text in help and main doc page."/>
+                <commit subject="Render &lt;backrest/&gt; doc tag via PROJECT_NAME macro."/>
+                <commit subject="Set version to 2.59.0-bunker.1 for the first pgBunker tag."/>
+                <commit subject="Refresh project tagline and intro to signal pgBunker identity."/>
+                <commit subject="Point repo URLs at pgbunker org after transfer."/>
+                <commit subject="Run CI on main and update binary path for fork rename."/>
 
                 <release-item-contributor-list>
-                    <release-item-contributor id="will.morland"/>
-                    <release-item-reviewer id="david.steele"/>
-                    <release-item-reviewer id="stefan.fercot"/>
+                    <release-item-contributor id="raindrop"/>
                 </release-item-contributor-list>
 
-                <p>Add per-repo backup progress to <cmd>info</cmd> command output.</p>
-            </release-item>
-
-            <release-item>
-                <github-issue id="2723"/>
-                <github-pull-request id="2752"/>
-
-                <release-item-contributor-list>
-                    <release-item-contributor id="denis.garsh"/>
-                    <release-item-reviewer id="david.steele"/>
-                    <release-item-reviewer id="douglas.j.hunley"/>
-                </release-item-contributor-list>
-
-                <p>Add <file>backup.info</file> checks to <cmd>verify</cmd> command.</p>
-            </release-item>
-
-            <release-item>
-                <github-issue id="2732"/>
-
-                <release-item-contributor-list>
-                    <release-item-contributor id="david.steele"/>
-                    <release-item-reviewer id="david.christensen"/>
-                    <release-item-reviewer id="douglas.j.hunley"/>
-                </release-item-contributor-list>
-
-                <p>Improve seek performance during block incremental delta restore.</p>
-            </release-item>
-
-            <release-item>
-                <github-issue id="2724"/>
-
-                <release-item-contributor-list>
-                    <release-item-contributor id="jorg.plate"/>
-                    <release-item-reviewer id="david.steele"/>
-                </release-item-contributor-list>
-
-                <p>Suppress <id>unused parameter</id> errors in <proper>meson</proper> compiler probes.</p>
+                <p>Initial <backrest/> fork release. Renames the binary, default config and data paths from <id>pgbackrest</id> to <id>pgbunker</id>, refreshes user-facing documentation, and establishes the org / website at <link url="https://github.com/pgbunker/pgbunker">pgbunker/pgbunker</link>. Honors the upstream maintainer's request that forks adopt a new identity. Existing <proper>pgBackRest</proper> deployments can upgrade in place: the on-disk repository format is unchanged and <file>/etc/pgbackrest/pgbackrest.conf</file> is read as a fallback when the new config is absent.</p>
             </release-item>
         </release-improvement-list>
-
-        <release-development-list>
-            <release-item>
-                <github-issue id="2731"/>
-
-                <release-item-contributor-list>
-                    <release-item-contributor id="david.steele"/>
-                    <release-item-reviewer id="douglas.j.hunley"/>
-                    <release-item-reviewer id="david.christensen"/>
-                </release-item-contributor-list>
-
-                <p>Refactor restore module into included modules.</p>
-            </release-item>
-        </release-development-list>
     </release-core-list>
 </release>

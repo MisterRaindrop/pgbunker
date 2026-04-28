@@ -975,6 +975,11 @@
     <contributor-id type="github">Rakshitha-BR</contributor-id>
 </contributor>
 
+<contributor id="raindrop">
+    <contributor-name-display>raindrop</contributor-name-display>
+    <contributor-id type="github">MisterRaindrop</contributor-id>
+</contributor>
+
 <contributor id="reid.thompson">
     <contributor-name-display>Reid Thompson</contributor-name-display>
     <contributor-id type="github">jreidthompson</contributor-id>
