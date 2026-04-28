@@ -13,6 +13,7 @@ Render Help
 #include "common/io/bufferWrite.h"
 #include "common/log.h"
 #include "common/type/pack.h"
+#include "version.h"
 
 #include "build/common/render.h"
 #include "build/config/parse.h"
@@ -58,7 +59,7 @@ bldHlpRenderXmlNode(const xmlNodePtr xml)
                 strCatZ(result, "\n\n");
             }
             else if (strEq(name, STRDEF("backrest")))
-                strCatZ(result, "pgBackRest");
+                strCatZ(result, PROJECT_NAME);
             else if (strEq(name, STRDEF("list")))
             {
                 strCat(result, bldHlpRenderXmlNode(currentNode));

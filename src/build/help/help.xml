@@ -2246,7 +2246,7 @@
                 <text>
                     <p>The <cmd>check</cmd> command validates that <backrest/> and the <pg-setting>archive_command</pg-setting> setting are configured correctly for archiving and backups for the specified stanza. It will attempt to check all repositories and databases that are configured for the host on which the command is run. It detects misconfigurations, particularly in archiving, that result in incomplete backups because required WAL segments did not reach the archive. The command can be run on the <postgres/> or repository host. The command may also be run on the standby host, however, since <code>pg_switch_xlog()</code>/<code>pg_switch_wal()</code> cannot be performed on the standby, the command will only test the repository configuration.</p>
 
-                    <p>Note that <code>pg_create_restore_point('pgBackRest Archive Check')</code> and <code>pg_switch_xlog()</code>/<code>pg_switch_wal()</code> are called to force <postgres/> to archive a WAL segment.</p>
+                    <p>Note that <code>pg_create_restore_point('pgBunker Archive Check')</code> and <code>pg_switch_xlog()</code>/<code>pg_switch_wal()</code> are called to force <postgres/> to archive a WAL segment.</p>
 
                     <!-- Note, linking to the User Guide is limited since it can cause a cyclical reference -->
                 </text>
