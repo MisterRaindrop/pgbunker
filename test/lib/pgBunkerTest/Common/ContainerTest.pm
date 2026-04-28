@@ -52,9 +52,10 @@ my $hContainerCache;
 ####################################################################################################################################
 sub containerRepo
 {
-    # The pgBackRest upstream maintains a 'pgbackrest/test' Docker Hub namespace with the base/test images that the test harness
-    # builds on top of. pgBunker has not published its own test image set yet, so VM-based tests reuse the upstream images.
-    return 'pgbackrest/test';
+    # pgBunker's mirror of the upstream pgBackRest test base images, maintained at docker.io/misterraindrop1/test (see
+    # scripts/mirror-test-images.sh). Hardcoded here rather than composed from PROJECT_EXE because Docker Hub does not offer
+    # free organization creation, so we use the maintainer's personal namespace until a paid 'pgbunker' org is set up.
+    return 'misterraindrop1/test';
 }
 
 push @EXPORT, qw(containerRepo);
