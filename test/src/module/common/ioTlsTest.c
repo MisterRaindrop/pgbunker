@@ -1067,7 +1067,8 @@ testRun(void)
                 TEST_ASSIGN(tlsSession, ioServerAccept(tlsServer, socketSession), "open server session");
 
                 TEST_RESULT_BOOL(ioSessionAuthenticated(tlsSession), true, "server session authenticated");
-                TEST_RESULT_STR_Z(ioSessionPeerName(tlsSession), "pgbunker-client", "check peer name");
+                // Cert was issued by upstream pgBackRest with CN=pgbackrest-client - we keep using upstream certs as-is
+                TEST_RESULT_STR_Z(ioSessionPeerName(tlsSession), "pgbackrest-client", "check peer name");
                 TEST_RESULT_VOID(ioWrite(ioSessionIoWrite(tlsSession), BUFSTRDEF("message")), "server write");
                 TEST_RESULT_VOID(ioWriteFlush(ioSessionIoWrite(tlsSession)), "server write flush");
 

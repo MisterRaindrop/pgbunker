@@ -974,7 +974,7 @@ testRun(void)
                 hrnCfgArgRawZ(argListBase, cfgOptTlsServerKeyFile, HRN_SERVER_KEY);
 
                 StringList *argList = strLstDup(argListBase);
-                hrnCfgArgRawZ(argList, cfgOptTlsServerAuth, "pgbunker-client=db");
+                hrnCfgArgRawZ(argList, cfgOptTlsServerAuth, "pgbackrest-client=db");
                 HRN_CFG_LOAD(cfgCmdServer, argList);
 
                 socketSession = ioServerAccept(socketServer, NULL);
@@ -986,7 +986,7 @@ testRun(void)
                 // Repo server access denied (archive-get) invalid stanza
                 // -----------------------------------------------------------------------------------------------------------------
                 argList = strLstDup(argListBase);
-                hrnCfgArgRawZ(argList, cfgOptTlsServerAuth, "pgbunker-client=bogus");
+                hrnCfgArgRawZ(argList, cfgOptTlsServerAuth, "pgbackrest-client=bogus");
                 HRN_CFG_LOAD(cfgCmdServer, argList);
 
                 socketSession = ioServerAccept(socketServer, NULL);
@@ -1006,7 +1006,7 @@ testRun(void)
                 // Repo server access denied (info)
                 // -----------------------------------------------------------------------------------------------------------------
                 argList = strLstDup(argListBase);
-                hrnCfgArgRawZ(argList, cfgOptTlsServerAuth, "pgbunker-client=db");
+                hrnCfgArgRawZ(argList, cfgOptTlsServerAuth, "pgbackrest-client=db");
                 HRN_CFG_LOAD(cfgCmdServer, argList);
 
                 socketSession = ioServerAccept(socketServer, NULL);
@@ -1016,7 +1016,7 @@ testRun(void)
                 // Pg server (backup)
                 // -----------------------------------------------------------------------------------------------------------------
                 argList = strLstDup(argListBase);
-                hrnCfgArgRawZ(argList, cfgOptTlsServerAuth, "pgbunker-client=*");
+                hrnCfgArgRawZ(argList, cfgOptTlsServerAuth, "pgbackrest-client=*");
                 HRN_CFG_LOAD(cfgCmdServer, argList);
 
                 socketSession = ioServerAccept(socketServer, NULL);

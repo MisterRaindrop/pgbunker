@@ -108,8 +108,11 @@ testRun(void)
         // -------------------------------------------------------------------------------------------------------------------------
         TEST_TITLE("check old config file constants");
 
-        TEST_RESULT_Z(PGBACKREST_CONFIG_ORIG_PATH_FILE, "/etc/pgbunker.conf", "check old config path");
-        TEST_RESULT_STR_Z(PGBACKREST_CONFIG_ORIG_PATH_FILE_STR, "/etc/pgbunker.conf", "check old config path str");
+        TEST_RESULT_Z(
+            PGBACKREST_CONFIG_ORIG_PATH_FILE, "/etc/pgbackrest/pgbackrest.conf", "check upstream pgBackRest fallback config path");
+        TEST_RESULT_STR_Z(
+            PGBACKREST_CONFIG_ORIG_PATH_FILE_STR, "/etc/pgbackrest/pgbackrest.conf",
+            "check upstream pgBackRest fallback config path str");
 
         // -------------------------------------------------------------------------------------------------------------------------
         TEST_TITLE("confirm same behavior with multiple config include files");
@@ -2451,7 +2454,7 @@ testRun(void)
             // Error on unreadable config
             TEST_ERROR(
                 cfgParseP(storageTest, strLstSize(argList), strLstPtr(argList), .noResetLogLevel = true),
-                FileOpenError, "unable to open file '/etc/pgbunker.conf' for read: [13] Permission denied");
+                FileOpenError, "unable to open file '/etc/pgbackrest/pgbackrest.conf' for read: [13] Permission denied");
 
             // No error on unreadable config
             argList = strLstNew();
