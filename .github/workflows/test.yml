@@ -3,14 +3,15 @@ name: test
 on:
   push:
     branches:
-      - integration
+      - main
       - '**-ci'
       - '**-cig'
   pull_request:
     branches:
-      - integration
+      - main
       - '**-ci'
       - '**-cig'
+  workflow_dispatch:
 
 # Limit permissions on the repository
 permissions:
@@ -196,7 +197,7 @@ jobs:
 
       - name: Check
         run: |
-          diff ${GITHUB_WORKSPACE?}/pgbackrest/.github/workflows/symbol.out <(nm -gj --defined-only build/src/pgbackrest)
+          diff ${GITHUB_WORKSPACE?}/pgbackrest/.github/workflows/symbol.out <(nm -gj --defined-only build/src/pgbunker)
 
   # Check that code is correctly formatted
   code-format:
