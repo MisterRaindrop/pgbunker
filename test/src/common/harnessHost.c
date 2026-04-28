@@ -1234,8 +1234,8 @@ hrnHostBuild(const int line, const HrnHostTestDefine *const testMatrix, const si
         testDef->repo, testDef->tls, testDef->stg, testDef->enc, testDef->cmp, testDef->rt, testDef->bnd, testDef->bi,
         hrnHostLocal.nonVersionSpecific);
 
-    // Create pg hosts
-    const String *const image = strNewFmt("pgbunker/test:%s-test-%s", testVm(), testArchitecture());
+    // Create pg hosts. Use upstream pgbackrest/test images - pgBunker does not publish its own Docker test image set yet.
+    const String *const image = strNewFmt("pgbackrest/test:%s-test-%s", testVm(), testArchitecture());
 
     hrnHostBuildRun(line, HRN_HOST_PG1, image);
     HrnHost *const pg2 = hrnHostBuildRun(line, HRN_HOST_PG2, image);

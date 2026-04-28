@@ -52,7 +52,9 @@ my $hContainerCache;
 ####################################################################################################################################
 sub containerRepo
 {
-    return PROJECT_EXE . qw(/) . 'test';
+    # The pgBackRest upstream maintains a 'pgbackrest/test' Docker Hub namespace with the base/test images that the test harness
+    # builds on top of. pgBunker has not published its own test image set yet, so VM-based tests reuse the upstream images.
+    return 'pgbackrest/test';
 }
 
 push @EXPORT, qw(containerRepo);
