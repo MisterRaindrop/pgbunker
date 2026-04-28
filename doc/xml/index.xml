@@ -7,7 +7,7 @@
     <variable-list>
         <!-- Variables used by the rest of the script -->
         <variable key="github-url-root">https://github.com</variable>
-        <variable key="github-url-base">{[github-url-root]}/MisterRaindrop/pgbunker</variable>
+        <variable key="github-url-base">{[github-url-root]}/pgbunker/pgbunker</variable>
         <variable key="upstream-github-url-base">{[github-url-root]}/pgbackrest/pgbackrest</variable>
         <variable key="github-url-main">{[github-url-base]}/blob/main</variable>
         <variable key="github-url-issues">{[github-url-base]}/issues</variable>
