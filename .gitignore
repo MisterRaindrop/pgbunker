@@ -6,3 +6,6 @@
 # Local editor / language server caches (not from upstream pgBackRest)
 /.cache/
 /build/
+
+# Claude Code local session settings (per-developer; not for version control)
+/.claude/
