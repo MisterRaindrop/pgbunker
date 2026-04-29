@@ -1,4 +1,4 @@
-**January 19, 2026**: The pgBunker community is pleased to announce the release of [pgBunker](https://pgbackrest.org) 2.58.0, the latest version of the reliable, easy-to-use backup and restore solution that can seamlessly scale up to the largest databases and workloads.
+**January 19, 2026**: The pgBunker community is pleased to announce the release of [pgBunker](https://pgbunker.github.io/website/) 2.58.0, the latest version of the reliable, easy-to-use backup and restore solution that can seamlessly scale up to the largest databases and workloads.
 
 pgBunker supports a robust set of features for managing your backup and recovery infrastructure, including: parallel backup/restore, full/differential/incremental backups, block incremental backup, multiple repositories, delta restore, parallel asynchronous archiving, per-file checksums, page checksums (when enabled) validated during backup, multiple compression types, encryption, partial/failed backup resume, backup from standby, tablespace and link support, S3/Azure/GCS/SFTP support, backup expiration, local/remote operation via SSH or TLS, flexible configuration, and more.
 
@@ -15,7 +15,7 @@ pgBunker can be installed from the [PostgreSQL Yum Repository](https://yum.postg
 - Allow dots in S3 bucket names when using path-style URIs (Joakim Hindersson)
 - Dynamically size S3/GCS/Azure chunks for large uploads and optimize chunk size for small files (David Steele)
 
-See the [2.58.0 Release Notes](https://pgbackrest.org/release.html#2.58.0) for additional features and improvements.
+See the upstream [pgBackRest 2.58.0 Release Notes](https://pgbackrest.org/release.html#2.58.0) for additional features and improvements.
 
 ## Important Notes
 
@@ -25,7 +25,7 @@ See the [2.58.0 Release Notes](https://pgbackrest.org/release.html#2.58.0) for a
 
 ## Links
 
-- [Website](https://pgbackrest.org)
-- [User Guides](https://pgbackrest.org/user-guide-index.html)
-- [Release Notes](https://pgbackrest.org/release.html)
-- [Support](http://pgbackrest.org/#support)
+- [Website](https://pgbunker.github.io/website/)
+- [User Guides](https://pgbunker.github.io/website/user-guide-index.html)
+- [Release Notes](https://pgbunker.github.io/website/release.html)
+- [Support](https://github.com/pgbunker/pgbunker/issues)
