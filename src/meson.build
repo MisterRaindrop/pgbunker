@@ -8,7 +8,7 @@ if get_option('unity') == 'on'
     configuration.set('VR_EXTERN_DECLARE', 'static', description: 'Variable declaration is static for unity build')
     configuration.set('VR_EXTERN_DEFINE', 'static', description: 'Variable definition is static for unity build')
 
-    # Add args to builds to prevent non-pgbackrest binaries failing due to unused functions
+    # Add args to builds to prevent non-pgbunker binaries failing due to unused functions
     arg_unity += '-Wno-unused-function'
 else
     configuration.set(
@@ -116,9 +116,9 @@ subdir('command/help')
 subdir('postgres')
 
 ####################################################################################################################################
-# pgBackRest target
+# pgBunker target
 ####################################################################################################################################
-src_pgbackrest = [
+src_pgbunker = [
     'command/annotate/annotate.c',
     'command/archive/common.c',
     'command/archive/find.c',
@@ -274,7 +274,7 @@ src_pgbackrest = [
 executable(
     'pgbunker',
     src_common,
-    src_pgbackrest,
+    src_pgbunker,
     help_auto_c_inc,
     interface_auto_c_inc,
     dependencies: [
