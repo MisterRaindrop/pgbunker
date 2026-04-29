@@ -14,6 +14,18 @@ pgBunker is a reliable, parallel, scalable backup and restore solution for Postg
 
 The last upstream stable release before pgBackRest was discontinued is [v2.58.0](https://github.com/pgbackrest/pgbackrest/releases/tag/release/2.58.0); pgBunker releases continue from this baseline. The current pgBunker tag is [v2.59.0-bunker.1](https://github.com/pgbunker/pgbunker/releases/tag/v2.59.0-bunker.1).
 
+## Issues and questions
+
+New bug reports, feature requests, and questions should be filed at the
+[pgBunker issue tracker](https://github.com/pgbunker/pgbunker/issues).
+
+Historical issues from upstream pgBackRest remain readable at
+[pgbackrest/pgbackrest issues](https://github.com/pgbackrest/pgbackrest/issues)
+but are no longer being triaged. A curated subset of still-relevant upstream
+bugs and feature requests has been re-filed here with `upstream` label and
+cross-references to the original — please check existing issues before filing
+duplicates.
+
 ## Features
 
 ### Parallel Backup & Restore
