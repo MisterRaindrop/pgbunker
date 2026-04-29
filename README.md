@@ -30,11 +30,11 @@ duplicates.
 
 ### Parallel Backup & Restore
 
-Compression is usually the bottleneck during backup operations so pgBackRest solves this problem with parallel processing and more efficient compression algorithms such as lz4 and zstd.
+Compression is usually the bottleneck during backup operations so pgBunker solves this problem with parallel processing and more efficient compression algorithms such as lz4 and zstd.
 
 ### Local or Remote Operation
 
-A custom protocol allows pgBackRest to backup, restore, and archive locally or remotely via TLS/SSH with minimal configuration. An interface to query PostgreSQL is also provided via the protocol layer so that remote access to PostgreSQL is never required, which enhances security.
+A custom protocol allows pgBunker to backup, restore, and archive locally or remotely via TLS/SSH with minimal configuration. An interface to query PostgreSQL is also provided via the protocol layer so that remote access to PostgreSQL is never required, which enhances security.
 
 ### Multiple Repositories
 
@@ -42,7 +42,7 @@ Multiple repositories allow, for example, a local repository with minimal retent
 
 ### Full, Differential, & Incremental Backups (at File or Block Level)
 
-Full, differential, and incremental backups are supported. pgBackRest is not susceptible to the time resolution issues of rsync, making differential and incremental backups safe without the requirement to checksum each file. Block-level backups save space by only copying the parts of files that have changed.
+Full, differential, and incremental backups are supported. pgBunker is not susceptible to the time resolution issues of rsync, making differential and incremental backups safe without the requirement to checksum each file. Block-level backups save space by only copying the parts of files that have changed.
 
 ### Backup Rotation & Archive Expiration
 
@@ -58,7 +58,7 @@ All operations utilize file and directory level fsync to ensure durability.
 
 ### Page Checksums
 
-If page checksums are enabled pgBackRest will validate the checksums for every file that is copied during a backup. All page checksums are validated during a full backup and checksums in files that have changed are validated during differential and incremental backups.
+If page checksums are enabled pgBunker will validate the checksums for every file that is copied during a backup. All page checksums are validated during a full backup and checksums in files that have changed are validated during differential and incremental backups.
 
 Validation failures do not stop the backup process, but warnings with details of exactly which pages have failed validation are output to the console and file log.
 
@@ -96,19 +96,19 @@ File and directory links are supported for any file or directory in the PostgreS
 
 ### S3, Azure, and GCS Compatible Object Store Support
 
-pgBackRest repositories can be located in S3, Azure, and GCS compatible object stores to allow for virtually unlimited capacity and retention.
+pgBunker repositories can be located in S3, Azure, and GCS compatible object stores to allow for virtually unlimited capacity and retention.
 
 ### Encryption
 
-pgBackRest can encrypt the repository to secure backups wherever they are stored.
+pgBunker can encrypt the repository to secure backups wherever they are stored.
 
 ### Compatibility with ten versions of PostgreSQL
 
-pgBackRest includes support for ten versions of PostgreSQL, the five supported versions and the last five EOL versions. This allows ample time to upgrade to a supported version.
+pgBunker includes support for ten versions of PostgreSQL, the five supported versions and the last five EOL versions. This allows ample time to upgrade to a supported version.
 
 ## Getting Started
 
-pgBackRest strives to be easy to configure and operate:
+pgBunker strives to be easy to configure and operate:
 
 - [User guides](https://pgbunker.github.io/website/user-guide-index.html) for various operating systems and PostgreSQL versions.
 
@@ -118,11 +118,11 @@ pgBackRest strives to be easy to configure and operate:
 
 ## Contributions
 
-Contributions to pgBackRest are always welcome! Please see our [Contributing Guidelines](https://github.com/pgbackrest/pgbackrest/blob/main/CONTRIBUTING.md) for details on how to contribute features, improvements or issues.
+Contributions to pgBunker are always welcome! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details on how to contribute features, improvements or issues.
 
 ## Support
 
-pgBackRest is completely free and open source under the [MIT](https://github.com/pgbackrest/pgbackrest/blob/main/LICENSE) license. You may use it for personal or commercial purposes without any restrictions whatsoever. Bug reports are taken very seriously and will be addressed as quickly as possible. Please report bugs [here]({[github-url-base}]/issues).
+pgBunker is completely free and open source under the [MIT](LICENSE) license. You may use it for personal or commercial purposes without any restrictions whatsoever. Bug reports are taken very seriously and will be addressed as quickly as possible. Please report bugs [here](https://github.com/pgbunker/pgbunker/issues).
 
 Creating a robust disaster recovery policy with proper replication and backup strategies can be a very complex and daunting task. You may find that you need help during the architecture phase and ongoing support to ensure that your enterprise continues running smoothly. There are a variety of PostgreSQL support companies that can provide this service.
 
