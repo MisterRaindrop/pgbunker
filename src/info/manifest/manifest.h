@@ -50,7 +50,7 @@ Manifest data
 ***********************************************************************************************************************************/
 typedef struct ManifestData
 {
-    const String *backrestVersion;                                  // pgBackRest version
+    const String *backrestVersion;                                  // pgBunker version
 
     const String *backupLabel;                                      // Backup label (unique identifier for the backup)
     const String *backupLabelPrior;                                 // Backup label for backup this diff/incr is based on

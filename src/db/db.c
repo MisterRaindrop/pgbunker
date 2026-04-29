@@ -290,7 +290,7 @@ dbOpen(Db *const this)
         this->pub.pgVersion = (unsigned int)pckReadI32P(read) / 100 * 100;
 
         // Store the data directory that PostgreSQL is running in, the archive mode, and archive command. These can be compared to
-        // the configured pgBackRest directory, and archive settings checked for validity, when validating the configuration.
+        // the configured pgBunker directory, and archive settings checked for validity, when validating the configuration.
         // Also store the checkpoint timeout to warn in case a backup is requested without using the start-fast option.
         MEM_CONTEXT_BEGIN(this->pub.memContext)
         {

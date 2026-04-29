@@ -11,7 +11,7 @@ These macros should be kept as simple as possible, with most of the logic contai
 
 /***********************************************************************************************************************************
 Determine if the supplied pg_control is for this version of PostgreSQL. When CATALOG_VERSION_NO_MAX is defined then the catalog will
-be accepted as a range that lasts until the end of the encoded year. This allows pgBackRest to work with PostgreSQL during the
+be accepted as a range that lasts until the end of the encoded year. This allows pgBunker to work with PostgreSQL during the
 alpha/beta/rc period without needing to be updated, unless of course the actual interface changes.
 ***********************************************************************************************************************************/
 #ifdef CATALOG_VERSION_NO_MAX
