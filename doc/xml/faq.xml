@@ -144,6 +144,129 @@ process-max=1
     </section>
 
     <!-- ======================================================================================================================= -->
+    <section id="wsl-support">
+        <title>Does <backrest/> work on Windows Subsystem for Linux (WSL)?</title>
+
+        <p><backrest/> is not officially tested on WSL, and no WSL-specific testing matrix is maintained. However, since WSL runs supported Linux distributions, the upstream maintainer's view is that it should work in practice. There are no known WSL-specific blockers documented. If running on WSL is impractical for your environment, third-party container images of <backrest/> exist as an alternative (these are community-maintained and not officially provided by the project).</p>
+
+        <p>See <link url="https://github.com/pgbackrest/pgbackrest/issues/2725">upstream issue #2725</link> for the original discussion.</p>
+    </section>
+
+    <!-- ======================================================================================================================= -->
+    <section id="repo-cmd-stanza">
+        <title>Why does <br-option>--stanza</br-option> seem to have no effect on <cmd>repo-ls</cmd> and <cmd>repo-get</cmd>?</title>
+
+        <p>The <br-option>--stanza</br-option> option is honored by <cmd>repo-ls</cmd> and <cmd>repo-get</cmd>, but those commands take a repository-relative path rather than constructing one from the stanza. To list a stanza's archive directory, supply the path explicitly:</p>
+
+        <code-block>
+pgbackrest --stanza=demo repo-ls archive/demo
+        </code-block>
+
+        <p>Internal storage path macros such as <code>&lt;REPO:ARCHIVE&gt;</code> and <code>&lt;REPO:BACKUP&gt;</code> exist in the source, but they are not part of the documented interface and are not guaranteed to remain stable across versions. Most users find that supplying the explicit relative path is clearer and more reliable.</p>
+
+        <p>See <link url="https://github.com/pgbackrest/pgbackrest/issues/2735">upstream issue #2735</link> for context.</p>
+    </section>
+
+    <!-- ======================================================================================================================= -->
+    <section id="direct-io">
+        <title>Does <backrest/> use direct I/O to avoid polluting the OS page cache during large backups?</title>
+
+        <p><backrest/> does not use direct I/O. Backups are dominated by sequential reads, and the upstream maintainer has noted that the kernel's read-ahead handles that workload well, so mechanisms like <code>io_uring</code> were judged to add significant complexity without proportional benefit.</p>
+
+        <p>To mitigate page cache pollution from large repository writes, <backrest/> calls <code>posix_fadvise(POSIX_FADV_DONTNEED)</code> on posix repository files after writing, prompting the kernel to drop those pages. This change comes from upstream <link url="https://github.com/pgbackrest/pgbackrest/pull/2758">PR #2758</link> and is present in pgBunker as a cherry-pick.</p>
+
+        <p>See <link url="https://github.com/pgbackrest/pgbackrest/issues/2727">upstream issue #2727</link> for the original discussion.</p>
+    </section>
+
+    <!-- ======================================================================================================================= -->
+    <section id="rpm-logrotate-permission">
+        <title>Why does <file>logrotate</file> fail with permission errors after an RPM update?</title>
+
+        <p>The PGDG RPM packages install <file>/etc/logrotate.d/pgbackrest</file> with the <id>postgres</id> user to align with PostgreSQL conventions. However, the recommended deployment for dedicated repository hosts uses a separate <id>pgbackrest</id> user (matching the default <br-option>repo-host-user</br-option> setting). When the package's logrotate configuration runs against files owned by <id>pgbackrest</id>, permission errors result.</p>
+
+        <p>The upstream-recommended workaround is to change ownership after the first package installation:</p>
+
+        <code-block>
+chown -R pgbackrest:pgbackrest /var/log/pgbackrest /var/lib/pgbackrest
+        </code-block>
+
+        <p>Subsequent package upgrades will preserve those ownership changes, just as they preserve modified configuration files. Alternatively, override <file>/etc/logrotate.d/pgbackrest</file> with a custom configuration matching the user that actually owns the log files.</p>
+
+        <p>See <link url="https://github.com/pgbackrest/pgbackrest/issues/2737">upstream issue #2737</link> for context.</p>
+    </section>
+
+    <!-- ======================================================================================================================= -->
+    <section id="server-tls-server-auth">
+        <title>Why do I get <quote>option 'tls-server-auth' must be set</quote> when I am not using the <cmd>server</cmd> command?</title>
+
+        <p>The <cmd>server</cmd> command is a TLS-based daemon used as an alternative to SSH for remote operations. Most deployments using SSH transport or direct repository access never invoke it. This command requires <br-setting>tls-server-auth</br-setting> by design, because TLS authentication is mandatory for that protocol.</p>
+
+        <p>If you encounter this error without intentionally configuring TLS, a systemd unit installed by your distribution package is likely starting the server in the background. List candidate units, then disable any that you do not need (substituting the actual unit name):</p>
+
+        <code-block>
+systemctl list-units | grep pgbackrest
+systemctl disable --now pgbackrest.service
+        </code-block>
+
+        <p>See <link url="https://github.com/pgbackrest/pgbackrest/issues/2756">upstream issue #2756</link> for context.</p>
+    </section>
+
+    <!-- ======================================================================================================================= -->
+    <section id="remote-env-vars">
+        <title>Why are environment variables not honored by remote <backrest/> processes?</title>
+
+        <p>Options that contain secrets (for example, S3 credentials) are deliberately not passed from the originating host to remote processes via the command line, because doing so would expose them in <cmd>ps</cmd> output and other process listings. As a consequence, environment variables set only on the host invoking <cmd>backup</cmd> do not reach the remote PostgreSQL or repository host.</p>
+
+        <p>Set the relevant variables on the remote host itself, using one of:</p>
+        <list>
+            <list-item>The user's shell profile (e.g. <file>~/.bash_profile</file>) on the remote host.</list-item>
+            <list-item>The systemd unit that launches <backrest/> on the remote host.</list-item>
+            <list-item>SSH <code>SendEnv</code> on the client and <code>AcceptEnv</code> on the remote, to forward specific variables across the SSH connection.</list-item>
+            <list-item>Storing the credentials directly in <file>pgbackrest.conf</file> on the remote host, where they will not appear in process listings.</list-item>
+        </list>
+
+        <p>See <link url="https://github.com/pgbackrest/pgbackrest/issues/2733">upstream issue #2733</link> for context.</p>
+    </section>
+
+    <!-- ======================================================================================================================= -->
+    <section id="client-state-error">
+        <title>What does <quote>client state is 'X' but expected 'idle'</quote> (error 039) mean?</title>
+
+        <p>This error is almost always a secondary symptom of an underlying failure that disrupted the protocol state machine, not a primary <backrest/> bug. Common root causes include exhausted disk space, an OOM kill of a subprocess, an unrelated subprocess crash, or noise on the SSH connection corrupting the protocol stream.</p>
+
+        <p>To find the real error, rerun the failing command with verbose subprocess logging:</p>
+
+        <code-block>
+pgbackrest --log-level-file=debug --log-subprocess=y --stanza=demo backup
+        </code-block>
+
+        <p>Then inspect the per-subprocess log files (for example, files named like <file>demo-backup-local-001.log</file>) for the original error that preceded the state mismatch. It is also worth checking <cmd>dmesg</cmd> for OOM kills and verifying that the repository and PGDATA filesystems still have free space.</p>
+
+        <p>If the failures correlate with SSH transport, consider switching to the TLS-based remote protocol, which is less prone to state corruption from transport-layer noise.</p>
+
+        <p>See <link url="https://github.com/pgbackrest/pgbackrest/issues/2729">upstream issue #2729</link> and <link url="https://github.com/pgbackrest/pgbackrest/issues/2744">upstream issue #2744</link> for context.</p>
+    </section>
+
+    <!-- ======================================================================================================================= -->
+    <section id="azure-mi-aks-multi-identity">
+        <title>Why does Azure Managed Identity authentication fail on AKS nodes with multiple identities?</title>
+
+        <p>When <br-option>repo-azure-key-type=auto</br-option> is configured, <backrest/> obtains an access token from the Azure Instance Metadata Service (IMDS). On AKS nodes that have more than one user-assigned managed identity attached, IMDS refuses the unqualified request and returns a message such as:</p>
+
+        <code-block>
+Multiple user assigned identities exist, please specify the clientId / resourceId of the identity in the token request
+        </code-block>
+
+        <p><backrest/> does not currently expose a configuration option to select a specific managed identity in this case. Available workarounds:</p>
+        <list>
+            <list-item>Switch to <br-option>repo-azure-key-type=shared</br-option> or <br-option>repo-azure-key-type=sas</br-option> and supply credentials explicitly.</list-item>
+            <list-item>Reconfigure the AKS node so that only one managed identity is relevant for the storage account in use.</list-item>
+        </list>
+
+        <p>See <link url="https://github.com/pgbackrest/pgbackrest/issues/2741">upstream issue #2741</link> for context.</p>
+    </section>
+
+    <!-- ======================================================================================================================= -->
     <!-- <section id="different-server">
         <title>How to restore a backup to a different server (for example, a production backup to a development server)?</title>
 
