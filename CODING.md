@@ -1,10 +1,10 @@
-# pgBackRest <br/> Coding Standards
+# pgBunker <br/> Coding Standards
 
 ## Formatting with uncrustify
 
-pgBackRest uses uncrustify to check/update the code formatting. If the `code-format` test fails in CI then reformat the code:
+pgBunker uses uncrustify to check/update the code formatting. If the `code-format` test fails in CI then reformat the code:
 ```
-pgbackrest/test/test.pl --code-format
+pgbunker/test/test.pl --code-format
 ```
 Also review the standards in the following sections below. Some standards require further explanation and others are not enforced by uncrustify.
 
@@ -268,11 +268,11 @@ Continuation characters should be aligned at column 132 (unlike the example abov
 
 This function can be called without variable parameters:
 ```c
-storagePathCreateP(storageLocal(), "/tmp/pgbackrest");
+storagePathCreateP(storageLocal(), "/tmp/pgbunker");
 ```
 Or with variable parameters:
 ```c
-storagePathCreateP(storageLocal(), "/tmp/pgbackrest", .errorOnExists = true, .mode = 0777);
+storagePathCreateP(storageLocal(), "/tmp/pgbunker", .errorOnExists = true, .mode = 0777);
 ```
 If the majority of functions in a module or object are variadic it is best to provide macros for all functions even if they do not have variable parameters. Do not use the base function when variadic macros exist.
 
