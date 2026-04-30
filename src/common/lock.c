@@ -185,10 +185,11 @@ lockAcquire(const String *const lockFileName, const LockAcquireParam param)
                 // Save the error for reporting outside the loop
                 errNo = errno;
 
-                // If the path does not exist then create it
+                // If the path does not exist then create it. Use mode 0770 (rather than the storage default 0750) so processes that
+                // run as different OS users in the same group can share a lock directory, matching the documented behavior.
                 if (errNo == ENOENT)
                 {
-                    storagePathCreateP(storagePosixNewP(FSLASH_STR, .write = true), strPath(lockFilePath));
+                    storagePathCreateP(storagePosixNewP(FSLASH_STR, .write = true), strPath(lockFilePath), .mode = 0770);
                     retry = true;
                 }
             }
