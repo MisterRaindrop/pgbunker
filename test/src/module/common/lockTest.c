@@ -103,6 +103,16 @@ testRun(void)
             strZ(noPermLock), strZ(noPermLock));
 
         // -------------------------------------------------------------------------------------------------------------------------
+        TEST_TITLE("lock dir is auto-created with mode 0770 (issue #9)");
+
+        const String *const lockFileAutoDirName = STRDEF("auto-lock-dir/test" LOCK_FILE_EXT);
+        StorageInfo lockPathInfo = {0};
+
+        TEST_RESULT_BOOL(lockAcquireP(lockFileAutoDirName), true, "acquire lock under non-existent subpath");
+        TEST_ASSIGN(lockPathInfo, storageInfoP(storageTest, STRDEF("auto-lock-dir")), "stat created lock dir");
+        TEST_RESULT_INT(lockPathInfo.mode, 0770, "lock dir mode is 0770");
+
+        // -------------------------------------------------------------------------------------------------------------------------
         TEST_TITLE("acquire file lock on the same exec-id");
 
         const String *const lockFileExecName = STRDEF("sub/exec" LOCK_FILE_EXT);
