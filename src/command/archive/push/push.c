@@ -548,8 +548,12 @@ cmdArchivePushAsync(void)
                 strLstSize(jobData.walFileList) == 1 ?
                     "" : zNewFmt("...%s", strZ(strLstGet(jobData.walFileList, strLstSize(jobData.walFileList) - 1))));
 
-            // Drop files if queue max has been exceeded
-            if (cfgOptionTest(cfgOptArchivePushQueueMax) && archivePushDrop(jobData.walPath, jobData.walFileList))
+            // Drop files if queue max has been exceeded. Use the full ready list (not the process list, which has had .ok files
+            // filtered out) so that WAL files we have already pushed to the repo - but which PostgreSQL has not yet acknowledged
+            // because the archiver is stuck on an earlier failing file - still count toward the queue. Without this, a single
+            // stuck WAL hides an arbitrarily large pg_wal backlog from the queue-max check, since subsequent WAL files keep
+            // getting .ok'd and disappearing from the process list.
+            if (cfgOptionTest(cfgOptArchivePushQueueMax) && archivePushDrop(jobData.walPath, archivePushReadyList(jobData.walPath)))
             {
                 for (unsigned int walFileIdx = 0; walFileIdx < strLstSize(jobData.walFileList); walFileIdx++)
                 {
