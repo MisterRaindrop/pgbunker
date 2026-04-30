@@ -48,7 +48,7 @@ Getters/Setters
 ***********************************************************************************************************************************/
 typedef struct InfoPub
 {
-    const String *backrestVersion;                                  // pgBackRest version
+    const String *backrestVersion;                                  // pgBunker version
     const String *cipherPass;                                       // Cipher passphrase if set
 } InfoPub;
 
@@ -61,7 +61,7 @@ infoCipherPass(const Info *const this)
 
 FN_EXTERN void infoCipherPassSet(Info *this, const String *cipherPass);
 
-// pgBackRest version
+// pgBunker version
 FN_INLINE_ALWAYS const String *
 infoBackrestVersion(const Info *const this)
 {

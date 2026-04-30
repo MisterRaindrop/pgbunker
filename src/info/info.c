@@ -186,7 +186,7 @@ infoNewLoad(IoRead *const read, InfoLoadNewCallback *const callbackFunction, voi
                                         varUInt64(jsonToVar(value->value)));
                                 }
                             }
-                            // Store pgBackRest version
+                            // Store pgBunker version
                             else if (strEqZ(value->key, INFO_KEY_VERSION))
                             {
                                 MEM_CONTEXT_OBJ_BEGIN(this)

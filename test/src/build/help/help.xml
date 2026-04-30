@@ -159,7 +159,7 @@
                         <p>Path to the original code repository or a copy.</p>
                     </text>
 
-                    <example>/path/to/pgbackrest</example>
+                    <example>/path/to/pgbunker</example>
                 </option>
 
                 <option id="scale">
@@ -239,7 +239,7 @@
                 <summary>Get help.</summary>
 
                 <text>
-                    <p>Three levels of help are provided. If no command is specified then general help will be displayed. If a command is specified (e.g. <cmd>test-pgbackrest help test</cmd>) then a full description of the command will be displayed along with a list of valid options. If an option is specified in addition to a command (e.g. <cmd>pgbackrest help test vm</cmd>) then a full description of the option as it applies to the command will be displayed.</p>
+                    <p>Three levels of help are provided. If no command is specified then general help will be displayed. If a command is specified (e.g. <cmd>test-pgbunker help test</cmd>) then a full description of the command will be displayed along with a list of valid options. If an option is specified in addition to a command (e.g. <cmd>pgbunker help test vm</cmd>) then a full description of the option as it applies to the command will be displayed.</p>
                 </text>
 
                 <option-list>
@@ -272,7 +272,7 @@
                 <summary>Run a test.</summary>
 
                 <text>
-                    <p>By default tests expect to run with the code repository in a subpath named <path>pgbackrest</path>. Tests will be run in a subpath named <path>test</path>.</p>
+                    <p>By default tests expect to run with the code repository in a subpath named <path>pgbunker</path>. Tests will be run in a subpath named <path>test</path>.</p>
 
                     <p>A test can be run by using the module option, e.g. <br-option>--module=common/error</br-option>.</p>
                 </text>

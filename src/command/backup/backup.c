@@ -926,8 +926,8 @@ backupResumeFind(const Manifest *const manifest, const String *const cipherPassB
                             {
                                 const ManifestData *manifestResumeData = manifestData(manifestResume);
 
-                                // Check pgBackRest version. This allows the resume implementation to be changed with each version
-                                // of pgBackRest at the expense of users losing a resumable back after an upgrade, which seems worth
+                                // Check pgBunker version. This allows the resume implementation to be changed with each version
+                                // of pgBunker at the expense of users losing a resumable back after an upgrade, which seems worth
                                 // the cost.
                                 if (!strEq(manifestResumeData->backrestVersion, manifestData(manifest)->backrestVersion))
                                 {

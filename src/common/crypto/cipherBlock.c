@@ -401,7 +401,7 @@ cipherBlockNew(const CipherMode mode, const CipherType cipherType, const Buffer 
     cryptoInit();
 
     // Lookup cipher by name. This means the ciphers passed in must exactly match a name expected by OpenSSL. This is a good thing
-    // since the name required by the openssl command-line tool will match what is used by pgBackRest.
+    // since the name required by the openssl command-line tool will match what is used by pgBunker.
     char *const cipherTypeZ = zNewStrId(cipherType);
     const EVP_CIPHER *cipher = EVP_get_cipherbyname(cipherTypeZ);
 
