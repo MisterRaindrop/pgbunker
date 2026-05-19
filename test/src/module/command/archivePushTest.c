@@ -93,6 +93,36 @@ testRun(void)
 
         // No WAL to be processed
         TEST_RESULT_BOOL(archivePushDrop(STRDEF("pg_wal"), strLstNew()), false, "no WAL to be processed");
+
+        // -------------------------------------------------------------------------------------------------------------------------
+        TEST_TITLE("queue check uses ready list, not process list, so .ok'd WAL still counts (issue #6)");
+
+        // After the previous archivePushProcessList run, spool keeps 000003.ok (its .ready is still present) while 000001.ok and
+        // 000004.ok were cleaned up. So readyList = [02, 03, 05, 06] but processList = [02, 05, 06] (000003 filtered out via its
+        // .ok). This models the bug scenario where pgBunker has already pushed a later WAL but PostgreSQL has not yet
+        // acknowledged it because the archiver is stuck on an earlier file - the .ok'd WAL still occupies pg_wal from PG's
+        // perspective.
+        TEST_RESULT_STRLST_Z(
+            archivePushReadyList(STRDEF(TEST_PATH "/db/pg_wal")),
+            "000000010000000100000002\n000000010000000100000003\n000000010000000100000005\n000000010000000100000006\n",
+            "ready list (full backlog from PG's perspective)");
+        TEST_RESULT_STRLST_Z(
+            archivePushProcessList(STRDEF(TEST_PATH "/db/pg_wal")),
+            "000000010000000100000002\n000000010000000100000005\n000000010000000100000006\n",
+            "process list (with 000003 filtered out via its .ok)");
+
+        // Set queue max between 3*walSize (48MB) and 4*walSize (64MB). Process list (3 files) should not trigger a drop, but
+        // ready list (4 files) should - this is exactly the gap that pgbackrest/pgbackrest#2629 reports.
+        StringList *const argListReadyDrop = strLstDup(argList);
+        hrnCfgArgRawFmt(argListReadyDrop, cfgOptArchivePushQueueMax, "%zu", (size_t)50 * 1024 * 1024);
+        HRN_CFG_LOAD(cfgCmdArchivePush, argListReadyDrop, .role = cfgCmdRoleAsync);
+
+        TEST_RESULT_BOOL(
+            archivePushDrop(STRDEF("pg_wal"), archivePushProcessList(STRDEF(TEST_PATH "/db/pg_wal"))), false,
+            "process-list-based check does not drop (would miss the stuck-WAL backlog)");
+        TEST_RESULT_BOOL(
+            archivePushDrop(STRDEF("pg_wal"), archivePushReadyList(STRDEF(TEST_PATH "/db/pg_wal"))), true,
+            "ready-list-based check drops (matches PG's actual backlog)");
     }
 
     // *****************************************************************************************************************************
